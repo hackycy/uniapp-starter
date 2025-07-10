@@ -22,3 +22,8 @@ yarn.lock
 *.njsproj
 *.sln
 *.sw?
+
+# uniapp
+pages.json
+manifest.json
+uni-pages.d.ts

@@ -1,16 +1,37 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
-    "types": ["@dcloudio/types"],
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./types",
+      "./node_modules"
+    ],
+    "types": [
+      "@dcloudio/types"
+    ],
     "importsNotUsedAsValues": "remove",
     "preserveValueImports": false,
     "sourceMap": true,
     "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "build/**/*.ts",
+    "vite.config.ts",
+    "manifest.config.ts",
+    "pages.config.ts"
+  ]
 }

@@ -1,7 +1,18 @@
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
+import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import { defineConfig } from 'vite'
+import { ensureManifestFile } from './build/utils'
+
+ensureManifestFile()
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [Uni()],
+  plugins: [
+    UniManifest(),
+    UniPages({
+      dts: 'src/uni-pages.d.ts',
+    }),
+    Uni(),
+  ],
 })

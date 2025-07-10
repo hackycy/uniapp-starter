@@ -1,3 +1,9 @@
-// oxlint-disable-next-line no-empty-file
-// eslint-disable-next-line ts/ban-ts-comment
-// @ts-nocheck
+import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
+
+export default defineUniPages({
+  pages: [],
+  globalStyle: {
+    navigationBarTextStyle: 'black',
+    navigationBarTitleText: '@uni-helper',
+  },
+})
