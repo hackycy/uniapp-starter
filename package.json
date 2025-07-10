@@ -3,6 +3,13 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
+  "description": "uniapp starter template",
+  "author": "hackycy",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 18",
+    "pnpm": ">= 8"
+  },
   "scripts": {
     "dev:custom": "uni -p",
     "dev:h5": "uni",
