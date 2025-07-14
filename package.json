@@ -76,6 +76,7 @@
     "@dcloudio/uni-stacktracey": "3.0.0-4030620241128001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4030620241128001",
     "@types/node": "~22.9.3",
+    "@types/wechat-miniprogram": "^3.4.8",
     "@uni-helper/eslint-config": "^0.4.0",
     "@uni-helper/vite-plugin-uni-manifest": "^0.2.8",
     "@uni-helper/vite-plugin-uni-pages": "^0.2.28",
