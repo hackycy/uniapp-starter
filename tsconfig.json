@@ -24,6 +24,7 @@
     "importsNotUsedAsValues": "remove",
     "preserveValueImports": false,
     "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": true
   },
   "include": [
