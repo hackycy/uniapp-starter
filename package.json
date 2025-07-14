@@ -75,9 +75,11 @@
     "@dcloudio/uni-cli-shared": "3.0.0-4030620241128001",
     "@dcloudio/uni-stacktracey": "3.0.0-4030620241128001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4030620241128001",
+    "@iconify/json": "^2.2.358",
     "@types/node": "~22.9.3",
     "@types/wechat-miniprogram": "^3.4.8",
     "@uni-helper/eslint-config": "^0.4.0",
+    "@uni-helper/unocss-preset-uni": "^0.2.11",
     "@uni-helper/vite-plugin-uni-manifest": "^0.2.8",
     "@uni-helper/vite-plugin-uni-pages": "^0.2.28",
     "@vue/runtime-core": "^3.5.17",
@@ -86,6 +88,7 @@
     "prettier": "^3.6.2",
     "tsx": "^4.20.3",
     "typescript": "^5.7.2",
+    "unocss": "^66.3.3",
     "vite": "5.2.8",
     "vue-tsc": "^1.8.27"
   }
