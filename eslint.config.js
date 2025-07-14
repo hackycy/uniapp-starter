@@ -2,8 +2,10 @@ import uniHelper from '@uni-helper/eslint-config'
 
 export default uniHelper({
   vue: true,
+  typescript: true,
   ignores: [
     'src/uni_modules/',
+    'src/static/',
     'dist',
     'uni-pages.d.ts',
     'src/pages.json',
@@ -11,9 +13,6 @@ export default uniHelper({
   ],
   rules: {
     'no-console': 'off',
-  },
-  formatters: {
-    css: true,
-    html: true,
+    'no-debugger': 'off',
   },
 })
