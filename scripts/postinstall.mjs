@@ -1,6 +1,6 @@
 // @ts-check
 import { existsSync, writeFileSync } from 'node:fs'
-import { getRootPath } from './utils.js'
+import { getRootPath } from './utils.mjs'
 
 /**
  * @param {'manifest' | 'pages'} file
