@@ -13,7 +13,6 @@ export default defineConfig(async () => {
   const UnoCSS = (await import('unocss/vite')).default
 
   const { UNI_PLATFORM } = process.env
-  console.log('UNI_PLATFORM -> ', UNI_PLATFORM)
 
   return {
     plugins: [
@@ -25,5 +24,8 @@ export default defineConfig(async () => {
       Uni(),
       UnoCSS(),
     ],
+    define: {
+      __UNI_PLATFORM__: JSON.stringify(UNI_PLATFORM),
+    },
   }
 })
