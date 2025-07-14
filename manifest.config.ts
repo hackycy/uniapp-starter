@@ -1,11 +1,12 @@
 import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
+import { version } from './package.json'
 
 export default defineManifestConfig({
   'name': 'uni-helper',
   'appid': '',
   'description': '',
-  'versionName': '1.0.0',
-  'versionCode': '100',
+  'versionName': version,
+  'versionCode': `${Number(version.replace(/\./g, ''))}`,
   'transformPx': false,
   /* 5+App特有相关 */
   'app-plus': {
@@ -74,6 +75,11 @@ export default defineManifestConfig({
   },
   'uniStatistics': {
     enable: false,
+  },
+  'h5': {
+    router: {
+      mode: 'hash',
+    },
   },
   'vueVersion': '3',
 })
