@@ -20,6 +20,8 @@ const IGNORE_EXTENSIONS = ['.vue', '.ts', '.tsx']
 
 /**
  * 模拟启动一次构建生成 manifest.json 和 pages.json 文件
+ *
+ * 注意UniManifest / UniPages 插件配置需要跟项目vite.config.ts中的配置保持一致
  */
 await (async () => {
   ensureJsonFile('manifest')

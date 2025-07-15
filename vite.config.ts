@@ -18,6 +18,7 @@ export default defineConfig(async () => {
   const { UNI_PLATFORM } = process.env
 
   return {
+    envPrefix: 'UNI_',
     plugins: [
       UniManifest(),
       UniPages({
