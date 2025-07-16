@@ -33,6 +33,6 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "scripts/*"
+    "types/**/*.d.ts"
   ]
 }
