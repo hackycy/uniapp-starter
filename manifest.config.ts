@@ -1,9 +1,15 @@
+import process from 'node:process'
 import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
+import { loadEnv } from 'vite'
 import { version } from './package.json'
+
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd())
+
+const { UNI_WX_APPID, UNI_APP_PUBLIC_BASE } = env
 
 export default defineManifestConfig({
   'name': 'uni-helper',
-  'appid': '',
+  'appid': UNI_WX_APPID,
   'description': '',
   'versionName': version,
   'versionCode': `${Number(version.replace(/\./g, ''))}`,
@@ -78,6 +84,7 @@ export default defineManifestConfig({
   },
   'h5': {
     router: {
+      base: UNI_APP_PUBLIC_BASE,
       mode: 'hash',
     },
   },

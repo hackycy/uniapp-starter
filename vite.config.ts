@@ -22,7 +22,7 @@ export default defineConfig(async () => {
     plugins: [
       UniManifest(),
       UniPages({
-        dts: 'src/uni-pages.d.ts',
+        dts: 'types/uni-pages.d.ts',
         subPackages: ['src/pages-sub'],
       }),
       Uni(),
@@ -39,6 +39,10 @@ export default defineConfig(async () => {
       alias: {
         '@': path.join(process.cwd(), './src'),
       },
+    },
+    server: {
+      host: '0.0.0.0',
+      hmr: true,
     },
   }
 })
