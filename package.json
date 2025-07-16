@@ -45,7 +45,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "node ./scripts/postinstall.mjs"
+    "postinstall": "node ./scripts/postinstall.mjs",
+    "uvm": "npx @dcloudio/uvm@latest"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4070520250711001",
