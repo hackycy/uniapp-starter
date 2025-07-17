@@ -33,7 +33,7 @@ await (async () => {
     plugins: [
       UniManifest(),
       UniPages({
-        dts: 'src/uni-pages.d.ts',
+        dts: 'types/uni-pages.d.ts',
         subPackages: ['src/pages-sub'],
       }),
       // 拦截文件编译
