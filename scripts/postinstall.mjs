@@ -56,10 +56,15 @@ await (async () => {
   // 删除 dist 文件夹
   const distPath = getRootPath('dist')
   if (existsSync(distPath)) {
-    rmSync(distPath, {
-      recursive: true,
-      force: true,
-    })
+    try {
+      rmSync(distPath, {
+        recursive: true,
+        force: true,
+      })
+    }
+    catch {
+      // ignore
+    }
   }
 
   console.log('Uni pages and manifest files generated successfully.')
