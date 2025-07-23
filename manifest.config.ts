@@ -3,13 +3,13 @@ import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
 import { loadEnv } from 'vite'
 import { version } from './package.json'
 
-const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd())
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), 'UNI_')
 
-const { UNI_WX_APPID, UNI_APP_PUBLIC_BASE, UNI_APP_DESCRIPTION, UNI_APP_NAME } = env
+const { UNI_APP_NAME, UNI_APP_ID, UNI_APP_DESCRIPTION, UNI_WX_APPID, UNI_APP_PUBLIC_BASE } = env
 
 export default defineManifestConfig({
   'name': UNI_APP_NAME,
-  'appid': UNI_WX_APPID,
+  'appid': UNI_APP_ID,
   'description': UNI_APP_DESCRIPTION,
   'versionName': version,
   'versionCode': `${Number(version.replace(/\./g, ''))}`,
@@ -64,14 +64,21 @@ export default defineManifestConfig({
   'quickapp': {},
   /* 小程序特有相关 */
   'mp-weixin': {
-    appid: '',
+    appid: UNI_WX_APPID,
     setting: {
       urlCheck: false,
+      // 是否启用 ES6 转 ES5
+      es6: true,
+      minified: true,
+    },
+    optimization: {
+      subPackages: true,
     },
     usingComponents: true,
   },
   'mp-alipay': {
     usingComponents: true,
+    styleIsolation: 'shared',
   },
   'mp-baidu': {
     usingComponents: true,

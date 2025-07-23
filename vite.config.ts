@@ -1,14 +1,15 @@
+import type { ConfigEnv, UserConfig } from 'vite'
 import path from 'node:path'
 import process from 'node:process'
 import Uni from '@dcloudio/vite-plugin-uni'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
-import { defineConfig, loadEnv } from 'vite'
+import { loadEnv } from 'vite'
 import { version } from './package.json'
 
 // https://vitejs.dev/config/
-export default async ({ mode }) => {
+export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   /**
    * @see https://unocss.dev/
    * @see https://github.com/dcloudio/uni-app/issues/4815
@@ -16,10 +17,10 @@ export default async ({ mode }) => {
   const UnoCSS = (await import('unocss/vite')).default
   const ViteRestart = (await import('vite-plugin-restart')).default
 
-  const env = loadEnv(mode, process.cwd())
+  const env = loadEnv(mode, process.cwd(), 'UNI_')
   const { UNI_PLATFORM, UNI_APP_PORT } = env
 
-  return defineConfig({
+  return {
     envPrefix: 'UNI_',
     plugins: [
       UniManifest(),
@@ -58,5 +59,5 @@ export default async ({ mode }) => {
       target: 'es6',
       minify: mode === 'development' ? false : 'esbuild',
     },
-  })
+  }
 }
