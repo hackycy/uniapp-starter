@@ -17,11 +17,11 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   const UnoCSS = (await import('unocss/vite')).default
   const ViteRestart = (await import('vite-plugin-restart')).default
 
-  const env = loadEnv(mode, process.cwd(), 'UNI_')
-  const { UNI_PLATFORM, UNI_APP_PORT } = env
+  const env = loadEnv(mode, process.cwd())
+  const { VITE_APP_PORT } = env
+  const { UNI_PLATFORM } = process.env
 
   return {
-    envPrefix: 'UNI_',
     plugins: [
       UniManifest(),
       UniPages({
@@ -52,7 +52,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
     server: {
       host: '0.0.0.0',
       hmr: true,
-      port: Number.parseInt(UNI_APP_PORT!),
+      port: Number.parseInt(VITE_APP_PORT!),
     },
     build: {
       sourcemap: false,

@@ -8,12 +8,12 @@ declare module '*.vue' {
 }
 
 interface ImportMetaEnv {
-  readonly UNI_APP_NAME: string
-  readonly UNI_APP_ID: string
-  readonly UNI_APP_PORT: string
-  readonly UNI_APP_PUBLIC_BASE: string
-  readonly UNI_APP_PROXY_ENABLED: 'true' | 'false'
-  readonly UNI_WX_APPID: string
+  readonly VITE_APP_NAME: string
+  readonly VITE_APP_ID: string
+  readonly VITE_APP_PORT: string
+  readonly VITE_APP_PUBLIC_BASE: string
+  readonly VITE_APP_PROXY_ENABLED: 'true' | 'false'
+  readonly VITE_WX_APPID: string
 }
 
 interface ImportMeta {

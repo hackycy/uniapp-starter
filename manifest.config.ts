@@ -3,14 +3,14 @@ import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
 import { loadEnv } from 'vite'
 import { version } from './package.json'
 
-const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), 'UNI_')
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
-const { UNI_APP_NAME, UNI_APP_ID, UNI_APP_DESCRIPTION, UNI_WX_APPID, UNI_APP_PUBLIC_BASE } = env
+const { VITE_APP_NAME, VITE_APP_ID, VITE_APP_DESCRIPTION, VITE_WX_APPID, VITE_APP_PUBLIC_BASE } = env
 
 export default defineManifestConfig({
-  'name': UNI_APP_NAME,
-  'appid': UNI_APP_ID,
-  'description': UNI_APP_DESCRIPTION,
+  'name': VITE_APP_NAME,
+  'appid': VITE_APP_ID,
+  'description': VITE_APP_DESCRIPTION,
   'versionName': version,
   'versionCode': `${Number(version.replace(/\./g, ''))}`,
   'transformPx': false,
@@ -64,7 +64,7 @@ export default defineManifestConfig({
   'quickapp': {},
   /* 小程序特有相关 */
   'mp-weixin': {
-    appid: UNI_WX_APPID,
+    appid: VITE_WX_APPID,
     setting: {
       urlCheck: false,
       // 是否启用 ES6 转 ES5
@@ -91,7 +91,7 @@ export default defineManifestConfig({
   },
   'h5': {
     router: {
-      base: UNI_APP_PUBLIC_BASE,
+      base: VITE_APP_PUBLIC_BASE,
       mode: 'hash',
     },
   },
