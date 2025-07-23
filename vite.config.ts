@@ -8,16 +8,18 @@ import { defineConfig } from 'vite'
 import { version } from './package.json'
 
 // https://vitejs.dev/config/
-export default defineConfig(async () => {
+export default async ({ mode }) => {
   /**
    * @see https://unocss.dev/
    * @see https://github.com/dcloudio/uni-app/issues/4815
    */
   const UnoCSS = (await import('unocss/vite')).default
 
-  const { UNI_PLATFORM } = process.env
+  const ViteRestart = (await import('vite-plugin-restart')).default
 
-  return {
+  const { UNI_PLATFORM, UNI_APP_PORT } = process.env
+
+  return defineConfig({
     envPrefix: 'UNI_',
     plugins: [
       UniManifest(),
@@ -27,6 +29,9 @@ export default defineConfig(async () => {
       }),
       Uni(),
       UnoCSS(),
+      ViteRestart({
+        restart: ['vite.config.ts'],
+      }),
     ],
     define: {
       __APP_INFO__: JSON.stringify({
@@ -43,6 +48,12 @@ export default defineConfig(async () => {
     server: {
       host: '0.0.0.0',
       hmr: true,
+      port: Number.parseInt(UNI_APP_PORT!),
     },
-  }
-})
+    build: {
+      sourcemap: false,
+      target: 'es6',
+      minify: mode === 'development' ? false : 'esbuild',
+    },
+  })
+}
