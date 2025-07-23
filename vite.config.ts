@@ -4,7 +4,7 @@ import Uni from '@dcloudio/vite-plugin-uni'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { version } from './package.json'
 
 // https://vitejs.dev/config/
@@ -16,7 +16,8 @@ export default async ({ mode }) => {
   const UnoCSS = (await import('unocss/vite')).default
   const ViteRestart = (await import('vite-plugin-restart')).default
 
-  const { UNI_PLATFORM, UNI_APP_PORT } = process.env
+  const env = loadEnv(mode, process.cwd())
+  const { UNI_PLATFORM, UNI_APP_PORT } = env
 
   return defineConfig({
     envPrefix: 'UNI_',
