@@ -5,10 +5,10 @@ import { version } from './package.json'
 
 const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
-const { UNI_WX_APPID, UNI_APP_PUBLIC_BASE, UNI_APP_DESCRIPTION } = env
+const { UNI_WX_APPID, UNI_APP_PUBLIC_BASE, UNI_APP_DESCRIPTION, UNI_APP_NAME } = env
 
 export default defineManifestConfig({
-  'name': 'uni-helper',
+  'name': UNI_APP_NAME,
   'appid': UNI_WX_APPID,
   'description': UNI_APP_DESCRIPTION,
   'versionName': version,
