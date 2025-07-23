@@ -15,6 +15,11 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
+# Environment files
+.env.development
+.env.production
+.env.*
+
 # Editor directories and files
 .idea
 *.suo
