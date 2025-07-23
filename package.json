@@ -2,7 +2,6 @@
   "type": "commonjs",
   "version": "0.0.2",
   "private": true,
-  "description": "uniapp starter template",
   "author": "hackycy",
   "license": "MIT",
   "engines": {
@@ -49,6 +48,7 @@
     "release": "bumpp"
   },
   "dependencies": {
+    "@alova/adapter-uniapp": "^2.0.14",
     "@dcloudio/uni-app": "3.0.0-4070520250711001",
     "@dcloudio/uni-app-harmony": "3.0.0-4070520250711001",
     "@dcloudio/uni-app-plus": "3.0.0-4070520250711001",
@@ -65,9 +65,10 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-4070520250711001",
     "@dcloudio/uni-mp-xhs": "3.0.0-4070520250711001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4070520250711001",
-    "@tanstack/vue-query": "^5.83.0",
+    "alova": "^3.3.4",
     "dayjs": "^1.11.13",
     "pinia": "^3.0.3",
+    "radashi": "^12.6.0",
     "vue": "^3.5.17",
     "vue-i18n": "^9.14.5",
     "wot-design-uni": "^1.11.0"
@@ -92,6 +93,7 @@
     "bumpp": "^10.2.0",
     "eslint": "^9.31.0",
     "prettier": "^3.6.2",
+    "sass": "^1.89.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "unocss": "^66.3.3",

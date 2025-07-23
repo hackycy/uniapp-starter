@@ -14,7 +14,6 @@ export default async ({ mode }) => {
    * @see https://github.com/dcloudio/uni-app/issues/4815
    */
   const UnoCSS = (await import('unocss/vite')).default
-
   const ViteRestart = (await import('vite-plugin-restart')).default
 
   const { UNI_PLATFORM, UNI_APP_PORT } = process.env
@@ -24,8 +23,10 @@ export default async ({ mode }) => {
     plugins: [
       UniManifest(),
       UniPages({
-        dts: 'types/uni-pages.d.ts',
+        dir: 'src/pages',
         subPackages: ['src/pages-sub'],
+        dts: 'types/uni-pages.d.ts',
+        mergePages: true,
       }),
       Uni(),
       UnoCSS(),
@@ -43,6 +44,7 @@ export default async ({ mode }) => {
     resolve: {
       alias: {
         '@': path.join(process.cwd(), './src'),
+        '#': path.join(process.cwd(), './types'),
       },
     },
     server: {
