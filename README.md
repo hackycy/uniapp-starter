@@ -6,3 +6,4 @@ uniapp-starter template
 
 - [unibest](https://github.com/unibest-tech/unibest)
 - [uni-helper](https://github.com/uni-helper/vitesse-uni-app)
+- [wot](https://github.com/Moonofweisheng/wot-demo)
