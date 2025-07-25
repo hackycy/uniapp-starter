@@ -22,7 +22,7 @@
     ],
     "types": [
       "@dcloudio/types",
-      "@types/wechat-miniprogram"
+      "miniprogram-api-typings"
     ],
     "allowJs": false,
     "importsNotUsedAsValues": "remove",
