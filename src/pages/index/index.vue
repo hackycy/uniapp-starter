@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import platform from '@/utils/platform'
 
 const title = ref('Hello')
 </script>
@@ -10,6 +11,12 @@ const title = ref('Hello')
     <view class="text-area">
       <text class="title">
         {{ title }}
+      </text>
+      <text class="title">
+        version: {{ platform.version }}
+      </text>
+      <text class="title">
+        release: {{ platform.lastBuildTime }}
       </text>
     </view>
   </view>
@@ -35,6 +42,8 @@ const title = ref('Hello')
 .text-area {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .title {

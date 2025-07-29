@@ -14,6 +14,8 @@ interface ImportMetaEnv {
   readonly VITE_APP_PUBLIC_BASE: string
   readonly VITE_APP_PROXY_ENABLED: 'true' | 'false'
   readonly VITE_WX_APPID: string
+  readonly VITE_API_BASE_URL: string
+  readonly VITE_API_PATH: string
 }
 
 interface ImportMeta {
