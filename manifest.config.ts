@@ -75,6 +75,9 @@ export default defineManifestConfig({
       subPackages: true,
     },
     usingComponents: true,
+    // https://uniapp.dcloud.net.cn/tutorial/darkmode.html
+    darkmode: true,
+    themeLocation: 'theme.json',
   },
   'mp-alipay': {
     usingComponents: true,
@@ -94,6 +97,9 @@ export default defineManifestConfig({
       base: VITE_APP_PUBLIC_BASE,
       mode: 'hash',
     },
+    // https://uniapp.dcloud.net.cn/tutorial/darkmode.html
+    darkmode: true,
+    themeLocation: 'theme.json',
   },
   'vueVersion': '3',
 })

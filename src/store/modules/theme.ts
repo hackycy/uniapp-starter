@@ -1,6 +1,7 @@
-import type { ThemeMode, ThemeState } from '#/theme'
+import type { ThemeColor, ThemeMode, ThemeState } from '#/theme'
 import { defineStore } from 'pinia'
 import { Theme_Color_Presets } from '@/settings/designSetings'
+import { store } from '..'
 
 export const useThemeStore = defineStore('theme', {
   state: (): ThemeState => ({
@@ -27,6 +28,14 @@ export const useThemeStore = defineStore('theme', {
     },
   },
   actions: {
+    toggleTheme(mode?: ThemeMode) {
+      if (mode && mode === this.themeMode) {
+        return
+      }
+
+      this.followSystem = false
+      this.themeMode = mode || (this.themeMode === 'light' ? 'dark' : 'light')
+    },
     getSystemTheme(): ThemeMode {
       // #ifdef MP-WEIXIN
       const appInfo = uni.getAppBaseInfo()
@@ -41,10 +50,20 @@ export const useThemeStore = defineStore('theme', {
         return 'dark'
       }
       // #endif
+
       return 'light'
     },
     setThemeMode(mode: ThemeMode) {
       this.themeMode = mode
     },
+    setThemeColor(color: ThemeColor) {
+      this.themeColor = color
+      this.themeVars.colorTheme = color.primaryColor
+    },
   },
 })
+
+// Need to be used outside the setup
+export function useThemeStoreWithOut() {
+  return useThemeStore(store)
+}

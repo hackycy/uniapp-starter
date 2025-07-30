@@ -15,7 +15,6 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
    * @see https://github.com/dcloudio/uni-app/issues/4815
    */
   const UnoCSS = (await import('unocss/vite')).default
-  const ViteRestart = (await import('vite-plugin-restart')).default
 
   const env = loadEnv(mode, process.cwd())
   const { VITE_APP_PORT } = env
@@ -23,7 +22,9 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
 
   return {
     plugins: [
+      // https://github.com/uni-helper/vite-plugin-uni-manifest
       UniManifest(),
+      // https://github.com/uni-helper/vite-plugin-uni-pages
       UniPages({
         dir: 'src/pages',
         subPackages: ['src/pages-sub'],
@@ -31,10 +32,8 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         mergePages: true,
       }),
       Uni(),
+      // https://github.com/antfu/unocss
       UnoCSS(),
-      ViteRestart({
-        restart: ['vite.config.ts'],
-      }),
     ],
     define: {
       __APP_INFO__: JSON.stringify({
