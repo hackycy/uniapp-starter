@@ -3,16 +3,12 @@ import type { ConfigProviderThemeVars } from 'wot-design-uni'
 /**
  * 主题类型
  */
-export type ThemeMode = 'light' | 'dark'
-
-export interface ThemeColor {
-  name: string
-  primaryColor: string
-}
+export type Theme = 'light' | 'dark'
+export type AppTheme = Theme | 'system'
 
 export interface ThemeState {
-  themeMode: ThemeMode
-  followSystem: boolean
-  themeColor: ThemeColor
+  theme: AppTheme
+  systemTheme: Theme
+  themeColor: string
   themeVars: ConfigProviderThemeVars
 }

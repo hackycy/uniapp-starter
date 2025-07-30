@@ -1,13 +1,13 @@
-import type { ThemeColor, ThemeMode, ThemeState } from '#/theme'
+import type { AppTheme, Theme, ThemeState } from '#/theme'
 import { defineStore } from 'pinia'
 import { Theme_Color_Presets } from '@/settings/designSetings'
 import { store } from '..'
 
 export const useThemeStore = defineStore('theme', {
   state: (): ThemeState => ({
-    themeMode: 'light',
+    theme: 'light',
+    systemTheme: 'light',
     themeColor: Theme_Color_Presets[0],
-    followSystem: true,
     themeVars: {
       darkBackground: '#0f0f0f',
       darkBackground2: '#1a1a1a',
@@ -19,28 +19,21 @@ export const useThemeStore = defineStore('theme', {
       darkColor: '#ffffff',
       darkColor2: '#e0e0e0',
       darkColor3: '#a0a0a0',
-      colorTheme: Theme_Color_Presets[0].primaryColor,
+      colorTheme: Theme_Color_Presets[0],
     },
   }),
-  getters: {
-    isDarkMode(state): boolean {
-      return state.themeMode === 'dark'
-    },
-  },
   actions: {
-    toggleTheme(mode?: ThemeMode) {
-      if (mode && mode === this.themeMode) {
-        return
-      }
-
-      this.followSystem = false
-      this.themeMode = mode || (this.themeMode === 'light' ? 'dark' : 'light')
+    setTheme(mode: AppTheme) {
+      this.theme = mode
     },
-    getSystemTheme(): ThemeMode {
+    setSystemTheme(theme: Theme) {
+      this.systemTheme = theme
+    },
+    getSystemTheme(): Theme {
       // #ifdef MP-WEIXIN
       const appInfo = uni.getAppBaseInfo()
       if (appInfo && appInfo.theme) {
-        return appInfo.theme as ThemeMode
+        return appInfo.theme as Theme
       }
       // #endif
 
@@ -53,12 +46,16 @@ export const useThemeStore = defineStore('theme', {
 
       return 'light'
     },
-    setThemeMode(mode: ThemeMode) {
-      this.themeMode = mode
-    },
-    setThemeColor(color: ThemeColor) {
+    setThemeColor(color: string) {
       this.themeColor = color
-      this.themeVars.colorTheme = color.primaryColor
+      this.themeVars.colorTheme = color
+    },
+    setup() {
+      this.systemTheme = this.getSystemTheme()
+      if (this.theme === 'system') {
+        this.theme = this.systemTheme
+      }
+      this.setThemeColor(Theme_Color_Presets[0])
     },
   },
 })
