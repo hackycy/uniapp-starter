@@ -2,6 +2,7 @@ import type { ConfigEnv, UserConfig } from 'vite'
 import path from 'node:path'
 import process from 'node:process'
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
@@ -31,6 +32,8 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         dts: 'types/uni-pages.d.ts',
         mergePages: true,
       }),
+      // https://github.com/uni-helper/vite-plugin-uni-layouts
+      UniLayouts(),
       Uni(),
       // https://github.com/antfu/unocss
       UnoCSS(),

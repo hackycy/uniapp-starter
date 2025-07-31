@@ -85,6 +85,7 @@
     "@types/node": "~22.9.4",
     "@uni-helper/eslint-config": "^0.4.0",
     "@uni-helper/unocss-preset-uni": "^0.2.11",
+    "@uni-helper/vite-plugin-uni-layouts": "^0.1.11",
     "@uni-helper/vite-plugin-uni-manifest": "^0.2.8",
     "@uni-helper/vite-plugin-uni-pages": "^0.2.28",
     "@unocss/eslint-config": "^66.3.3",
