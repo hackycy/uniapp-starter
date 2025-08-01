@@ -7,6 +7,7 @@ import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
 import { loadEnv } from 'vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
 import { version } from './package.json'
 
 // https://vitejs.dev/config/
@@ -18,7 +19,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   const UnoCSS = (await import('unocss/vite')).default
 
   const env = loadEnv(mode, process.cwd())
-  const { VITE_APP_PORT } = env
+  const { VITE_APP_PORT, VITE_APP_NAME } = env
   const { UNI_PLATFORM } = process.env
 
   return {
@@ -40,6 +41,15 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       Uni(),
       // https://github.com/antfu/unocss
       UnoCSS(),
+      // https://github.com/vbenjs/vite-plugin-html
+      UNI_PLATFORM === 'h5' && createHtmlPlugin({
+        minify: true,
+        inject: {
+          data: {
+            title: VITE_APP_NAME,
+          },
+        },
+      }),
     ],
     define: {
       __APP_INFO__: JSON.stringify({

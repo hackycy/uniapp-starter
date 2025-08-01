@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NavigationBar from '@/components/NavigationBar/NavigationBar.vue'
 import PrivacyPopup from '@/components/PrivacyPopup/PrivacyPopup.vue'
 import { useTheme } from '@/composables/core/useTheme'
 
@@ -22,6 +23,8 @@ export default {
     :custom-class="`page-wrapper ${getCurrentTheme}`"
   >
     <slot />
+
+    <NavigationBar />
 
     <!-- #ifdef MP-WEIXIN -->
     <PrivacyPopup />

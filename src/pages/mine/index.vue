@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import platform from '@/utils/platform'
 
 const title = ref('Hello')
 </script>
@@ -11,12 +10,6 @@ const title = ref('Hello')
     <view class="text-area">
       <text class="title">
         {{ title }}
-      </text>
-      <text class="title">
-        version: {{ platform.version }}
-      </text>
-      <text class="title">
-        release: {{ platform.lastBuildTime }}
       </text>
     </view>
   </view>
@@ -54,10 +47,10 @@ const title = ref('Hello')
 
 <route lang="json">
 {
-  "name": "Home",
+  "name": "Mine",
   "layout": "navigation",
   "style": {
-    "navigationBarTitleText": "首页"
+    "navigationBarTitleText": "我的"
   }
 }
 </route>

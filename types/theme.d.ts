@@ -6,6 +6,11 @@ import type { ConfigProviderThemeVars } from 'wot-design-uni'
 export type Theme = 'light' | 'dark'
 export type AppTheme = Theme | 'system'
 
+/**
+ * Tab Bar类型
+ */
+export type TabBarType = 'native' | 'custom' | 'none'
+
 export interface ThemeState {
   theme: AppTheme
   systemTheme: Theme

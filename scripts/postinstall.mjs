@@ -1,5 +1,5 @@
 // @ts-check
-import { existsSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, rmSync, writeFileSync } from 'node:fs'
 import process from 'node:process'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
@@ -67,5 +67,11 @@ await (async () => {
     }
   }
 
-  console.log('Uni pages and manifest files generated successfully.')
+  // 创建开发环境env
+  const devEnvFile = getRootPath('.env.development')
+  if (!existsSync(devEnvFile)) {
+    copyFileSync(getRootPath('.env'), devEnvFile)
+  }
+
+  console.log('Development env create successfully.')
 })()
