@@ -22,7 +22,8 @@
     ],
     "types": [
       "@dcloudio/types",
-      "miniprogram-api-typings"
+      "miniprogram-api-typings",
+      "wot-design-uni/global"
     ],
     "allowJs": false,
     "importsNotUsedAsValues": "remove",

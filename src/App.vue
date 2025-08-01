@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onShow } from '@dcloudio/uni-app'
+import { useThemeStore } from './store/modules/theme'
+
+const themeStore = useThemeStore()
 
 onLaunch(() => {
   console.log('App Launch')
+
+  themeStore.setup()
 })
 
 onShow(() => {

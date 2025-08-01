@@ -16,10 +16,6 @@ export default defineUniPages({
     // 下拉刷新配置
     enablePullDownRefresh: false,
     onReachBottomDistance: 50,
-
-    // 动画配置
-    animationType: 'pop-in',
-    animationDuration: 300,
   },
   easycom: {
     autoscan: true,

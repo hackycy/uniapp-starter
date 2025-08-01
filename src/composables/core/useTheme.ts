@@ -1,4 +1,4 @@
-import type { AppTheme } from '#/theme'
+import type { AppTheme, Theme } from '#/theme'
 import { onShow } from '@dcloudio/uni-app'
 import { isNullish } from 'radashi'
 import { computed, onBeforeMount, onUnmounted } from 'vue'
@@ -15,13 +15,17 @@ export function useTheme() {
     return themeStore.systemTheme
   })
 
-  const getIsDarkMode = computed((): boolean => {
+  const getCurrentTheme = computed((): Theme => {
     const theme = themeStore.theme
     if (theme === 'system') {
-      return themeStore.systemTheme === 'dark'
+      return themeStore.systemTheme
     }
 
-    return theme === 'dark'
+    return theme
+  })
+
+  const getThemeVars = computed(() => {
+    return themeStore.themeVars
   })
 
   function setTheme(mode: AppTheme) {
@@ -34,7 +38,7 @@ export function useTheme() {
 
   function toggleDarkMode(dark?: boolean) {
     if (isNullish(dark)) {
-      themeStore.setTheme(getIsDarkMode.value ? 'light' : 'dark')
+      themeStore.setTheme(getCurrentTheme.value === 'dark' ? 'light' : 'dark')
     }
     else {
       themeStore.setTheme(dark ? 'dark' : 'light')
@@ -43,8 +47,8 @@ export function useTheme() {
 
   function setNavigationBarColor() {
     uni.setNavigationBarColor({
-      frontColor: getTheme.value === 'light' ? '#000000' : '#ffffff',
-      backgroundColor: getTheme.value === 'light' ? '#ffffff' : '#000000',
+      frontColor: getCurrentTheme.value === 'light' ? '#000000' : '#ffffff',
+      backgroundColor: getCurrentTheme.value === 'light' ? '#ffffff' : '#000000',
     })
   }
 
@@ -57,6 +61,7 @@ export function useTheme() {
     if (getTheme.value === 'system') {
       themeStore.setSystemTheme(result.theme)
     }
+    setNavigationBarColor()
   }
 
   onBeforeMount(() => {
@@ -70,8 +75,9 @@ export function useTheme() {
   return {
     getTheme,
     getSystemTheme,
+    getCurrentTheme,
+    getThemeVars,
     setTheme,
-    getIsDarkMode,
     toggleDarkMode,
     setThemeColor,
   }

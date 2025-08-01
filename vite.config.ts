@@ -33,7 +33,10 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         mergePages: true,
       }),
       // https://github.com/uni-helper/vite-plugin-uni-layouts
-      UniLayouts(),
+      UniLayouts({
+        layout: 'default',
+        layoutDir: 'src/layouts',
+      }),
       Uni(),
       // https://github.com/antfu/unocss
       UnoCSS(),
