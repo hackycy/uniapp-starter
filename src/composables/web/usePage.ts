@@ -12,25 +12,28 @@ interface Route {
   [key: string]: any
 }
 
-export function usePages() {
-  const route = shallowRef<Route>(getCurrentPageRoute()!)
+export function usePage() {
+  const route = shallowRef<Route>(getCurrentPageRoute())
 
   function getCurrentPage() {
     const pages = getCurrentPages()
     return pages.length > 0 ? pages[pages.length - 1] : undefined
   }
 
-  function getCurrentPageRoute() {
+  function getCurrentPageRoute(): Route {
+    const route: Route = {}
     const page = getCurrentPage()
-    if (!page) {
-      return
+    if (page) {
+      try {
+        const parsed = new URL(`/$${page.route}`)
+        route.path = parsed.pathname
+      }
+      catch {
+      // ?
+      }
     }
 
-    const path = `/${page.route}`.split('?')[0]
-
-    return {
-      path,
-    }
+    return route
   }
 
   onLoad((options) => {

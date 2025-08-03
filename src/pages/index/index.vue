@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { usePages } from '@/composables/web/usePages'
+import { usePage } from '@/composables/web/usePage'
 import platform from '@/utils/platform'
 
 const title = ref('Hello')
 
-const { route } = usePages()
+const { route } = usePage()
 
 console.log('Current Page:', route.value)
 </script>
