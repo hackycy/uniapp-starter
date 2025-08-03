@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { usePages } from '@/composables/web/usePages'
 import platform from '@/utils/platform'
 
 const title = ref('Hello')
+
+const { route } = usePages()
+
+console.log('Current Page:', route.value)
 </script>
 
 <template>
