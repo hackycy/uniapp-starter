@@ -1,8 +1,9 @@
 import { onLoad } from '@dcloudio/uni-app'
 import { isEmpty } from 'radashi'
+import { pages } from 'virtual:uni-pages'
 import { shallowRef } from 'vue'
 
-interface Route {
+export interface Route {
   fullPath?: string
   aliasPath?: string
   name?: string
@@ -21,16 +22,18 @@ export function usePage() {
   }
 
   function getCurrentPageRoute(): Route {
-    const route: Route = {}
-    const page = getCurrentPage()
-    if (page) {
-      try {
-        const parsed = new URL(`/$${page.route}`)
-        route.path = parsed.pathname
-      }
-      catch {
-      // ?
-      }
+    const page: Recordable | undefined = getCurrentPage()
+    if (!page) {
+      console.warn('No current page found.')
+      return {}
+    }
+
+    const route: Route = pages.find((p) => {
+      return p.path === page.route
+    })
+
+    if (page.$page) {
+      route.fullPath = page.$page.fullPath
     }
 
     return route
@@ -38,9 +41,7 @@ export function usePage() {
 
   onLoad((options) => {
     if (!isEmpty(options)) {
-      route.value = {
-        ...options,
-      }
+      console.log('Page options:', options)
     }
   })
 

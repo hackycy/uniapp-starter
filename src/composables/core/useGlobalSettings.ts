@@ -1,1 +1,1 @@
-export function useGlobSetting() {}
+export function useGlobalSetting() {}
