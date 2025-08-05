@@ -37,3 +37,7 @@ export function getCurrentPageRoute(router: Router): Route {
 
   return route
 }
+
+export function saveCurrentRoute(router: Router) {
+  router.route.value = getCurrentPageRoute(router)
+}

@@ -1,7 +1,8 @@
+import type { Route } from './types'
 import { inject, reactive, watch } from 'vue'
 import { routeKey } from './helper'
 
-export function useRoute() {
+export function useRoute(): Route {
   const currentRoute = inject(routeKey)
 
   if (currentRoute) {
@@ -13,6 +14,6 @@ export function useRoute() {
     return route
   }
   else {
-    console.warn('useRoute: No route provided. Make sure to call setupRouter before using this function.')
+    throw new Error('useRoute: No route provided. Make sure to call setupRouter before using this function.')
   }
 }

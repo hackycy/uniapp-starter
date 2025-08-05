@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app'
-import { ref } from 'vue'
-import { ACTIVE_TAB_BAR_TYPE } from '@/settings/tabbarSettings'
+import { computed } from 'vue'
+import { useRoute } from '@/router'
+import {
+  Active_Tabbar_Type,
+  Default_Tabbar_Items,
+} from '@/settings/tabbarSettings'
 
-const currentTabRef = ref('home')
+const route = useRoute()
+
+const getCurrPage = computed(() => {
+  return route.path
+})
+
+function handleTabChange(arg: Recordable) {
+  uni.redirectTo({
+    url: `/${arg.value}`,
+  })
+}
 
 onLoad(() => {
   // #ifdef APP-PLUS
-  if (ACTIVE_TAB_BAR_TYPE === 'custom' || ACTIVE_TAB_BAR_TYPE === 'none') {
+  if (Active_Tabbar_Type === 'custom' || Active_Tabbar_Type === 'none') {
     uni.hideTabBar()
   }
   // #endif
@@ -26,14 +40,20 @@ export default {
 
 <template>
   <wd-tabbar
-    v-model="currentTabRef"
+    v-if="Active_Tabbar_Type === 'custom'"
+    :model-value="getCurrPage"
     bordered
     safe-area-inset-bottom
     placeholder
     fixed
+    @change="handleTabChange"
   >
-    <wd-tabbar-item title="首页" icon="home" />
-    <wd-tabbar-item title="分类" icon="cart" />
-    <wd-tabbar-item title="我的" icon="user" />
+    <wd-tabbar-item
+      v-for="item in Default_Tabbar_Items"
+      :key="item.pagePath"
+      :name="item.pagePath"
+      :title="item.text"
+      :icon="item.icon"
+    />
   </wd-tabbar>
 </template>

@@ -3,7 +3,7 @@ import type { Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
 import { shallowRef } from 'vue'
-import { getCurrentPageRoute, routeKey } from './helper'
+import { routeKey, saveCurrentRoute } from './helper'
 
 export * from './core'
 
@@ -15,8 +15,7 @@ export function setupRouter(app: App<Element>) {
       app.mixin({
         beforeCreate() {
           if (this.$mpType) {
-            const route = getCurrentPageRoute(router)
-            console.log('Current route:', route)
+            saveCurrentRoute(router)
           }
         },
         onLoad(option) {
@@ -29,7 +28,7 @@ export function setupRouter(app: App<Element>) {
         },
         onShow() {
           if (this.$mpType) {
-            // TODO
+            saveCurrentRoute(router)
           }
         },
       })
