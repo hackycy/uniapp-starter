@@ -14,7 +14,7 @@ export function setupRouter(app: App<Element>) {
 
       app.mixin({
         beforeCreate() {
-          if (this.$mpType) {
+          if (this.$mpType === 'page') {
             saveCurrentRoute(router)
           }
         },
@@ -27,7 +27,7 @@ export function setupRouter(app: App<Element>) {
           }
         },
         onShow() {
-          if (this.$mpType) {
+          if (this.$mpType === 'page') {
             saveCurrentRoute(router)
           }
         },
