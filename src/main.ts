@@ -7,7 +7,7 @@ import 'virtual:uno.css'
 export function createApp() {
   const app = createSSRApp(App)
   setupStore(app)
-  setupRouter()
+  setupRouter(app)
 
   return {
     app,

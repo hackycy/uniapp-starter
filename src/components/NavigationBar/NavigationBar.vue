@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
+import { ACTIVE_TAB_BAR_TYPE } from '@/settings/tabbarSettings'
 
 const currentTabRef = ref('home')
 
 onLoad(() => {
   // #ifdef APP-PLUS
-  uni.hideTabBar()
+  if (ACTIVE_TAB_BAR_TYPE === 'custom' || ACTIVE_TAB_BAR_TYPE === 'none') {
+    uni.hideTabBar()
+  }
   // #endif
 })
 </script>
