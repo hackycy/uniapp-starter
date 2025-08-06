@@ -222,7 +222,7 @@ export default {
         display: inline;
 
         &.link {
-          color: #007aff;
+          color: var(--wot-color-theme);
           text-decoration: underline;
           cursor: pointer;
         }
@@ -248,7 +248,7 @@ export default {
         font-weight: 500;
 
         &.btn-agree {
-          background-color: #007aff;
+          background-color: var(--wot-color-theme);
           color: white;
         }
 

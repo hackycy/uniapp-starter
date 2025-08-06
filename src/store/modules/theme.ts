@@ -7,7 +7,7 @@ export const useThemeStore = defineStore('theme', {
   state: (): ThemeState => ({
     theme: 'light',
     systemTheme: 'light',
-    themeColor: Theme_Color_Presets[0],
+    themeColor: '',
     themeVars: {
       darkBackground: '#0f0f0f',
       darkBackground2: '#1a1a1a',
@@ -19,7 +19,7 @@ export const useThemeStore = defineStore('theme', {
       darkColor: '#ffffff',
       darkColor2: '#e0e0e0',
       darkColor3: '#a0a0a0',
-      colorTheme: Theme_Color_Presets[0],
+      colorTheme: '',
     },
   }),
   actions: {
@@ -50,6 +50,9 @@ export const useThemeStore = defineStore('theme', {
       this.themeColor = color
       this.themeVars.colorTheme = color
     },
+    /**
+     * 初始化主题设定
+     */
     setup() {
       this.systemTheme = this.getSystemTheme()
       if (this.theme === 'system') {
