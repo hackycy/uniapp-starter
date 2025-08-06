@@ -9,7 +9,7 @@ import {
 
 const route = useRoute()
 
-const getCurrPage = computed(() => {
+const getCurrentPagePath = computed(() => {
   return route.path
 })
 
@@ -41,7 +41,7 @@ export default {
 <template>
   <wd-tabbar
     v-if="Active_Tabbar_Type === 'custom'"
-    :model-value="getCurrPage"
+    :model-value="getCurrentPagePath"
     bordered
     safe-area-inset-bottom
     placeholder
