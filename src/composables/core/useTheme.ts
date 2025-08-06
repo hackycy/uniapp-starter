@@ -28,6 +28,10 @@ export function useTheme() {
     return themeStore.themeVars
   })
 
+  const getPrimaryColor = computed(() => {
+    return themeStore.themeColor
+  })
+
   function setTheme(mode: AppTheme) {
     themeStore.setTheme(mode)
   }
@@ -77,6 +81,7 @@ export function useTheme() {
     getSystemTheme,
     getCurrentTheme,
     getThemeVars,
+    getPrimaryColor,
     setTheme,
     toggleDarkMode,
     setThemeColor,
