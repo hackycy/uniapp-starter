@@ -1,10 +1,15 @@
-import type { InjectionKey } from 'vue'
+import type { InjectionKey, Ref } from 'vue'
 import type { Route, Router } from './types'
+
+/**
+ * useRouter
+ */
+export const routerKey = Symbol('__ROUTER__') as InjectionKey<Router>
 
 /**
  * useRoute
  */
-export const routeKey = Symbol('__ROUTE__') as InjectionKey<Route>
+export const routeKey = Symbol('__ROUTE__') as InjectionKey<Ref<Route>>
 
 /**
  * 获取当前页面

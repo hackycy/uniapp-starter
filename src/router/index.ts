@@ -3,14 +3,15 @@ import type { Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
 import { shallowRef } from 'vue'
-import { routeKey, saveCurrentRoute } from './helper'
+import { routeKey, routerKey, saveCurrentRoute } from './helper'
 
 export * from './core'
 
 export function setupRouter(app: App<Element>) {
   const router: ObjectPlugin & Router = {
-    install(app) {
-      app.provide(routeKey, this.route)
+    install($app) {
+      $app.provide(routerKey, this)
+      $app.provide(routeKey, this.route)
 
       app.mixin({
         beforeCreate() {
