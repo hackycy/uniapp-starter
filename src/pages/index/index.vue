@@ -55,6 +55,7 @@ const title = ref('Hello')
 <route lang="json">
 {
   "name": "Home",
+  "type": "home",
   "layout": "navigation",
   "style": {
     "navigationBarTitleText": "首页"

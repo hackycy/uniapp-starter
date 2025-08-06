@@ -3,6 +3,7 @@ import type { Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
 import { shallowRef } from 'vue'
+import { setupRouterGuard } from './guard'
 import { routeKey, routerKey, saveCurrentRoute } from './helper'
 
 export * from './core'
@@ -38,5 +39,6 @@ export function setupRouter(app: App<Element>) {
     routes: pages,
   }
 
+  setupRouterGuard(router)
   app.use(router)
 }
