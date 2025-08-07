@@ -28,6 +28,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       UniManifest(),
       // https://github.com/uni-helper/vite-plugin-uni-pages
       UniPages({
+        exclude: ['**/components/**/**.*'],
         dir: 'src/pages',
         subPackages: ['src/pages-sub'],
         dts: 'types/uni-pages.d.ts',

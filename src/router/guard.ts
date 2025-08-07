@@ -1,13 +1,18 @@
 import type { Router } from './types'
+import { useUserStoreWithOut } from '@/store/modules/user'
 
-const NAVIGATE_METHODS = ['navigateTo', 'redirectTo', 'switchTab']
+function createAuthGuard(_router: Router): UniApp.InterceptorOptions {
+  useUserStoreWithOut()
 
-export function setupRouterGuard(_router: Router) {
-  NAVIGATE_METHODS.forEach((method) => {
-    uni.addInterceptor(method, {
-      invoke(_args: UniApp.NavigateToOptions) {
-        return true
-      },
-    })
-  })
+  return {
+    invoke() {
+      // TODO
+    },
+  }
+}
+
+export function setupRouterGuard(router: Router) {
+  const authGuard = createAuthGuard(router)
+
+  uni.addInterceptor('navigateTo', authGuard)
 }
