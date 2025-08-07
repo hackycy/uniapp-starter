@@ -6,8 +6,6 @@ export interface Route {
   name?: string
   path?: string
   query?: Record<string, any>
-  page?: Page.PageInstance<AnyObject, object>
-  [x: string]: any
 }
 
 export interface Router {

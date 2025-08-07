@@ -1,20 +1,15 @@
+import type { ShallowReactive } from 'vue'
 import type { Route } from './types'
-import { inject, reactive, watch } from 'vue'
+import { inject } from 'vue'
 import { routeKey, routerKey } from './helper'
 
-export function useRoute(): Route {
+export function useRoute(): ShallowReactive<Route> {
   const currentRoute = inject(routeKey)
-
   if (currentRoute) {
-    const route = reactive(currentRoute.value)
-    watch(currentRoute, (newRoute) => {
-      Object.assign(route, newRoute)
-    })
-
-    return route
+    return currentRoute
   }
   else {
-    throw new Error('useRoute: No route provided. Make sure it is being used inside a Vue component.')
+    throw new Error('useRoute: No route provided. it is being used inside a Vue component.')
   }
 }
 

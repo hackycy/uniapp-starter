@@ -1,4 +1,4 @@
-import type { InjectionKey, Ref } from 'vue'
+import type { InjectionKey, ShallowReactive } from 'vue'
 import type { Route, Router } from './types'
 
 /**
@@ -9,7 +9,15 @@ export const routerKey = Symbol('__ROUTER__') as InjectionKey<Router>
 /**
  * useRoute
  */
-export const routeKey = Symbol('__ROUTE__') as InjectionKey<Ref<Route>>
+export const routeKey = Symbol('__ROUTE__') as InjectionKey<ShallowReactive<Route>>
+
+export const START_LOCATION_NORMALIZED: Route = {
+  path: '/',
+  fullPath: '/',
+  aliasPath: '/',
+  name: undefined,
+  query: {},
+}
 
 /**
  * 获取当前页面
@@ -32,13 +40,9 @@ export function getCurrentPageRoute(router: Router): Route {
     return p.path === page.route
   })
 
-  if (currRoute.$page) {
+  if (page.$page) {
     currRoute.fullPath = page.$page.fullPath
   }
 
   return JSON.parse(JSON.stringify(currRoute))
-}
-
-export function saveCurrentRoute(router: Router) {
-  router.route.value = getCurrentPageRoute(router)
 }

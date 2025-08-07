@@ -2,40 +2,50 @@ import type { App, ObjectPlugin } from 'vue'
 import type { Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
-import { shallowRef } from 'vue'
+import { shallowReactive, shallowRef } from 'vue'
 import { setupRouterGuard } from './guard'
-import { routeKey, routerKey, saveCurrentRoute } from './helper'
+import { getCurrentPageRoute, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
 
 export * from './core'
 
 export function setupRouter(app: App<Element>) {
+  const reactiveRoute = {} as Route
+  const currentRoute = shallowRef<Route>(START_LOCATION_NORMALIZED)
+
+  for (const key in START_LOCATION_NORMALIZED) {
+    Object.defineProperty(reactiveRoute, key, {
+      get: () => currentRoute.value[key as keyof Route],
+      enumerable: true,
+    })
+  }
+
   const router: ObjectPlugin & Router = {
     install($app) {
       $app.provide(routerKey, this)
-      $app.provide(routeKey, this.route)
+      $app.provide(routeKey, shallowReactive(reactiveRoute))
 
-      app.mixin({
+      $app.mixin({
         beforeCreate() {
           if (this.$mpType === 'page') {
-            saveCurrentRoute(router)
+            currentRoute.value = getCurrentPageRoute(router)
           }
         },
         onLoad(option) {
           if (!isEmpty(option)) {
-            router.route.value = {
-              ...router.route.value,
+            currentRoute.value = {
+              ...currentRoute.value,
               query: option,
             }
           }
         },
         onShow() {
           if (this.$mpType === 'page') {
-            saveCurrentRoute(router)
+            currentRoute.value = getCurrentPageRoute(router)
           }
         },
       })
     },
-    route: shallowRef<Route>({ path: '/' }),
+    route: currentRoute,
     routes: pages,
   }
 
