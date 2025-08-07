@@ -24,23 +24,19 @@ export function getCurrentPage() {
  */
 export function getCurrentPageRoute(router: Router): Route {
   const page: Recordable | undefined = getCurrentPage()
-  if (!page) {
-    console.warn('No current page found.')
+  if (!page || !page.route || !router.routes) {
     return {}
   }
 
-  const route: Route = router.routes.find((p: Recordable) => {
+  const currRoute: Route = router.routes.find((p: Recordable) => {
     return p.path === page.route
   })
 
-  // mount the page instance
-  route.page = page
-
-  if (page.$page) {
-    route.fullPath = page.$page.fullPath
+  if (currRoute.$page) {
+    currRoute.fullPath = page.$page.fullPath
   }
 
-  return route
+  return JSON.parse(JSON.stringify(currRoute))
 }
 
 export function saveCurrentRoute(router: Router) {
