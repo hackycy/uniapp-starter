@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@alova/adapter-uniapp": "^2.0.14",
+    "@alova/shared": "^1.3.1",
     "@dcloudio/uni-app": "3.0.0-4070520250711001",
     "@dcloudio/uni-app-harmony": "3.0.0-4070520250711001",
     "@dcloudio/uni-app-plus": "3.0.0-4070520250711001",
@@ -70,6 +71,7 @@
     "dayjs": "^1.11.13",
     "pinia": "^2.3.1",
     "radashi": "^12.6.0",
+    "vconsole": "^3.15.1",
     "vue": "^3.5.17",
     "vue-i18n": "^9.14.5",
     "wechat-open-js-sdk": "^0.0.2",

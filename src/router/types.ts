@@ -2,10 +2,10 @@ import type { Ref } from 'vue'
 
 export interface Route {
   fullPath?: string
-  aliasPath?: string
   name?: string
   path?: string
   query?: Record<string, any>
+  meta?: Record<string, any>
 }
 
 export interface Router {

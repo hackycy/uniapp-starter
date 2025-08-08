@@ -8,7 +8,7 @@ import { getCurrentPageRoute, routeKey, routerKey, START_LOCATION_NORMALIZED } f
 
 export * from './core'
 
-export function setupRouter(app: App<Element>) {
+function createRouter(): Router & ObjectPlugin {
   const reactiveRoute = {} as Route
   const currentRoute = shallowRef<Route>(START_LOCATION_NORMALIZED)
 
@@ -20,18 +20,18 @@ export function setupRouter(app: App<Element>) {
   }
 
   const router: ObjectPlugin & Router = {
-    install($app) {
-      $app.provide(routerKey, this)
-      $app.provide(routeKey, shallowReactive(reactiveRoute))
+    install(app) {
+      app.provide(routerKey, this)
+      app.provide(routeKey, shallowReactive(reactiveRoute))
 
-      $app.mixin({
+      app.mixin({
         beforeCreate() {
           if (this.$mpType === 'page') {
             currentRoute.value = getCurrentPageRoute(router)
           }
         },
         onLoad(option) {
-          if (!isEmpty(option)) {
+          if (!isEmpty(option) && isEmpty(currentRoute.value.query)) {
             currentRoute.value = {
               ...currentRoute.value,
               query: option,
@@ -49,6 +49,12 @@ export function setupRouter(app: App<Element>) {
     routes: pages,
   }
 
+  return router
+}
+
+export const router = createRouter()
+
+export function setupRouter(app: App<Element>) {
   setupRouterGuard(router)
   app.use(router)
 }

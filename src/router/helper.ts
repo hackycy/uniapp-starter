@@ -1,5 +1,6 @@
 import type { InjectionKey, ShallowReactive } from 'vue'
 import type { Route, Router } from './types'
+import { parseURL } from '@/utils/uri'
 
 /**
  * useRouter
@@ -14,9 +15,9 @@ export const routeKey = Symbol('__ROUTE__') as InjectionKey<ShallowReactive<Rout
 export const START_LOCATION_NORMALIZED: Route = {
   path: '/',
   fullPath: '/',
-  aliasPath: '/',
   name: undefined,
   query: {},
+  meta: {},
 }
 
 /**
@@ -42,7 +43,23 @@ export function getCurrentPageRoute(router: Router): Route {
 
   if (page.$page) {
     currRoute.fullPath = page.$page.fullPath
+    const { query } = parseURL(page.$page.fullPath)
+    currRoute.query = query || undefined
   }
 
+  // 深拷贝
   return JSON.parse(JSON.stringify(currRoute))
+}
+
+/**
+ * 根据path查找路由
+ */
+export function findRouteByPath(to: string | Pick<Partial<Route>, 'name' | 'path'>, router: Router): Recordable | undefined {
+  if (typeof to === 'string') {
+    return router.routes.find((route: Route) => route.path === to)
+  }
+
+  return router.routes.find((route: Route) => {
+    return route.name === to.name || route.path === to.path
+  })
 }
