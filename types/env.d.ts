@@ -18,6 +18,7 @@ interface ImportMetaEnv {
   readonly VITE_OPENWX_APPID: string
   readonly VITE_API_BASE_URL: string
   readonly VITE_API_PATH: string
+  readonly VITE_DEVTOOL: string
 }
 
 interface ImportMeta {
