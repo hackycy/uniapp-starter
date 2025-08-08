@@ -1,0 +1,34 @@
+{
+  "UniApp Page": {
+    "prefix": "uni-page",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "import { onLoad, onShow } from '@dcloudio/uni-app'",
+      "",
+      "onLoad(() => {",
+      "  console.log('onLoad')",
+      "})",
+      "",
+      "onShow(() => {",
+      "  console.log('onShow')",
+      "})",
+      "</script>",
+      "",
+      "<template>",
+      "  <view><!-- TODO --></view>",
+      "</template>",
+      "",
+      "<route lang=\"json\">",
+      "{",
+      "  \"name\": \"$1\",",
+      "  \"layout\": \"${2:default}\",",
+      "  \"style\": {",
+      "    \"navigationBarTitleText\": \"$3\",",
+      "    \"navigationStyle\": \"custom\"",
+      "  }",
+      "}",
+      "</route>"
+    ],
+    "description": "UniApp Page Template"
+  }
+}
