@@ -74,7 +74,7 @@
     "vconsole": "^3.15.1",
     "vue": "^3.5.17",
     "vue-i18n": "^9.14.5",
-    "wechat-open-js-sdk": "^0.0.3",
+    "wechat-open-js-sdk": "^0.0.6",
     "wot-design-uni": "^1.11.0"
   },
   "devDependencies": {
