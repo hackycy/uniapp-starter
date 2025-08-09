@@ -13,7 +13,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_ID: string
   readonly VITE_APP_PORT: string
   readonly VITE_APP_PUBLIC_BASE: string
-  readonly VITE_APP_PROXY_ENABLED: 'true' | 'false'
+  readonly VITE_APP_PROXY: string
   readonly VITE_WX_APPID: string
   readonly VITE_OPENWX_APPID: string
   readonly VITE_API_BASE_URL: string
