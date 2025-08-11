@@ -21,8 +21,33 @@ export async function setupDevtool() {
   if (vconsole) {
     return
   }
-  const { default: VConsole } = await import('vconsole')
-  vconsole = new VConsole()
+
+  if (import.meta.hot) {
+    import('vconsole').then((mod) => {
+      const VConsole = mod.default
+      vconsole = new VConsole()
+    })
+  }
+  else {
+    const cdns = [
+      'https://unpkg.com/vconsole@latest/dist/vconsole.min.js',
+      'https://cdn.jsdelivr.net/npm/vconsole@latest/dist/vconsole.min.js',
+    ]
+    // 寻找可用cdn
+    const loadScript = (src: string) => {
+      return new Promise<void>((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = src
+        script.onload = () => resolve()
+        script.onerror = e => reject(e)
+        document.body.appendChild(script)
+      })
+    }
+
+    Promise.race(cdns.map(loadScript)).then(() => {
+      vconsole = new (window as any).VConsole()
+    })
+  }
   // #endif
 
   // #ifdef MP-WEIXIN
