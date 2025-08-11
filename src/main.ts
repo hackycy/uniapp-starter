@@ -8,9 +8,17 @@ import 'virtual:uno.css'
 
 export function createApp() {
   const app = createSSRApp(App)
+
+  // Configure store
   setupStore(app)
+
+  // Configure routing
   setupRouter(app)
-  setupDevtool()
+
+  // Configure devtool (vconsole)
+  if (import.meta.env.VITE_DEVTOOL === 'true') {
+    setupDevtool()
+  }
 
   return {
     app,

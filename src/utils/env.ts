@@ -17,10 +17,6 @@ export function getAppEnvConfig() {
 
 let vconsole: unknown
 export async function setupDevtool() {
-  if (import.meta.env.VITE_DEVTOOL !== 'true') {
-    return
-  }
-
   // #ifdef H5
   if (vconsole) {
     return
