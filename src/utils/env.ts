@@ -24,4 +24,10 @@ export async function setupDevtool() {
   const { default: VConsole } = await import('vconsole')
   vconsole = new VConsole()
   // #endif
+
+  // #ifdef MP-WEIXIN
+  wx.setEnableDebug({
+    enableDebug: true,
+  })
+  // #endif
 }
