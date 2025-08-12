@@ -3,7 +3,6 @@ export function getAppEnvConfig() {
     VITE_APP_NAME: import.meta.env.VITE_APP_NAME,
     VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
     VITE_API_PATH: import.meta.env.VITE_API_PATH,
-    VITE_DEVTOOL: import.meta.env.VITE_DEVTOOL,
 
     // #ifdef H5
     VITE_OPENWX_APPID: import.meta.env.VITE_OPENWX_APPID,
@@ -29,9 +28,11 @@ export async function setupDevtool() {
     })
   }
   else {
+    const version = '3.15.1'
     const cdns = [
-      'https://unpkg.com/vconsole@latest/dist/vconsole.min.js',
-      'https://cdn.jsdelivr.net/npm/vconsole@latest/dist/vconsole.min.js',
+      `https://unpkg.com/vconsole@${version}/dist/vconsole.min.js`,
+      `https://cdn.jsdelivr.net/npm/vconsole@${version}/dist/vconsole.min.js`,
+      `https://cdn.bootcdn.net/ajax/libs/vConsole/${version}/vconsole.min.js`,
     ]
     // 寻找可用cdn
     const loadScript = (src: string) => {
