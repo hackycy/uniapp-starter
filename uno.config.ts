@@ -1,3 +1,6 @@
+import path from 'node:path'
+import process from 'node:process'
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
 import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
 
@@ -16,6 +19,16 @@ export default defineConfig({
       extraProperties: {
         'display': 'inline-block',
         'vertical-align': 'middle',
+      },
+      collections: {
+        /**
+         * 项目内如需自定义svg，请先自行处理svg格式，移除width / height
+         * 单色图标需要将颜色至改为 currentColor
+         * 如 fill="currentColor"
+         */
+        custom: FileSystemIconLoader(
+          path.resolve(process.cwd(), 'src', 'assets', 'icons'),
+        ),
       },
     }),
   ],

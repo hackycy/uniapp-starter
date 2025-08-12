@@ -6,7 +6,6 @@ const title = ref('Hello')
 
 <template>
   <view class="content">
-    <image class="logo" src="/static/logo.png" />
     <view class="text-area">
       <text class="title">
         {{ title }}
@@ -15,7 +14,7 @@ const title = ref('Hello')
   </view>
 </template>
 
-<style>
+<style scoped>
 .content {
   display: flex;
   flex-direction: column;
@@ -23,16 +22,8 @@ const title = ref('Hello')
   justify-content: center;
 }
 
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
 .text-area {
+  margin-top: 200rpx;
   display: flex;
   justify-content: center;
   align-items: center;

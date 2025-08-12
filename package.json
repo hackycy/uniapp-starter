@@ -85,6 +85,7 @@
     "@dcloudio/uni-stacktracey": "3.0.0-4070520250711001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4070520250711001",
     "@iconify/json": "^2.2.360",
+    "@iconify/utils": "^3.0.1",
     "@types/node": "~22.9.4",
     "@uni-helper/eslint-config": "^0.4.0",
     "@uni-helper/unocss-preset-uni": "^0.2.11",
