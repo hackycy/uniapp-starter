@@ -14,6 +14,14 @@ export function getAppEnvConfig() {
   }
 }
 
+export function isDev() {
+  return import.meta.env.DEV
+}
+
+export function isProd() {
+  return import.meta.env.PROD
+}
+
 let vconsole: unknown
 export async function setupDevtool() {
   // #ifdef H5

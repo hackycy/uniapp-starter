@@ -2,7 +2,7 @@ import { createSSRApp } from 'vue'
 import App from './App.vue'
 import { setupRouter } from './router'
 import { setupStore } from './store'
-import { setupDevtool } from './utils/env'
+import { isDev, setupDevtool } from './utils/env'
 
 import 'virtual:uno.css'
 
@@ -16,7 +16,7 @@ export function createApp() {
   setupRouter(app)
 
   // Configure devtool (vconsole)
-  if (import.meta.env.VITE_DEVTOOL === 'true') {
+  if (import.meta.env.VITE_DEVTOOL === 'true' && isDev()) {
     setupDevtool()
   }
 
