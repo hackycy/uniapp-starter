@@ -26,6 +26,10 @@ export default {
     <!-- #ifdef MP-WEIXIN -->
     <PrivacyPopup />
     <!-- #endif -->
+
+    <wd-toast />
+    <wd-notify />
+    <wd-message-box />
   </wd-config-provider>
 </template>
 

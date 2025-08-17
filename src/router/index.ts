@@ -19,10 +19,19 @@ function createRouter(): Router & ObjectPlugin {
     })
   }
 
+  let started: boolean | undefined
+
   const router: ObjectPlugin & Router = {
     install(app) {
       app.provide(routerKey, this)
       app.provide(routeKey, shallowReactive(reactiveRoute))
+
+      // #ifdef H5
+      if (!started && currentRoute.value === START_LOCATION_NORMALIZED) {
+        started = true
+        console.log('Router started')
+      }
+      // #endif
 
       app.mixin({
         beforeCreate() {

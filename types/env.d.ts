@@ -10,6 +10,7 @@ declare module '*.vue' {
 
 interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
+  readonly VITE_APP_SHORT_NAME: string
   readonly VITE_APP_ID: string
   readonly VITE_APP_PORT: string
   readonly VITE_APP_PUBLIC_BASE: string

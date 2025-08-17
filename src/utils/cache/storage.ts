@@ -148,7 +148,7 @@ export function createStorage({
     }
 
     private getKey(key: string) {
-      return `${this.prefixKey}${key}`.toUpperCase()
+      return `${this.prefixKey}${key}`
     }
 
     private serialize<T>(payload: CachePayload<T>): string {
