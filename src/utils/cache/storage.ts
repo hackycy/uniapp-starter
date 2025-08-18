@@ -99,12 +99,12 @@ export function createStorage({
       this.hasEncrypt = hasEncrypt
     }
 
-    public set(key: string, value: any, expire: number | null) {
+    public set(key: string, value: any, expire?: number) {
       const data = this.processValue('before', value, expire)
       this.storage.setItem(this.getKey(key), data as string)
     }
 
-    public get<T = any>(key: string, defaultValue: any = null): T | null {
+    public get<T = any>(key: string, defaultValue?: any): T | null {
       const val = this.storage.getItem(this.getKey(key))
       return (this.processValue('after', val, null) || defaultValue) as T | null
     }
@@ -117,12 +117,12 @@ export function createStorage({
       this.storage.clear()
     }
 
-    public async setAsync(key: string, value: any, expire: number | null) {
+    public async setAsync(key: string, value: any, expire?: number) {
       const data = this.processValue('before', value, expire)
       await this.storage.setItemAsync(this.getKey(key), data as string)
     }
 
-    public async getAsync<T = any>(key: string, defaultValue: any = null): Promise<T | null> {
+    public async getAsync<T = any>(key: string, defaultValue?: any): Promise<T | null> {
       const val = await this.storage.getItemAsync(this.getKey(key))
       return (this.processValue('after', val, null) || defaultValue) as T | null
     }
@@ -143,7 +143,7 @@ export function createStorage({
       return this.storage.getStorageInfoAsync()
     }
 
-    private isExpired(expire: number | null): boolean {
+    private isExpired(expire: number | null | undefined): boolean {
       return !isNullish(expire) && expire < new Date().getTime()
     }
 
@@ -168,7 +168,7 @@ export function createStorage({
       }
     }
 
-    private processValue(point: 'before' | 'after', value: any, expire: number | null): unknown {
+    private processValue(point: 'before' | 'after', value: any, expire?: number | null): unknown {
       if (point === 'before') {
         const stringData = this.serialize({
           value,
