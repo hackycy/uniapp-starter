@@ -7,11 +7,6 @@ export interface ProgressOptions {
    */
   initialProgress?: number
   /**
-   * 动画缓动函数 (默认'ease')
-   * @default 'ease'
-   */
-  animationEasing?: string
-  /**
    * 完成动画速度ms (默认200)
    * @default 200
    */
@@ -26,7 +21,6 @@ export interface ProgressOptions {
    * @default 300
    */
   autoIncrementDelay?: number
-
   /**
    * 是否立即完成进度 (默认true)
    * @default true
@@ -41,7 +35,6 @@ export function useProgressSimulator(options?: ProgressOptions) {
   const cfg: Required<ProgressOptions> = Object.assign(
     {
       initialProgress: 0.08,
-      animationEasing: 'ease',
       completionSpeed: 200,
       autoIncrementRate: 0.02,
       autoIncrementDelay: 300,
