@@ -1,17 +1,13 @@
 <script setup lang="ts">
-import { onLoad, onShow } from '@dcloudio/uni-app'
+import { useProgressSimulator } from '@/composables/web/useProgressSimulator'
 
-onLoad(() => {
-  console.log('onLoad')
-})
-
-onShow(() => {
-  console.log('onShow')
-})
+const { getProgress } = useProgressSimulator()
 </script>
 
 <template>
-  <view><!-- TODO --></view>
+  <view>
+    <wd-progress :percentage="getProgress" hide-text color="#00c740" class="!p-0" />
+  </view>
 </template>
 
 <route lang="json">
