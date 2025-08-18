@@ -11,4 +11,7 @@ export interface Route {
 export interface Router {
   route: Ref<Route>
   routes: any
+  push?: () => void
+  replace?: () => void
+  back?: () => void
 }

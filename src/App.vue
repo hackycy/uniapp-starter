@@ -20,7 +20,7 @@ onHide(() => {
 
 onPageNotFound(() => {
   uni.redirectTo({
-    url: '/pages-sub/notfound/404',
+    url: '/pages-sub/404',
   })
 })
 </script>
