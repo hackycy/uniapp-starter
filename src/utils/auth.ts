@@ -1,7 +1,7 @@
 import { TOKEN_KEY } from '@/enums/cacheEnum'
 import { storage } from './cache'
 
-export function getToken() {
+export function getToken(): string | null {
   return storage.get(TOKEN_KEY)
 }
 
@@ -13,8 +13,8 @@ export function removeToken() {
   storage.remove(TOKEN_KEY)
 }
 
-export function getAuthCache(key: string) {
-  return storage.get(key)
+export function getAuthCache<T = any>(key: string): T | null {
+  return storage.get<T>(key)
 }
 
 export function setAuthCache(key: string, value: unknown) {
