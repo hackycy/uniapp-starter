@@ -1,6 +1,6 @@
 import type { InjectionKey, ShallowReactive } from 'vue'
-import type { Route, Router } from './types'
-import { parseURL } from '@/utils/uri'
+import type { Route, RouteLocationRaw, Router } from './types'
+import { parseURL, stringifyURL } from '@/utils/uri'
 
 /**
  * useRouter
@@ -29,6 +29,18 @@ export function getCurrentPage() {
 }
 
 /**
+ * 根据路径获取路由
+ */
+export function getRouteByPath(path: string, router: Router): Route {
+  const route: Route = router.routes.find((route: Route) => {
+    return route.path === path
+  })!
+
+  // 深拷贝
+  return JSON.parse(JSON.stringify(route))
+}
+
+/**
  * 获取当前页面路由信息
  */
 export function getCurrentPageRoute(router: Router): Route {
@@ -37,9 +49,7 @@ export function getCurrentPageRoute(router: Router): Route {
     return {}
   }
 
-  const currRoute: Route = router.routes.find((p: Recordable) => {
-    return p.path === page.route
-  })
+  const currRoute: Route = getRouteByPath(page.route, router)
 
   if (page.$page) {
     currRoute.fullPath = page.$page.fullPath
@@ -47,19 +57,71 @@ export function getCurrentPageRoute(router: Router): Route {
     currRoute.query = query || undefined
   }
 
-  // 深拷贝
-  return JSON.parse(JSON.stringify(currRoute))
+  return currRoute
 }
 
-/**
- * 根据path查找路由
- */
-export function findRouteByPath(to: string | Pick<Partial<Route>, 'name' | 'path'>, router: Router): Recordable | undefined {
+export function getLocationUrl(to: RouteLocationRaw, router: Router): string {
+  let url = ''
+  let query: Record<string, any> | undefined
   if (typeof to === 'string') {
-    return router.routes.find((route: Route) => route.path === to)
+    url = to
   }
+  else {
+    // 判断to是否为对象且是否存在name属性
+    if (typeof to === 'object' && to !== null && 'name' in to) {
+      const route = router.routes.find((r: Recordable) => r.name === to.name)
+      if (route && route.path) {
+        url = `/${route.path}`
+        query = route.query
+      }
+      else {
+        throw new Error(`路由: ${to.name}未定义`)
+      }
+    }
+    else if (typeof to === 'object' && to !== null && 'path' in to) {
+      const parsed = parseURL(`${to.path}`)
+      url = parsed.path
+      query = { ...to.query, ...parsed.query }
+    }
 
-  return router.routes.find((route: Route) => {
-    return route.name === to.name || route.path === to.path
-  })
+    if (query) {
+      url = stringifyURL({
+        path: url,
+        query,
+      })
+    }
+  }
+  return url
+}
+
+export function navigateTo(
+  to: RouteLocationRaw,
+  router: Router,
+  type: 'push' | 'replace' | 'switchTab' | 'reLaunch',
+): void {
+  const url = getLocationUrl(to, router)
+  switch (type) {
+    case 'push':
+      uni.navigateTo({
+        url,
+      })
+      break
+    case 'replace':
+      uni.redirectTo({
+        url,
+      })
+      break
+    case 'switchTab':
+      uni.switchTab({
+        url,
+      })
+      break
+    case 'reLaunch':
+      uni.reLaunch({
+        url,
+      })
+      break
+    default:
+      throw new Error(`无效的路由类型: ${type}`)
+  }
 }
