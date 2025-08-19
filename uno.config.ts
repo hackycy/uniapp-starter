@@ -26,9 +26,7 @@ export default defineConfig({
          * 单色图标需要将颜色至改为 currentColor
          * 如 fill="currentColor"
          */
-        custom: FileSystemIconLoader(
-          path.resolve(process.cwd(), 'src', 'assets', 'icons'),
-        ),
+        custom: FileSystemIconLoader(path.resolve(process.cwd(), 'src', 'assets', 'icons')),
       },
     }),
   ],
@@ -41,6 +39,7 @@ export default defineConfig({
   ],
   safelist: [],
   rules: [
+    // 安全区域适配
     [
       'p-safe',
       {

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import PrivacyPopup from '@/components/PrivacyPopup/PrivacyPopup.vue'
-import { useTheme } from '@/composables/core/useTheme'
+import { useNavbar, useTheme } from '@/composables/core/useTheme'
 
 const { getThemeVars, getCurrentTheme } = useTheme()
+useNavbar()
 </script>
 
 <script lang="ts">

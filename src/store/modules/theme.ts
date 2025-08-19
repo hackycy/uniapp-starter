@@ -22,6 +22,9 @@ export const useThemeStore = defineStore('theme', {
       colorTheme: '',
     },
   }),
+  getters: {
+    getThemeColor: state => state.themeColor,
+  },
   actions: {
     setTheme(mode: AppTheme) {
       this.theme = mode

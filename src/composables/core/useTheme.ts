@@ -40,6 +40,10 @@ export function useTheme() {
     themeStore.setThemeColor(color)
   }
 
+  function setSystemTheme(theme: Theme) {
+    themeStore.setSystemTheme(theme)
+  }
+
   function toggleDarkMode(dark?: boolean) {
     if (isNullish(dark)) {
       themeStore.setTheme(getCurrentTheme.value === 'dark' ? 'light' : 'dark')
@@ -48,6 +52,22 @@ export function useTheme() {
       themeStore.setTheme(dark ? 'dark' : 'light')
     }
   }
+
+  return {
+    getTheme,
+    getSystemTheme,
+    getCurrentTheme,
+    getThemeVars,
+    getPrimaryColor,
+    setTheme,
+    toggleDarkMode,
+    setThemeColor,
+    setSystemTheme,
+  }
+}
+
+export function useNavbar() {
+  const { getCurrentTheme, getTheme, setSystemTheme } = useTheme()
 
   function setNavigationBarColor() {
     uni.setNavigationBarColor({
@@ -63,7 +83,7 @@ export function useTheme() {
 
   const onThemeChange = (result: UniApp.OnThemeChangeCallbackResult) => {
     if (getTheme.value === 'system') {
-      themeStore.setSystemTheme(result.theme)
+      setSystemTheme(result.theme)
     }
     setNavigationBarColor()
   }
@@ -75,15 +95,4 @@ export function useTheme() {
   onUnmounted(() => {
     uni.offThemeChange(onThemeChange)
   })
-
-  return {
-    getTheme,
-    getSystemTheme,
-    getCurrentTheme,
-    getThemeVars,
-    getPrimaryColor,
-    setTheme,
-    toggleDarkMode,
-    setThemeColor,
-  }
 }

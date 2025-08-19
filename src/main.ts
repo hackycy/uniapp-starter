@@ -4,6 +4,7 @@ import { setupRouter } from './router'
 import { setupStore } from './store'
 import { isDev, setupDevtool } from './utils/env'
 
+import './styles/index.scss'
 import 'virtual:uno.css'
 
 export function createApp() {
