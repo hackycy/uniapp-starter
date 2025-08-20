@@ -39,7 +39,6 @@ export default defineConfig({
   ],
   safelist: [],
   rules: [
-    // 安全区域适配
     [
       'p-safe',
       {
@@ -57,7 +56,7 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      primary: 'var(--uni-primary-color)',
+      primary: 'var(--wot-color-theme)',
     },
   },
 })
