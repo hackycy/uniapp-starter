@@ -91,7 +91,7 @@ export function parseQuery(search: string): Recordable {
         currentValue = query[key] = [currentValue]
       }
       // we force the modification
-      ; (currentValue as unknown[]).push(value)
+      ;(currentValue as unknown[]).push(value)
     }
     else {
       query[key] = value
@@ -104,14 +104,10 @@ export function parseQuery(search: string): Recordable {
  * Transforms a URI into a normalized history location
  *
  * @param location - URI to normalize
- * @param currentLocation - current absolute location. Allows resolving relative
- * paths. Must start with `/`. Defaults to `/`
+ * @param currentLocation - current absolute location. Allows resolving relative paths. Must start with `/`. if not will ignore
  * @returns a normalized history location
  */
-export function parseURL(
-  location: string,
-  currentLocation: string = '/',
-): LocationNormalized {
+export function parseURL(location: string, currentLocation: string): LocationNormalized {
   let path: string | undefined
   let query: Recordable = {}
   let searchString = ''
@@ -128,10 +124,7 @@ export function parseURL(
 
   if (searchPos > -1) {
     path = location.slice(0, searchPos)
-    searchString = location.slice(
-      searchPos + 1,
-      hashPos > -1 ? hashPos : location.length,
-    )
+    searchString = location.slice(searchPos + 1, hashPos > -1 ? hashPos : location.length)
 
     query = parseQuery(searchString)
   }
@@ -161,12 +154,13 @@ export function parseURL(
  * @param from - currentLocation.path, should start with `/`
  */
 export function resolveRelativePath(to: string, from: string): string {
-  if (to.startsWith('/') || !from.startsWith('/')) {
+  if (to?.startsWith('/') || !from?.startsWith('/')) {
     return to
   }
 
-  if (!to)
+  if (!to) {
     return from
+  }
 
   const fromSegments = from.split('/')
   const toSegments = to.split('/')
@@ -201,9 +195,7 @@ export function resolveRelativePath(to: string, from: string): string {
     }
   }
 
-  return (
-    `${fromSegments.slice(0, position).join('/')}/${toSegments.slice(toPosition).join('/')}`
-  )
+  return `${fromSegments.slice(0, position).join('/')}/${toSegments.slice(toPosition).join('/')}`
 }
 
 /**
