@@ -1,26 +1,29 @@
 import type { ConfigEnv, ProxyOptions, UserConfig } from 'vite'
 import path from 'node:path'
 import process from 'node:process'
-import Uni from '@dcloudio/vite-plugin-uni'
+// import Uni from '@dcloudio/vite-plugin-uni'
+// ESM re-export @dcloudio/vite-plugin-uni
+import Uni from '@uni-helper/plugin-uni'
 import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
+import UnoCSS from 'unocss/vite'
 import { loadEnv } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { version } from './package.json'
 
 // https://vitejs.dev/config/
 export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
-  /**
-   * @see https://unocss.dev/
-   * @see https://github.com/dcloudio/uni-app/issues/4815
-   */
-  const UnoCSS = (await import('unocss/vite')).default
-
   const env = loadEnv(mode, process.cwd())
   const { VITE_APP_PORT, VITE_APP_NAME, VITE_APP_PROXY } = env
   const { UNI_PLATFORM } = process.env
+
+  // /**
+  //  * @see https://unocss.dev/
+  //  * @see https://github.com/dcloudio/uni-app/issues/4815
+  //  */
+  // const UnoCSS = (await import('unocss/vite')).default
 
   return {
     plugins: [
