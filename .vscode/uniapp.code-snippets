@@ -54,7 +54,7 @@
       "  <view><!-- TODO --></view>",
       "</template>",
       "",
-      "<style lang=\"scss\"></style>",
+      "<style lang=\"scss\" scoped></style>",
       ""
     ],
     "description": "UniApp Component Template"
