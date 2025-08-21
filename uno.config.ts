@@ -18,7 +18,10 @@ export default defineConfig({
       warn: true,
       extraProperties: {
         'display': 'inline-block',
-        'vertical-align': 'middle',
+        'overflow': 'hidden',
+        'width': '1em',
+        'height': '1em',
+        'vertical-align': '-0.15em',
       },
       collections: {
         /**
@@ -57,6 +60,14 @@ export default defineConfig({
   theme: {
     colors: {
       primary: 'var(--wot-color-theme)',
+    },
+    // 文本颜色
+    txt: {
+      primary: '#333333',
+      secondary: '#666666',
+      tertiary: '#999999',
+      muted: '#cccccc',
+      danger: '#ff3434',
     },
   },
 })
