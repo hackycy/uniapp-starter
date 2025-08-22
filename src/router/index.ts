@@ -4,7 +4,7 @@ import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
 import { shallowReactive, shallowRef } from 'vue'
 import { parseURL } from '@/utils/uri'
-// import { setupRouterGuard } from './guard'
+import { setupRouterGuard } from './guard'
 import { getCurrentPageRoute, navigateTo, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
 
 export * from './core'
@@ -23,6 +23,7 @@ function createRouter(): Router & ObjectPlugin {
   let started: boolean | undefined
 
   const router: ObjectPlugin & Router = {
+    guards: [],
     push(to) {
       navigateTo(to, this, 'push')
     },
@@ -57,7 +58,7 @@ function createRouter(): Router & ObjectPlugin {
           }
         },
         onLoad(option) {
-          if (!isEmpty(option) && isEmpty(currentRoute.value.query)) {
+          if (!isEmpty(option)) {
             currentRoute.value = {
               ...currentRoute.value,
               query: option,
@@ -81,6 +82,6 @@ function createRouter(): Router & ObjectPlugin {
 export const router = createRouter()
 
 export function setupRouter(app: App<Element>) {
-  // setupRouterGuard(router)
+  setupRouterGuard(router)
   app.use(router)
 }

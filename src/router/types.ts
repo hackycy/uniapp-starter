@@ -25,9 +25,20 @@ export interface Route {
   meta?: Record<string, any>
 }
 
+/**
+ * 守卫名称
+ */
+export type Guard = 'Auth'
+
+export interface NavigationGuard {
+  name: Guard
+  interceptor: UniApp.InterceptorOptions
+}
+
 export interface Router {
   route: Ref<Route>
   routes: Route[]
+  guards: NavigationGuard[]
   push: (to: RouteLocationRaw) => void
   replace: (to: RouteLocationRaw) => void
   switchTab: (to: RouteLocationRaw) => void

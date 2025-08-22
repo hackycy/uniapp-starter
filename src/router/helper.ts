@@ -60,7 +60,7 @@ export function getCurrentPageRoute(router: Router): Route {
   return currRoute
 }
 
-export function getLocationUrl(to: RouteLocationRaw, router: Router): string {
+export function resolveRouteUrl(to: RouteLocationRaw, router: Router): string {
   let url = ''
   let query: Record<string, any> | undefined
   if (typeof to === 'string') {
@@ -99,7 +99,7 @@ export function navigateTo(
   router: Router,
   type: 'push' | 'replace' | 'switchTab' | 'reLaunch',
 ): void {
-  const url = getLocationUrl(to, router)
+  const url = resolveRouteUrl(to, router)
   switch (type) {
     case 'push':
       uni.navigateTo({

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onPageNotFound, onShow } from '@dcloudio/uni-app'
+import { useRouter } from './router'
 import { useThemeStore } from './store/modules/theme'
 
 const themeStore = useThemeStore()
+const router = useRouter()
 
 onLaunch(() => {
   console.log('App Launch')
@@ -10,8 +12,15 @@ onLaunch(() => {
   themeStore.setup()
 })
 
-onShow(() => {
-  console.log('App Show')
+onShow((options) => {
+  console.log('App Show', options)
+
+  // 处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
+  router.guards.forEach((guard) => {
+    guard.interceptor.invoke!({
+      url: options?.path ? `/${options.path}` : '/',
+    })
+  })
 })
 
 onHide(() => {
