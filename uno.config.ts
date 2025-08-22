@@ -60,14 +60,14 @@ export default defineConfig({
   theme: {
     colors: {
       primary: 'var(--wot-color-theme)',
-    },
-    // 文本颜色
-    txt: {
-      primary: '#333333',
-      secondary: '#666666',
-      tertiary: '#999999',
-      muted: '#cccccc',
-      danger: '#ff3434',
+      // 文本颜色
+      label: {
+        primary: '#333333',
+        secondary: '#666666',
+        tertiary: '#999999',
+        disabled: '#cccccc',
+        error: '#ff3434',
+      },
     },
   },
 })
