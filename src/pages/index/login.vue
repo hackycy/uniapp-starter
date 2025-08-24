@@ -8,7 +8,12 @@ const { getProgress } = useProgressSimulator({
 
 <template>
   <view>
-    <wd-progress :percentage="getProgress" hide-text color="#00c740" class="!p-0 position-fixed top-0 left-0 right-0" />
+    <wd-progress
+      :percentage="getProgress"
+      hide-text
+      color="#07c160"
+      custom-class="!p-0 position-fixed top-0 left-0 right-0"
+    />
   </view>
 </template>
 

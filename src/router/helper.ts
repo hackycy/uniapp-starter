@@ -1,5 +1,6 @@
 import type { InjectionKey, ShallowReactive } from 'vue'
 import type { Route, RouteLocationRaw, Router } from './types'
+import { isPromise } from 'radashi'
 import { parseURL, stringifyURL } from '@/utils/uri'
 
 /**
@@ -58,6 +59,27 @@ export function getCurrentPageRoute(router: Router): Route {
   }
 
   return currRoute
+}
+
+export async function queueGuards(args: any, router: Router) {
+  const hooks = router.guards.map(guard => guard.interceptor.invoke)
+  // queue guard
+  let result = args
+  for (let i = 0; i < hooks.length; i++) {
+    const hook = hooks[i] as (...args: any[]) => any
+    if (!hook) {
+      continue
+    }
+
+    const res = hook(result)
+    if (isPromise(res)) {
+      result = await res
+    }
+
+    if (res === false) {
+      return
+    }
+  }
 }
 
 export function resolveRouteUrl(to: RouteLocationRaw, router: Router): string {

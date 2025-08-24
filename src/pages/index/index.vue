@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { onShow } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import platform from '@/utils/platform'
 
 const title = ref('Hello')
+
+onShow((options) => {
+  console.log('Index onShow', options)
+})
 </script>
 
 <template>
@@ -55,6 +60,9 @@ const title = ref('Hello')
   "name": "Home",
   "type": "home",
   "layout": "navigation",
+  "meta": {
+    "auth": true
+  },
   "style": {
     "navigationBarTitleText": "首页"
   }

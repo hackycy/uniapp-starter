@@ -3,7 +3,6 @@ import type { Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
 import { shallowReactive, shallowRef } from 'vue'
-import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
 import { getCurrentPageRoute, navigateTo, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
 
@@ -19,8 +18,6 @@ function createRouter(): Router & ObjectPlugin {
       enumerable: true,
     })
   }
-
-  let started: boolean | undefined
 
   const router: ObjectPlugin & Router = {
     guards: [],
@@ -42,14 +39,6 @@ function createRouter(): Router & ObjectPlugin {
     install(app) {
       app.provide(routerKey, this)
       app.provide(routeKey, shallowReactive(reactiveRoute))
-
-      // #ifdef H5
-      if (!started && currentRoute.value === START_LOCATION_NORMALIZED) {
-        started = true
-        const { query } = parseURL(location.href)
-        currentRoute.value.query = query || {}
-      }
-      // #endif
 
       app.mixin({
         beforeCreate() {

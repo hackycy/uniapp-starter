@@ -1,11 +1,11 @@
 import type { NavigationGuard, Router } from './types'
 import { isNullish } from 'radashi'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { parseURL } from '@/utils/uri'
+import { parseURL, stringifyURL } from '@/utils/uri'
 import { getRouteByPath } from './helper'
 
 function createAuthGuard(router: Router): NavigationGuard {
-  useUserStoreWithOut()
+  const userStore = useUserStoreWithOut()
 
   return {
     name: 'Auth',
@@ -13,16 +13,36 @@ function createAuthGuard(router: Router): NavigationGuard {
       /**
        * 这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
        */
-      invoke({ url }: { url: string }) {
+      invoke({ url, query }: { url: string, query?: Recordable }) {
         if (isNullish(url)) {
           return
         }
 
         const { path, query: _query } = parseURL(url, url.startsWith('/') ? undefined : '/')
-        const mergeQuery = { ..._query, ...router.route.value.query }
+        const mergeQuery = { ..._query, ...query }
 
+        // 查找页面信息
         const page = getRouteByPath(path.slice(1), router)
-        console.log('[Auth Guard] Parsed URL:', page, mergeQuery)
+        if (!page) {
+          return
+        }
+
+        console.log('[Auth Guard] Redirect URL:', mergeQuery, router.route.value)
+
+        if (page.meta?.auth && !userStore.isLoggedIn) {
+          const redirectUrl = stringifyURL({
+            path: '/pages/index/login',
+            query: {
+              redirect: url,
+            },
+          })
+
+          uni.redirectTo({
+            url: redirectUrl,
+          })
+
+          return false
+        }
       },
     },
   }

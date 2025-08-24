@@ -59,10 +59,10 @@ export function useProgressSimulator(options?: ProgressOptions) {
     if (autoIncrementTimer) {
       return
     }
-    autoIncrementTimer = window.setInterval(
+    autoIncrementTimer = setInterval(
       smartIncrement,
       cfg.autoIncrementDelay,
-    )
+    ) as unknown as number
   }
 
   const stopAutoProgress = () => {
@@ -92,9 +92,9 @@ export function useProgressSimulator(options?: ProgressOptions) {
     }
 
     // 延迟重置进度条
-    completionTimer = window.setTimeout(() => {
+    completionTimer = setTimeout(() => {
       progressRef.value = 0
-    }, cfg.completionSpeed)
+    }, cfg.completionSpeed) as unknown as number
   }
 
   const updateProgress = (value: number) => {
