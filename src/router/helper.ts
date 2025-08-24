@@ -31,13 +31,13 @@ export function getCurrentPage() {
 /**
  * 根据路径获取路由
  */
-export function getRouteByPath(path: string, router: Router): Route {
-  const route: Route = router.routes.find((route: Route) => {
+export function getRouteByPath(path: string, router: Router): Route | null {
+  const route = router.routes.find((route: Route) => {
     return route.path === path
-  })!
+  })
 
   // 深拷贝
-  return JSON.parse(JSON.stringify(route))
+  return route ? JSON.parse(JSON.stringify(route)) : null
 }
 
 /**
@@ -49,7 +49,7 @@ export function getCurrentPageRoute(router: Router): Route {
     return {}
   }
 
-  const currRoute: Route = getRouteByPath(page.route, router)
+  const currRoute = getRouteByPath(page.route, router)!
 
   if (page.$page) {
     currRoute.fullPath = page.$page.fullPath

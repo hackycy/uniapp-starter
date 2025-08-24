@@ -2,8 +2,9 @@ import type { NavigationGuard, Router } from './types'
 import { isNullish } from 'radashi'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { parseURL } from '@/utils/uri'
+import { getRouteByPath } from './helper'
 
-function createAuthGuard(_router: Router): NavigationGuard {
+function createAuthGuard(router: Router): NavigationGuard {
   useUserStoreWithOut()
 
   return {
@@ -17,8 +18,11 @@ function createAuthGuard(_router: Router): NavigationGuard {
           return
         }
 
-        const { path, query } = parseURL(url, url.startsWith('/') ? undefined : '/')
-        console.log('[Auth Guard] Parsed URL:', { path, query })
+        const { path, query: _query } = parseURL(url, url.startsWith('/') ? undefined : '/')
+        const mergeQuery = { ..._query, ...router.route.value.query }
+
+        const page = getRouteByPath(path.slice(1), router)
+        console.log('[Auth Guard] Parsed URL:', page, mergeQuery)
       },
     },
   }
