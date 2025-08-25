@@ -60,9 +60,6 @@ onShow((options) => {
   "name": "Home",
   "type": "home",
   "layout": "navigation",
-  "meta": {
-    "auth": true
-  },
   "style": {
     "navigationBarTitleText": "首页"
   }
