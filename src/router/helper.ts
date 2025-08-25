@@ -61,6 +61,9 @@ export function getCurrentPageRoute(router: Router): Route {
   return currRoute
 }
 
+/**
+ * @see https://github.com/dcloudio/uni-app/blob/next/packages/uni-api/src/helpers/interceptor.ts#L29
+ */
 export async function queueGuards(args: any, router: Router) {
   const hooks = router.guards.map(guard => guard.interceptor.invoke)
   // queue guard
