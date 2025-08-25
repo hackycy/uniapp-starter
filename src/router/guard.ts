@@ -2,6 +2,7 @@ import type { NavigationGuard, Router } from './types'
 import { isNullish } from 'radashi'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { parseURL, stringifyURL } from '@/utils/uri'
+import { LOGIN_PAGE } from './constant'
 import { getRouteByPath } from './helper'
 
 function createAuthGuard(router: Router): NavigationGuard {
@@ -29,7 +30,7 @@ function createAuthGuard(router: Router): NavigationGuard {
 
         if (page.meta?.auth && !userStore.isLoggedIn) {
           const redirectUrl = stringifyURL({
-            path: '/pages/login',
+            path: LOGIN_PAGE,
             query: {
               redirect: stringifyURL({
                 path,
