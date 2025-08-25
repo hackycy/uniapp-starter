@@ -27,13 +27,14 @@ function createAuthGuard(router: Router): NavigationGuard {
           return
         }
 
-        console.log('[Auth Guard] Redirect URL:', mergeQuery, router.route.value)
-
         if (page.meta?.auth && !userStore.isLoggedIn) {
           const redirectUrl = stringifyURL({
-            path: '/pages/index/login',
+            path: '/pages/login',
             query: {
-              redirect: url,
+              redirect: stringifyURL({
+                path,
+                query: mergeQuery,
+              }),
             },
           })
 

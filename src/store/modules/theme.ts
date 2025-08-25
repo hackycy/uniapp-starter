@@ -1,29 +1,32 @@
 import type { AppTheme, Theme, ThemeState } from '#/theme'
 import { defineStore } from 'pinia'
+import { THEME_PRIMARY_COLOR_KEY } from '@/enums/cacheEnum'
 import { Theme_Color_Presets } from '@/settings/designSetings'
+import { storage } from '@/utils/cache'
 import { store } from '..'
 
 export const useThemeStore = defineStore('theme', {
-  state: (): ThemeState => ({
-    theme: 'light',
-    systemTheme: 'light',
-    themeColor: '',
-    themeVars: {
-      darkBackground: '#0f0f0f',
-      darkBackground2: '#1a1a1a',
-      darkBackground3: '#242424',
-      darkBackground4: '#2f2f2f',
-      darkBackground5: '#3d3d3d',
-      darkBackground6: '#4a4a4a',
-      darkBackground7: '#606060',
-      darkColor: '#ffffff',
-      darkColor2: '#e0e0e0',
-      darkColor3: '#a0a0a0',
-      colorTheme: '',
-    },
-  }),
-  getters: {
-    getThemeColor: state => state.themeColor,
+  state: (): ThemeState => {
+    const themeColor = storage.get(THEME_PRIMARY_COLOR_KEY) || Theme_Color_Presets[0]
+
+    return {
+      theme: 'light',
+      systemTheme: 'light',
+      themeColor,
+      themeVars: {
+        darkBackground: '#0f0f0f',
+        darkBackground2: '#1a1a1a',
+        darkBackground3: '#242424',
+        darkBackground4: '#2f2f2f',
+        darkBackground5: '#3d3d3d',
+        darkBackground6: '#4a4a4a',
+        darkBackground7: '#606060',
+        darkColor: '#ffffff',
+        darkColor2: '#e0e0e0',
+        darkColor3: '#a0a0a0',
+        colorTheme: themeColor,
+      },
+    }
   },
   actions: {
     setTheme(mode: AppTheme) {
@@ -61,7 +64,6 @@ export const useThemeStore = defineStore('theme', {
       if (this.theme === 'system') {
         this.theme = this.systemTheme
       }
-      this.setThemeColor(Theme_Color_Presets[0])
     },
   },
 })

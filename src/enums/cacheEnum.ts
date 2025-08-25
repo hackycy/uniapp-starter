@@ -1,6 +1,7 @@
 // theme
 export const THEME_MODE_KEY = '__THEME_MODE'
 export const THEME_MODE_FLOW_SYSTEM_KEY = '__THEME_MODE_FOLLOW_SYSTEM'
+export const THEME_PRIMARY_COLOR_KEY = '__THEME_PRIMARY_COLOR'
 
 // auth
 export const TOKEN_KEY = '__TOKEN'

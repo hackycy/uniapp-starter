@@ -8,15 +8,7 @@ import { parseURL } from './utils/uri'
 const themeStore = useThemeStore()
 const router = useRouter()
 
-onLaunch(() => {
-  console.log('App Launch')
-
-  themeStore.setup()
-})
-
-onShow((options) => {
-  console.log('App Show', options)
-
+function startup(options: App.LaunchShowOption | undefined) {
   // 处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
   let query: Recordable
 
@@ -40,6 +32,18 @@ onShow((options) => {
     },
     router,
   )
+}
+
+onLaunch(() => {
+  console.log('App Launch')
+
+  themeStore.setup()
+})
+
+onShow((options) => {
+  console.log('App Show')
+
+  startup(options)
 })
 
 onHide(() => {
