@@ -1,3 +1,4 @@
+import { isEmpty as _isEmpty } from 'radashi'
 import { ref } from 'vue'
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error' | 'empty'
@@ -18,19 +19,7 @@ export interface UseAsyncDataOptions<T> {
 export function useAsyncData<T = any>(factoryFn: () => Promise<T>, options: UseAsyncDataOptions<T> = {}) {
   const {
     isEmpty = (data: unknown) => {
-      if (data === null || data === undefined) {
-        return true
-      }
-      if (Array.isArray(data)) {
-        return data.length === 0
-      }
-      if (typeof data === 'object') {
-        return Object.keys(data).length === 0
-      }
-      if (typeof data === 'string') {
-        return data.trim() === ''
-      }
-      return false
+      return _isEmpty(data)
     },
     defaultValue = null as T,
     immediate = true,
