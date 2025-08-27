@@ -1,6 +1,6 @@
 import type { NavigationGuard, Router } from './types'
 import { isNullish } from 'radashi'
-import { LOGIN_PAGE } from '@/enums/pageEnum'
+import { PageEnum } from '@/enums/pageEnum'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { parseURL, stringifyURL } from '@/utils/uri'
 import { getRouteByPath } from './helper'
@@ -30,7 +30,7 @@ function createAuthGuard(router: Router): NavigationGuard {
 
         if (page.meta?.auth && !userStore.isLoggedIn) {
           const redirectUrl = stringifyURL({
-            path: LOGIN_PAGE,
+            path: PageEnum.BASE_LOGIN,
             query: {
               redirect: stringifyURL({
                 path,
