@@ -76,6 +76,7 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
     stateRef,
     errorRef,
     dataRef,
+    run: execute,
     isIdle: () => stateRef.value === 'idle',
     isLoading: () => stateRef.value === 'loading',
     isError: () => stateRef.value === 'error',
