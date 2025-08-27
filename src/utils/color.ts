@@ -1,6 +1,15 @@
 export const Color_White = '#fff'
 export const Color_Black = '#000'
 
+/**
+ * 判断是否为十六进制颜色值.
+ * 输入形式可为 #fff000 #f00
+ */
+export function isHexColor(color: string) {
+  const reg = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i
+  return reg.test(color)
+}
+
 export function mixLighten(colorStr: string, weight: number): string {
   return mix(Color_White, colorStr, weight)
 }
@@ -22,13 +31,7 @@ export function mixDarken(colorStr: string, weight: number): string {
  * @param color2
  * @param weight
  */
-export function mix(
-  color1: string,
-  color2: string,
-  weight: number,
-  alpha1?: number,
-  alpha2?: number,
-) {
+export function mix(color1: string, color2: string, weight: number, alpha1?: number, alpha2?: number) {
   color1 = dropPrefix(color1)
   color2 = dropPrefix(color2)
   if (weight === undefined)
@@ -96,4 +99,28 @@ export function rgbToHex(r: number, g: number, b: number) {
   // tslint:disable-next-line:no-bitwise
   const hex = ((r << 16) | (g << 8) | b).toString(16)
   return `#${Array.from({ length: Math.abs(hex.length - 7) }).join('0')}${hex}`
+}
+
+/**
+ * Transform a HEX color to its RGB representation
+ * @param {string} hex The color to transform
+ * @returns The RGB representation of the passed color
+ */
+export function hexToRGB(hex: string) {
+  let sHex = hex.toLowerCase()
+  if (isHexColor(hex)) {
+    if (sHex.length === 4) {
+      let sColorNew = '#'
+      for (let i = 1; i < 4; i += 1) {
+        sColorNew += sHex.slice(i, i + 1).concat(sHex.slice(i, i + 1))
+      }
+      sHex = sColorNew
+    }
+    const sColorChange: number[] = []
+    for (let i = 1; i < 7; i += 2) {
+      sColorChange.push(Number.parseInt(`0x${sHex.slice(i, i + 2)}`))
+    }
+    return `RGB(${sColorChange.join(',')})`
+  }
+  return sHex
 }

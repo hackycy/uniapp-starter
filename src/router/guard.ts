@@ -1,8 +1,8 @@
 import type { NavigationGuard, Router } from './types'
 import { isNullish } from 'radashi'
+import { LOGIN_PAGE } from '@/enums/pageEnum'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { parseURL, stringifyURL } from '@/utils/uri'
-import { LOGIN_PAGE } from './constant'
 import { getRouteByPath } from './helper'
 
 function createAuthGuard(router: Router): NavigationGuard {

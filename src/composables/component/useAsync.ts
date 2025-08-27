@@ -3,32 +3,35 @@ import { ref } from 'vue'
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error' | 'empty'
 
-export interface UseAsyncDataOptions<T> {
-  /** 数据是否为空的判断函数 */
+export interface UseAsyncOptions<T> {
+  /* 数据是否为空的判断函数 */
   isEmpty?: (data: unknown) => boolean
-  /** 默认数据 */
+  /* 默认数据 */
   defaultValue?: T
-  /** 是否立即执行 */
+  /* 初始状态 */
+  initialState?: LoadingState
+  /* 是否立即执行 */
   immediate?: boolean
-  /** 错误重试次数 */
+  /* 错误重试次数 */
   maxRetries?: number
-  /** 重试延迟时间(毫秒) */
+  /* 重试延迟时间(毫秒) */
   retryDelay?: number
 }
 
-export function useAsyncData<T = any>(factoryFn: () => Promise<T>, options: UseAsyncDataOptions<T> = {}) {
+export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsyncOptions<T> = {}) {
   const {
     isEmpty = (data: unknown) => {
       return _isEmpty(data)
     },
     defaultValue = null as T,
+    initialState = 'idle',
     immediate = true,
     maxRetries = 3,
     retryDelay = 1000,
   } = options
 
   const dataRef = ref<T>(defaultValue)
-  const stateRef = ref<LoadingState>('idle')
+  const stateRef = ref<LoadingState>(initialState)
   const errorRef = ref<unknown | null>(null)
   const retryCountRef = ref(0)
 
