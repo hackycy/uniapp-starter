@@ -5,3 +5,11 @@
   -webkit-appearance: none;
   background: transparent;
 }
+
+/* #ifdef H5 */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+/* #endif */
