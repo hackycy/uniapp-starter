@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onHide, onLaunch, onPageNotFound, onShow } from '@dcloudio/uni-app'
 import { useRouter } from './router'
-import { queueGuards } from './router/helper'
+import { invokeGuards } from './router/helper'
 import { useThemeStore } from './store/modules/theme'
 import { parseURL } from './utils/uri'
 
@@ -25,7 +25,7 @@ function startup(options: App.LaunchShowOption | undefined) {
   }
   // #endif
 
-  queueGuards(
+  invokeGuards(
     {
       url: options?.path ? `/${options.path}` : '/',
       query,

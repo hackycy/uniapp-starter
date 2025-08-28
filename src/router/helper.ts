@@ -62,11 +62,11 @@ export function getCurrentPageRoute(router: Router): Route {
 }
 
 /**
- * @see https://github.com/dcloudio/uni-app/blob/next/packages/uni-api/src/helpers/interceptor.ts#L29
+ * @see https://github.com/dcloudio/uni-app/blob/next/packages/uni-api/src/helpers/interceptor.ts
  */
-export async function queueGuards(args: any, router: Router) {
+export async function invokeGuards(args: any, router: Router) {
   const hooks = router.guards.map(guard => guard.interceptor.invoke)
-  // queue guard
+  // queue invoke guard
   let result = args
   for (let i = 0; i < hooks.length; i++) {
     const hook = hooks[i] as (...args: any[]) => any
@@ -77,6 +77,9 @@ export async function queueGuards(args: any, router: Router) {
     const res = hook(result)
     if (isPromise(res)) {
       result = await res
+    }
+    else {
+      result = res || result
     }
 
     if (res === false) {
