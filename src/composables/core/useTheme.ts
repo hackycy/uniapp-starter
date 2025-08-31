@@ -1,4 +1,4 @@
-import type { AppTheme, Theme } from '#/theme'
+import type { AppTheme, Theme } from '#/store'
 import { onShow } from '@dcloudio/uni-app'
 import { isNullish } from 'radashi'
 import { computed, onBeforeMount, onUnmounted } from 'vue'

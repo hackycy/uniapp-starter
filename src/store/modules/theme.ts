@@ -1,4 +1,4 @@
-import type { AppTheme, Theme, ThemeState } from '#/theme'
+import type { AppTheme, Theme, ThemeState } from '#/store'
 import { defineStore } from 'pinia'
 import { THEME_PRIMARY_COLOR_KEY } from '@/enums/cacheEnum'
 import { Theme_Color_Presets } from '@/settings/designSetings'

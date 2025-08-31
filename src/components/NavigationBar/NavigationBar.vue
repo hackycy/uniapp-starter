@@ -3,8 +3,10 @@ import { onLoad } from '@dcloudio/uni-app'
 import { computed } from 'vue'
 import { useRoute } from '@/router'
 import {
-  Active_Tabbar_Type,
-  Default_Tabbar_Items,
+  activeTabBarStrategy,
+  customTabBarEnable,
+  defaultTabBarItems,
+  TabBarStrategy,
 } from '@/settings/tabbarSettings'
 
 const route = useRoute()
@@ -21,7 +23,7 @@ function handleTabChange(arg: Recordable) {
 
 onLoad(() => {
   // #ifdef APP-PLUS
-  if (Active_Tabbar_Type === 'custom' || Active_Tabbar_Type === 'none') {
+  if (activeTabBarStrategy === TabBarStrategy.CUSTOM || activeTabBarStrategy === TabBarStrategy.NONE) {
     uni.hideTabBar()
   }
   // #endif
@@ -40,7 +42,7 @@ export default {
 
 <template>
   <wd-tabbar
-    v-if="Active_Tabbar_Type === 'custom'"
+    v-if="customTabBarEnable"
     :model-value="getCurrentPagePath"
     bordered
     safe-area-inset-bottom
@@ -49,7 +51,7 @@ export default {
     @change="handleTabChange"
   >
     <wd-tabbar-item
-      v-for="item in Default_Tabbar_Items"
+      v-for="item in defaultTabBarItems"
       :key="item.pagePath"
       :name="item.pagePath"
       :title="item.text"
