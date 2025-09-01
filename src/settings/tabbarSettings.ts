@@ -1,4 +1,4 @@
-import type { TabBarItem } from '@uni-helper/vite-plugin-uni-pages'
+import type { TabBarItem } from '#/store'
 
 export enum TabBarStrategy {
   // 不显示
@@ -29,10 +29,12 @@ export const defaultTabBarItems: TabBarItem[] = [
     pagePath: 'pages/index/index',
     text: '首页',
     icon: 'home',
+    iconType: 'wot',
   },
   {
     pagePath: 'pages/mine/index',
     text: '我的',
     icon: 'user',
+    iconType: 'wot',
   },
 ]
