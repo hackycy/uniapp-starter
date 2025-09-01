@@ -54,15 +54,16 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
       retryCountRef.value = 0
     }
     catch (error: unknown) {
-      stateRef.value = 'error'
-      errorRef.value = error
-
       if (retryCountRef.value < maxRetries) {
         retryCountRef.value += 1
 
         setTimeout(() => {
           execute()
         }, retryDelay)
+      }
+      else {
+        stateRef.value = 'error'
+        errorRef.value = error
       }
     }
   }
