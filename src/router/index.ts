@@ -25,19 +25,19 @@ function createRouter(): Router & ObjectPlugin {
   const router: ObjectPlugin & Router = {
     guards: [],
     push(to) {
-      navigateTo(to, this, 'push')
+      return navigateTo(to, this, 'push')
     },
     replace(to) {
-      navigateTo(to, this, 'replace')
+      return navigateTo(to, this, 'replace')
     },
     switchTab(to) {
-      navigateTo(to, this, 'switchTab')
+      return navigateTo(to, this, 'switchTab')
     },
     reLaunch(to) {
-      navigateTo(to, this, 'reLaunch')
+      return navigateTo(to, this, 'reLaunch')
     },
     back(to) {
-      uni.navigateBack(to)
+      return uni.navigateBack(to)
     },
     install(app) {
       app.provide(routerKey, this)

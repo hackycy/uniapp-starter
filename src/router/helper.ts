@@ -126,30 +126,40 @@ export function navigateTo(
   to: RouteLocationRaw,
   router: Router,
   type: 'push' | 'replace' | 'switchTab' | 'reLaunch',
-): void {
-  const url = resolveRouteUrl(to, router)
-  switch (type) {
-    case 'push':
-      uni.navigateTo({
-        url,
-      })
-      break
-    case 'replace':
-      uni.redirectTo({
-        url,
-      })
-      break
-    case 'switchTab':
-      uni.switchTab({
-        url,
-      })
-      break
-    case 'reLaunch':
-      uni.reLaunch({
-        url,
-      })
-      break
-    default:
-      throw new Error(`无效的路由类型: ${type}`)
-  }
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const url = resolveRouteUrl(to, router)
+    switch (type) {
+      case 'push':
+        uni.navigateTo({
+          url,
+          success: () => resolve(),
+          fail: () => reject(new Error('Navigation failed')),
+        })
+        break
+      case 'replace':
+        uni.redirectTo({
+          url,
+          success: () => resolve(),
+          fail: () => reject(new Error('Navigation failed')),
+        })
+        break
+      case 'switchTab':
+        uni.switchTab({
+          url,
+          success: () => resolve(),
+          fail: () => reject(new Error('Navigation failed')),
+        })
+        break
+      case 'reLaunch':
+        uni.reLaunch({
+          url,
+          success: () => resolve(),
+          fail: () => reject(new Error('Navigation failed')),
+        })
+        break
+      default:
+        reject(new Error(`无效的路由类型: ${type}`))
+    }
+  })
 }

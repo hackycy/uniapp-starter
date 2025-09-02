@@ -39,9 +39,9 @@ export interface Router {
   route: Ref<Route>
   routes: Route[]
   guards: NavigationGuard[]
-  push: (to: RouteLocationRaw) => void
-  replace: (to: RouteLocationRaw) => void
-  switchTab: (to: RouteLocationRaw) => void
-  reLaunch: (to: RouteLocationRaw) => void
-  back: (to?: RouteBackLocation) => void
+  push: (to: RouteLocationRaw) => Promise<void>
+  replace: (to: RouteLocationRaw) => Promise<void>
+  switchTab: (to: RouteLocationRaw) => Promise<void>
+  reLaunch: (to: RouteLocationRaw) => Promise<void>
+  back: (to?: RouteBackLocation) => Promise<void>
 }
