@@ -21,6 +21,7 @@ function createAuthGuard(router: Router): NavigationGuard {
 
         const { path, query: _query } = parseURL(url, url.startsWith('/') ? undefined : '/')
         const mergeQuery = { ..._query, ...query }
+        console.log('invoke', mergeQuery)
 
         // 查找页面信息
         const page = getRouteByPath(path.slice(1), router)

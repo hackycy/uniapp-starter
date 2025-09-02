@@ -44,4 +44,5 @@ export interface Router {
   switchTab: (to: RouteLocationRaw) => Promise<void>
   reLaunch: (to: RouteLocationRaw) => Promise<void>
   back: (to?: RouteBackLocation) => Promise<void>
+  isReady: () => Promise<boolean>
 }

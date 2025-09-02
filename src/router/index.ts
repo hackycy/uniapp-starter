@@ -5,7 +5,7 @@ import { pages } from 'virtual:uni-pages'
 import { shallowReactive, shallowRef } from 'vue'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
-import { getCurrentPageRoute, navigateTo, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
+import { getCurrentPageRoute, invokeGuards, navigateTo, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
 
 export * from './core'
 
@@ -19,8 +19,6 @@ function createRouter(): Router & ObjectPlugin {
       enumerable: true,
     })
   }
-
-  let started: boolean | undefined
 
   const router: ObjectPlugin & Router = {
     guards: [],
@@ -39,17 +37,13 @@ function createRouter(): Router & ObjectPlugin {
     back(to) {
       return uni.navigateBack(to)
     },
+    isReady: () => {
+      // TODO
+      return Promise.resolve(true)
+    },
     install(app) {
       app.provide(routerKey, this)
       app.provide(routeKey, shallowReactive(reactiveRoute))
-
-      // #ifdef H5
-      if (!started && currentRoute.value === START_LOCATION_NORMALIZED) {
-        started = true
-        const { query } = parseURL(location.href)
-        currentRoute.value.query = query || {}
-      }
-      // #endif
 
       app.mixin({
         beforeCreate() {
@@ -65,8 +59,27 @@ function createRouter(): Router & ObjectPlugin {
             }
           }
         },
-        onShow() {
-          if (this.$mpType === 'page') {
+        onShow(options?: Recordable) {
+          if (this.$mpType === 'app' && options) {
+            let mergedQuery: Recordable = options.query || {}
+            // #ifdef H5
+            const { query: urlQuery } = parseURL(location.href)
+            mergedQuery = { ...urlQuery, ...mergedQuery }
+            // #endif
+
+            currentRoute.value.path = `/${options?.path}`
+            currentRoute.value.query = mergedQuery
+
+            // 首次进入手动触发拦截器，用于处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
+            invokeGuards(
+              {
+                url: currentRoute.value.path,
+                query: currentRoute.value.query,
+              },
+              router,
+            )
+          }
+          else if (this.$mpType === 'page') {
             currentRoute.value = getCurrentPageRoute(router)
           }
         },
