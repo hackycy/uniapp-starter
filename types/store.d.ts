@@ -15,15 +15,12 @@ export interface ThemeState {
 // TabBar
 export interface TabBarItem extends UniTabBarItem {
   /**
-   * iconfont / unocss 使用 icon 属性指定图标
-   * image 则沿用默认设定，支持网络图片
-   *
-   * @default 'none'
+   * 图标类型
    */
-  iconType?: 'iconfont' | 'unocss' | 'image' | 'wot' | 'none'
+  iconType?: 'iconfont' | 'unocss' | 'image' | 'wot'
 
   /**
-   * Icon 图标名称
+   * 图标名称，当 iconType 为 iconfont / unocss 时必填
    */
   icon?: string
 

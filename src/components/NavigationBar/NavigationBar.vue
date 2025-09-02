@@ -53,7 +53,7 @@ export default {
           :custom-class="`${active ? 'is-active' : 'is-inactive'}`"
           size="20"
         />
-        <view v-else-if="item.iconType === 'unocss'" :class="item.icon" class="text-[20px]" />
+        <view v-else-if="item.iconType === 'unocss' || item.iconType === 'iconfont'" :class="item.icon" class="text-[20px]" />
         <wd-img v-else-if="item.iconType === 'image'" height="20" width="20" :src="active ? item.selectedIconPath : item.iconPath" />
       </template>
     </wd-tabbar-item>
