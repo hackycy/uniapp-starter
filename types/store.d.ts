@@ -25,6 +25,11 @@ export interface TabBarItem extends UniTabBarItem {
   icon?: string
 
   /**
+   * 选中状态图标，可选
+   */
+  selectedIcon?: string
+
+  /**
    * TabBar 显示一个数字或小红点
    */
   badge?: number | 'dot'
