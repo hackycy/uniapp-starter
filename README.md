@@ -1,6 +1,6 @@
-<div align="center">
-
 # uniapp-starter
+
+<div align="center">
 
 基于 Vite + Vue3 + TypeScript + uni-app 3 (vue3) 的多端快速启动模板
 
