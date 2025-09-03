@@ -1,5 +1,8 @@
 import type { Ref } from 'vue'
 
+// resolve, reject arguments of Promise constructor
+export type OnReadyCallback = [() => void, (reason?: any) => void]
+
 export interface RouteNameLocation {
   name: string
   query?: Record<string, any>
@@ -44,5 +47,5 @@ export interface Router {
   switchTab: (to: RouteLocationRaw) => Promise<void>
   reLaunch: (to: RouteLocationRaw) => Promise<void>
   back: (to?: RouteBackLocation) => Promise<void>
-  isReady: () => Promise<boolean>
+  isReady: () => Promise<void>
 }

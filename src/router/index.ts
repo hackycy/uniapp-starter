@@ -1,11 +1,19 @@
 import type { App, ObjectPlugin } from 'vue'
-import type { Route, Router } from './types'
+import type { OnReadyCallback, Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages } from 'virtual:uni-pages'
 import { shallowReactive, shallowRef } from 'vue'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
-import { getCurrentPageRoute, invokeGuards, navigateTo, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
+import {
+  getCurrentPageRoute,
+  invokeGuards,
+  navigateTo,
+  routeKey,
+  routerKey,
+  START_LOCATION_NORMALIZED,
+  useCallbacks,
+} from './helper'
 
 export * from './core'
 
@@ -18,6 +26,20 @@ function createRouter(): Router & ObjectPlugin {
       get: () => currentRoute.value[key as keyof Route],
       enumerable: true,
     })
+  }
+
+  const readyHandlers = useCallbacks<OnReadyCallback>()
+  let ready: boolean = false
+
+  function markAsReady(err?: unknown) {
+    if (!ready) {
+      // still not ready if an error happened
+      ready = !err
+      readyHandlers.list().forEach(([resolve, reject]) => (err ? reject(err) : resolve()))
+      readyHandlers.reset()
+    }
+
+    return err
   }
 
   const router: ObjectPlugin & Router = {
@@ -38,8 +60,12 @@ function createRouter(): Router & ObjectPlugin {
       return uni.navigateBack(to)
     },
     isReady: () => {
-      // TODO
-      return Promise.resolve(true)
+      if (ready && currentRoute.value !== START_LOCATION_NORMALIZED) {
+        return Promise.resolve()
+      }
+      return new Promise((resolve, reject) => {
+        readyHandlers.add([resolve, reject])
+      })
     },
     install(app) {
       app.provide(routerKey, this)
@@ -78,6 +104,8 @@ function createRouter(): Router & ObjectPlugin {
               },
               router,
             )
+              .then(markAsReady)
+              .catch(markAsReady)
           }
           else if (this.$mpType === 'page') {
             currentRoute.value = getCurrentPageRoute(router)
