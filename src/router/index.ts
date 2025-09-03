@@ -31,15 +31,13 @@ function createRouter(): Router & ObjectPlugin {
   const readyHandlers = useCallbacks<OnReadyCallback>()
   let ready: boolean = false
 
-  function markAsReady(err?: unknown) {
+  function markAsReady() {
     if (!ready) {
-      // still not ready if an error happened
-      ready = !err
-      readyHandlers.list().forEach(([resolve, reject]) => (err ? reject(err) : resolve()))
+      // be ready
+      ready = true
+      readyHandlers.list().forEach(([resolve, _]) => resolve())
       readyHandlers.reset()
     }
-
-    return err
   }
 
   const router: ObjectPlugin & Router = {
