@@ -1,14 +1,8 @@
-<div align="center">
-
-<img width="166" height="32" alt="设计开源模板 Logo" src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png" />
+# uniapp-starter
 
 基于 Vite + Vue3 + TypeScript + uni-app 3 (vue3) 的多端快速启动模板
 
 支持 H5 / 微信小程序 / 多家小程序 / 公众号H5 等平台一套代码多端输出。
-
-</div>
-
-# uniapp-starter
 
 ## ✨ 特性 (Features)
 
