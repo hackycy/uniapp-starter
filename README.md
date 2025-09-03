@@ -1,12 +1,14 @@
-# uniapp-starter
-
 <div align="center">
+
+<img width="166" height="32" alt="设计开源模板 Logo" src="[https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png" />
 
 基于 Vite + Vue3 + TypeScript + uni-app 3 (vue3) 的多端快速启动模板
 
 支持 H5 / 微信小程序 / 多家小程序 / 公众号H5 等平台一套代码多端输出。
 
 </div>
+
+# uniapp-starter
 
 ## ✨ 特性 (Features)
 
@@ -22,7 +24,6 @@
 - 🧪 TypeScript 全量类型支持 & ESM 纯净输出
 - 🧹 统一 ESLint + Prettier + Antfu 代码风格
 - 🚀 支持 H5 SSR（`dev:h5:ssr` / `build:h5:ssr`）
-- 🧱 常用骨架屏组件示例（列表/详情/首页）
 - 🏷 自定义标签、导航栏、隐私弹窗等基础组件示例
 
 ## 🗂 目录结构 (Overview)
