@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="166" height="32" alt="设计开源模板 Logo" src="[https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png" />
+<img width="166" height="32" alt="设计开源模板 Logo" src="https://qiniu-web-assets.dcloud.net.cn/unidoc/zh/uni-app.png" />
 
 基于 Vite + Vue3 + TypeScript + uni-app 3 (vue3) 的多端快速启动模板
 
