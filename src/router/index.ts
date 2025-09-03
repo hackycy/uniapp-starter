@@ -74,7 +74,21 @@ function createRouter(): Router & ObjectPlugin {
       app.mixin({
         beforeCreate() {
           if (this.$mpType === 'page') {
-            currentRoute.value = getCurrentPageRoute(router)
+            const to = getCurrentPageRoute(router)
+
+            // only consider merge if it's first navigation
+            if (currentRoute.value === START_LOCATION_NORMALIZED) {
+              currentRoute.value = {
+                ...to,
+                query: {
+                  ...currentRoute.value.query,
+                  ...to.query,
+                },
+              }
+            }
+            else {
+              currentRoute.value = to
+            }
           }
         },
         onLoad(option) {
@@ -93,13 +107,13 @@ function createRouter(): Router & ObjectPlugin {
             mergedQuery = { ...urlQuery, ...mergedQuery }
             // #endif
 
-            currentRoute.value.path = `/${options?.path}`
+            currentRoute.value.path = options.path
             currentRoute.value.query = mergedQuery
 
             // 首次进入手动触发拦截器，用于处理直接进入页面路由的情况：如h5直接输入路由、微信小程序分享后进入等
             invokeGuards(
               {
-                url: currentRoute.value.path,
+                url: `/${currentRoute.value.path}`,
                 query: currentRoute.value.query,
               },
               router,

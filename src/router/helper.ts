@@ -14,8 +14,8 @@ export const routerKey = Symbol('__ROUTER__') as InjectionKey<Router>
 export const routeKey = Symbol('__ROUTE__') as InjectionKey<ShallowReactive<Route>>
 
 export const START_LOCATION_NORMALIZED: Route = {
-  path: '/',
   fullPath: '/',
+  path: '',
   name: undefined,
   query: {},
   meta: {},
