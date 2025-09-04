@@ -1,7 +1,7 @@
 import type { App, ObjectPlugin } from 'vue'
 import type { OnReadyCallback, Route, Router } from './types'
 import { isEmpty } from 'radashi'
-import { pages } from 'virtual:uni-pages'
+import { pages, subPackages } from 'virtual:uni-pages'
 import { shallowReactive, shallowRef } from 'vue'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
@@ -126,7 +126,9 @@ function createRouter(): Router & ObjectPlugin {
       })
     },
     route: currentRoute,
-    routes: pages,
+    routes: [...pages, ...subPackages.reduce((arr, cur) => {
+      return arr.concat(cur.pages)
+    }, [])],
   }
 
   return router
