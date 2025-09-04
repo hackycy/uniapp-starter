@@ -48,28 +48,28 @@
 
 1. 环境要求：Node >= 18，推荐使用 `pnpm`
 2. 克隆项目：
-   ```bash
-   git clone <your-repo-url> uniapp-starter
-   cd uniapp-starter
-   pnpm i
-   ```
+```bash
+git clone <your-repo-url> uniapp-starter
+cd uniapp-starter
+pnpm i
+```
 3. 启动（H5 默认平台）：
-   ```bash
-   pnpm dev:h5
-   ```
+```bash
+pnpm dev:h5
+```
 4. 其它常用平台（任选其一）：
-   ```bash
-   pnpm dev:mp-weixin      # 微信小程序
-   pnpm dev:mp-alipay      # 支付宝小程序
-   pnpm dev:mp-baidu       # 百度
-   pnpm dev:mp-toutiao     # 头条
-   pnpm dev:mp-qq          # QQ
-   pnpm dev:mp-kuaishou    # 快手
-   pnpm dev:mp-lark        # 飞书
-   pnpm dev:mp-xhs         # 小红书
-   pnpm dev:quickapp-webview
-   pnpm dev:h5:ssr         # H5 SSR 模式
-   ```
+```bash
+pnpm dev:mp-weixin      # 微信小程序
+pnpm dev:mp-alipay      # 支付宝小程序
+pnpm dev:mp-baidu       # 百度
+pnpm dev:mp-toutiao     # 头条
+pnpm dev:mp-qq          # QQ
+pnpm dev:mp-kuaishou    # 快手
+pnpm dev:mp-lark        # 飞书
+pnpm dev:mp-xhs         # 小红书
+pnpm dev:quickapp-webview
+pnpm dev:h5:ssr         # H5 SSR 模式
+```
 
 构建：
 
