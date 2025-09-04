@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import NavigationBar from '@/components/NavigationBar/NavigationBar.vue'
 import PrivacyPopup from '@/components/PrivacyPopup/PrivacyPopup.vue'
+import TabBar from '@/components/TabBar/TabBar.vue'
 import { useNavbar, useTheme } from '@/composables/core/useTheme'
 
 const { getThemeVars, getCurrentTheme } = useTheme()
@@ -25,7 +25,7 @@ export default {
   >
     <slot />
 
-    <NavigationBar />
+    <TabBar />
 
     <!-- #ifdef MP-WEIXIN -->
     <PrivacyPopup />
