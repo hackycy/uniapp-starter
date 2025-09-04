@@ -8,6 +8,7 @@ import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
+import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 import { loadEnv } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
@@ -46,13 +47,23 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       // https://github.com/antfu/unocss
       UnoCSS(),
       // https://github.com/vbenjs/vite-plugin-html
-      UNI_PLATFORM === 'h5' && createHtmlPlugin({
+      UNI_PLATFORM === 'h5'
+      && createHtmlPlugin({
         minify: true,
         inject: {
           data: {
             title: VITE_APP_NAME,
           },
         },
+      }),
+      // https://github.com/btd/rollup-plugin-visualizer
+      UNI_PLATFORM === 'h5'
+      && mode === 'production'
+      && visualizer({
+        filename: './node_modules/.cache/visualizer/stats.html',
+        open: true,
+        gzipSize: true,
+        brotliSize: true,
       }),
     ],
     define: {
