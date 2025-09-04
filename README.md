@@ -27,7 +27,7 @@
 │  ├─ pages/            业务主包页面（自动扫描）
 │  ├─ pages-sub/        分包页面（自动扫描）
 │  ├─ layouts/          约定式布局（默认 default / navigation）
-│  ├─ components/       公共组件（NavigationBar / PrivacyPopup / Skeleton ...）
+│  ├─ components/       公共组件（TabBar / PrivacyPopup / Skeleton ...）
 │  ├─ composables/      组合式工具（web、core、component）
 │  ├─ store/            Pinia 模块化状态管理
 │  ├─ router/           自定义轻量路由实现 + 守卫
@@ -49,7 +49,7 @@
 1. 环境要求：Node >= 18，推荐使用 `pnpm`
 2. 克隆项目：
 ```bash
-git clone <your-repo-url> uniapp-starter
+git clone https://github.com/hackycy/uniapp-starter.git
 cd uniapp-starter
 pnpm i
 ```
