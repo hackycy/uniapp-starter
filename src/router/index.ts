@@ -3,6 +3,7 @@ import type { OnReadyCallback, Route, Router } from './types'
 import { isEmpty } from 'radashi'
 import { pages, subPackages } from 'virtual:uni-pages'
 import { shallowReactive, shallowRef } from 'vue'
+import { useCallbacks } from '@/composables/web/useCallbacks'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
 import {
@@ -12,7 +13,6 @@ import {
   routeKey,
   routerKey,
   START_LOCATION_NORMALIZED,
-  useCallbacks,
 } from './helper'
 
 export * from './core'
