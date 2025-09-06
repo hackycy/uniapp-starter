@@ -59,7 +59,7 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
 
         setTimeout(() => {
           execute()
-        }, retryDelay)
+        }, retryDelay * retryCountRef.value) // 指数退避
       }
       else {
         stateRef.value = 'error'
