@@ -9,3 +9,11 @@ export function isWeixin() {
   return isWeixin
   // #endif
 }
+
+/**
+ * 判断是否在微信小程序内置浏览器
+ */
+export function isMPWeixin() {
+  const ua = navigator.userAgent.toLowerCase()
+  return ua.match(/miniprogram/i) !== null || (window as any).__wxjs_environment === 'miniprogram'
+}
