@@ -70,10 +70,15 @@ export function useNavbar() {
   const { getCurrentTheme, getTheme, setSystemTheme } = useTheme()
 
   function setNavigationBarColor() {
-    uni.setNavigationBarColor({
-      frontColor: getCurrentTheme.value === 'light' ? '#000000' : '#ffffff',
-      backgroundColor: getCurrentTheme.value === 'light' ? '#ffffff' : '#000000',
-    })
+    try {
+      uni.setNavigationBarColor({
+        frontColor: getCurrentTheme.value === 'light' ? '#000000' : '#ffffff',
+        backgroundColor: getCurrentTheme.value === 'light' ? '#ffffff' : '#000000',
+      })
+    }
+    catch {
+      // ignore
+    }
   }
 
   // 页面显示时更新导航栏颜色，确保每次切换页面时导航栏颜色都是正确的
