@@ -23,12 +23,15 @@ export interface UseJWeixinOptions {
 async function defaultSign(url: string) {
   return http.Request<Sign>({
     method: 'POST',
-    url: '',
+    url: 'xxx',
     data: {
       url,
     },
   })
 }
+
+const readyRef = ref(false)
+const readyHandlers = useCallbacks<OnReadyCallback>()
 
 /**
  * JS-SDK 微信网页开发 SDK 封装
@@ -36,13 +39,6 @@ async function defaultSign(url: string) {
  */
 export function useJWeixin({ debug, sign = defaultSign }: UseJWeixinOptions = {}) {
   // #ifdef H5
-  const readyRef = ref(false)
-
-  const readyHandlers = useCallbacks<OnReadyCallback>()
-
-  /**
-   * 初始化 JWeixin SDK
-   */
   async function init() {
     try {
       if (!isWeixin()) {
