@@ -3,8 +3,8 @@ import App from './App.vue'
 import { setupRouter } from './router'
 import { setupStore } from './store'
 import { isDev, setupDevtool } from './utils/env'
-import './polyfill'
 
+import './polyfill'
 import './styles/index.scss'
 import 'virtual:uno.css'
 
