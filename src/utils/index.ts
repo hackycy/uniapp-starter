@@ -27,3 +27,16 @@ export function buildFullPath(baseURL: string, requestedURL: string) {
   }
   return requestedURL
 }
+
+/**
+ * 休眠（setTimeout的promise版）
+ * @param ms 要休眠的时间，单位：毫秒
+ * @return Promise
+ */
+export function sleep(ms: number) {
+  return new Promise<void>(resolve =>
+    setTimeout(() => {
+      resolve()
+    }, ms),
+  )
+}
