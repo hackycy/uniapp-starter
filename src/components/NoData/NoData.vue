@@ -84,7 +84,7 @@ export default {
 
           <!-- 额外提示 -->
           <text v-if="getExtraTip.length > 0" class="text-[26rpx] text-gray-600 text-center leading-relaxed">
-            <view v-for="(tip, index) in getExtraTip" :key="index">
+            <view v-for="(tip, index) in getExtraTip" :key="`tip-${index}-${tip}`">
               {{ tip }}
             </view>
           </text>
