@@ -75,7 +75,9 @@ export function useJWeixin({ debug, sign = defaultSign }: UseJWeixinOptions = {}
       return Promise.resolve()
     }
 
-    init()
+    if (readyHandlers.list().length <= 0) {
+      init()
+    }
 
     return new Promise<void>((resolve, reject) => {
       readyHandlers.add([resolve, reject])
