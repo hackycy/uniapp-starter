@@ -73,11 +73,17 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
     execute()
   }
 
+  function run() {
+    // reset retry count
+    retryCountRef.value = 0
+    execute()
+  }
+
   return {
     stateRef,
     errorRef,
     dataRef,
-    run: execute,
+    run,
     isIdle: () => stateRef.value === 'idle',
     isLoading: () => stateRef.value === 'loading',
     isError: () => stateRef.value === 'error',
