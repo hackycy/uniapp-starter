@@ -100,7 +100,7 @@ export function resolveRouteUrl(to: RouteLocationRaw, router: Router): string {
       const route = router.routes.find((r: Recordable) => r.name === to.name)
       if (route && route.path) {
         url = `/${route.path}`
-        query = route.query
+        query = to.query
       }
       else {
         throw new Error(`路由: ${to.name}未定义`)
