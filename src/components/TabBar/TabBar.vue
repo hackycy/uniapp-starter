@@ -11,6 +11,10 @@ const getCurrentPagePath = computed(() => {
 })
 
 function handleTabChange(arg: Recordable) {
+  if (route.path === arg.value) {
+    return
+  }
+
   uni.redirectTo({
     url: `/${arg.value}`,
   })
