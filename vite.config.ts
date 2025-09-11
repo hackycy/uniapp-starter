@@ -1,4 +1,5 @@
 import type { ConfigEnv, ProxyOptions, UserConfig } from 'vite'
+import { readFile } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 // import Uni from '@dcloudio/vite-plugin-uni'
@@ -32,7 +33,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       UniManifest(),
       // https://github.com/uni-helper/vite-plugin-uni-pages
       UniPages({
-        exclude: ['**/components/**/**.*'],
+        exclude: ['**/components/**/**.*', '**/*.ignore.*'],
         dir: 'src/pages',
         subPackages: ['src/pages-sub'],
         dts: 'types/uni-pages.d.ts',
@@ -65,6 +66,31 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         gzipSize: true,
         brotliSize: true,
       }),
+      // 微信JS接口安全域名验证文件支持
+      UNI_PLATFORM === 'h5'
+      && mode === 'development' && {
+        name: 'file-server-plugin',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.originalUrl?.startsWith('/MP_') && req.originalUrl.endsWith('.txt')) {
+              const filePath = path.join(process.cwd(), 'public', req.originalUrl)
+              readFile(filePath, 'utf-8', (err, data) => {
+                if (err) {
+                  res.statusCode = 500
+                  res.end('Internal Server Error')
+                }
+                else {
+                  res.setHeader('Content-Type', 'text/plain')
+                  res.end(data)
+                }
+              })
+            }
+            else {
+              next()
+            }
+          })
+        },
+      },
     ],
     define: {
       __APP_INFO__: JSON.stringify({
