@@ -66,14 +66,17 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         gzipSize: true,
         brotliSize: true,
       }),
-      // 微信JS接口安全域名验证文件支持
+      /**
+       * 微信JS接口安全域名验证文件支持, 用于本地开发内网穿透调试使用
+       */
       UNI_PLATFORM === 'h5'
       && mode === 'development' && {
         name: 'mp-verify-file-serve-plugin',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
             if (req.originalUrl?.startsWith('/MP_') && req.originalUrl.endsWith('.txt')) {
-              const filePath = path.join(process.cwd(), 'public', req.originalUrl)
+              // 放置到 /node_modules/MP_verify_XXXXXX.txt 或 自行更改
+              const filePath = path.join(process.cwd(), 'node_modules', req.originalUrl)
               readFile(filePath, 'utf-8', (err, data) => {
                 if (err) {
                   res.statusCode = 500

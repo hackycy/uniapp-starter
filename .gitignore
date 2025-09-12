@@ -14,6 +14,7 @@ dist
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+MP_*.txt
 
 # Environment files
 .env.development
