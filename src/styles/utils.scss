@@ -6,13 +6,33 @@
     bottom: 0;
     right: 0;
     height: 1px;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f4f4f4;
     transform-origin: 0 100%;
     transform: scaleY(0.5);
   }
 
   @media (-webkit-min-device-pixel-ratio: 3) {
     &::after {
+      transform: scaleY(0.33);
+    }
+  }
+}
+
+.border-top {
+  &::before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #f4f4f4;
+    transform-origin: 0 0;
+    transform: scaleY(0.5);
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 3) {
+    &::before {
       transform: scaleY(0.33);
     }
   }
