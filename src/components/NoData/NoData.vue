@@ -64,7 +64,7 @@ export default {
 
 <template>
   <view
-    class="box-border flex flex-col items-center justify-center gap-[32rpx]"
+    class="box-border flex flex-col items-center justify-center gap-[32rpx] py-[32rpx]"
     :class="customClass"
     :style="customStyle"
   >
@@ -73,7 +73,7 @@ export default {
       <slot :name="status">
         <view class="flex flex-col items-center gap-[32rpx]" @click="$emit('click', status)">
           <i
-            class="text-neutral-300 text-[180rpx] mt-[32rpx]"
+            class="text-neutral-300 text-[180rpx]"
             :class="icon || status === 'empty' ? 'i-fluent-slide-search-16-regular' : 'i-uiw-reload'"
           />
 
