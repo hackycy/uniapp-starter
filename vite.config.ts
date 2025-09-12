@@ -69,7 +69,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       // 微信JS接口安全域名验证文件支持
       UNI_PLATFORM === 'h5'
       && mode === 'development' && {
-        name: 'mp-file-serve-plugin',
+        name: 'mp-verify-file-serve-plugin',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
             if (req.originalUrl?.startsWith('/MP_') && req.originalUrl.endsWith('.txt')) {
