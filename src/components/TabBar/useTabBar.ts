@@ -1,4 +1,4 @@
-import type { TabBarItem } from '#/store'
+import type { TabBarItem } from './types'
 import { onLoad } from '@dcloudio/uni-app'
 import { computed, reactive } from 'vue'
 import { useRoute } from '@/router'
