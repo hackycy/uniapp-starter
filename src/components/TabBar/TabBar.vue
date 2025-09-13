@@ -1,32 +1,19 @@
 <script setup lang="ts">
-import { onLoad } from '@dcloudio/uni-app'
-import { computed } from 'vue'
-import { useRoute } from '@/router'
-import { activeTabBarStrategy, customTabBarEnable, defaultTabBarItems, TabBarStrategy } from '@/settings/tabbarSettings'
+import { useRouter } from '@/router'
+import { useTabBar } from './useTabBar'
 
-const route = useRoute()
-
-const getCurrentPagePath = computed(() => {
-  return route.path
-})
+const router = useRouter()
+const { getTabBar, getShowTabBar, getCurrentPagePath } = useTabBar()
 
 function handleTabChange(arg: Recordable) {
-  if (route.path === arg.value) {
+  if (getCurrentPagePath.value === arg.value) {
     return
   }
 
-  uni.redirectTo({
-    url: `/${arg.value}`,
+  router.replace({
+    path: `/${arg.value}`,
   })
 }
-
-onLoad(() => {
-  // #ifdef APP-PLUS
-  if (activeTabBarStrategy === TabBarStrategy.CUSTOM || activeTabBarStrategy === TabBarStrategy.NONE) {
-    uni.hideTabBar()
-  }
-  // #endif
-})
 </script>
 
 <script lang="ts">
@@ -41,7 +28,7 @@ export default {
 
 <template>
   <wd-tabbar
-    v-if="customTabBarEnable"
+    v-if="getShowTabBar"
     :model-value="getCurrentPagePath"
     bordered
     safe-area-inset-bottom
@@ -49,7 +36,7 @@ export default {
     fixed
     @change="handleTabChange"
   >
-    <wd-tabbar-item v-for="item in defaultTabBarItems" :key="item.pagePath" :name="item.pagePath" :title="item.text">
+    <wd-tabbar-item v-for="item in getTabBar" :key="item.pagePath" :name="item.pagePath" :title="item.text">
       <template #icon="{ active }">
         <wd-icon
           v-if="item.iconType === 'wot'"

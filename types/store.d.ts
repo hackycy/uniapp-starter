@@ -13,7 +13,7 @@ export interface ThemeState {
 }
 
 // TabBar
-export interface TabBarItem extends UniTabBarItem {
+export interface TabBarItem extends Pick<UniTabBarItem, 'pagePath' | 'text' | 'selectedIconPath' | 'iconPath'> {
   /**
    * 图标类型
    */
