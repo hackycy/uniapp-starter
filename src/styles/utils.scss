@@ -6,9 +6,13 @@
     bottom: 0;
     right: 0;
     height: 1px;
-    border-bottom: 1px solid #f4f4f4;
+    border-bottom: 1px solid #e4e4e4;
     transform-origin: 0 100%;
     transform: scaleY(0.5);
+  }
+
+  &.dashed::after {
+    border-bottom-style: dashed;
   }
 
   @media (-webkit-min-device-pixel-ratio: 3) {
@@ -26,9 +30,13 @@
     top: 0;
     right: 0;
     height: 1px;
-    border-top: 1px solid #f4f4f4;
+    border-top: 1px solid #e4e4e4;
     transform-origin: 0 0;
     transform: scaleY(0.5);
+  }
+
+  &.dashed::before {
+    border-top-style: dashed;
   }
 
   @media (-webkit-min-device-pixel-ratio: 3) {
