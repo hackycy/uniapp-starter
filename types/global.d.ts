@@ -7,6 +7,16 @@ declare global {
   declare type Recordable<T = any> = Record<string, T>
   declare type Arrayable<T> = T | T[]
 
+  /**
+   * Void function
+   */
+  export type Fn = () => void
+
+  /**
+   * Any function
+   */
+  export type AnyFn = (...args: any[]) => any
+
   declare const __APP_INFO__: {
     platform: string
     lastBuildTime: string
