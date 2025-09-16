@@ -98,7 +98,10 @@ function createRouter(): Router & ObjectPlugin {
           }
         },
         onShow(options?: Recordable) {
-          if (this.$mpType === 'app' && options) {
+          if (this.$mpType === 'page') {
+            currentRoute.value = getCurrentPageRoute(router)
+          }
+          else if (this.$mpType === 'app' && options) {
             let mergedQuery: Recordable = options.query || {}
             // #ifdef H5
             const { query: urlQuery } = parseURL(location.href)
@@ -118,9 +121,6 @@ function createRouter(): Router & ObjectPlugin {
             )
               .then(markAsReady)
               .catch(markAsReady)
-          }
-          else if (this.$mpType === 'page') {
-            currentRoute.value = getCurrentPageRoute(router)
           }
         },
       })
