@@ -66,9 +66,29 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         gzipSize: true,
         brotliSize: true,
       }),
-      /**
-       * 微信JS接口安全域名验证文件支持, 用于本地开发内网穿透调试使用
-       */
+      // Fix https://github.com/dcloudio/uni-app/issues/4604
+      {
+        name: 'vite-plugin-uni-polyfill',
+        transform(code, id) {
+          if (!id.endsWith('@dcloudio/uni-mp-vue/dist/vue.runtime.esm.js')) {
+            return
+          }
+
+          code += `
+          // Vue 3 components mock
+          function createMockComponent(name) {
+            return {
+              setup() {
+                throw new Error("[vite-plugin-uni-polyfill] " + name + " It is not supported in the current version of Vue that Uni App relies on. It's provided to avoid compiler errors.")
+              }
+            }
+          }
+          export var TransitionGroup = /*#__PURE__*/ createMockComponent('TransitionGroup')
+          `
+          return code
+        },
+      },
+      // 微信JS接口安全域名验证文件支持, 用于本地开发内网穿透调试使用
       UNI_PLATFORM === 'h5'
       && mode === 'development' && {
         name: 'mp-verify-file-serve-plugin',
