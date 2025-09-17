@@ -24,7 +24,7 @@ export function useRouter() {
   }
 }
 
-export function onRouteShow(fn: Fn) {
+export function usePageShow(fn: Fn) {
   // 放在事件循环的末尾执行，确保路由状态已经更新
   onShow(() => {
     Promise.resolve().then(() => {
@@ -33,7 +33,7 @@ export function onRouteShow(fn: Fn) {
   })
 }
 
-export function onRouteLoad(fn: AnyFn) {
+export function usePageLoad(fn: AnyFn) {
   // 放在事件循环的末尾执行，确保路由状态已经更新
   onLoad((options) => {
     Promise.resolve().then(() => {
