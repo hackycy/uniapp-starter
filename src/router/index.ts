@@ -7,9 +7,7 @@ import { useCallbacks } from '@/composables/web/useCallbacks'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
 import {
-  getCurrentPage,
   getCurrentPageRoute,
-  getPreviousPage,
   invokeGuards,
   navigateTo,
   routeKey,
@@ -74,25 +72,7 @@ function createRouter(): Router & ObjectPlugin {
       app.mixin({
         beforeCreate() {
           if (this.$mpType === 'page') {
-            const to = getCurrentPageRoute(router)
-
-            // only consider merge if it's first navigation
-            if (currentRoute.value === START_LOCATION_NORMALIZED) {
-              currentRoute.value = {
-                ...to,
-                query: {
-                  ...currentRoute.value.query,
-                  ...to.query,
-                },
-              }
-            }
-            else {
-              currentRoute.value = to
-            }
-
-            // Set the route of current page instance
-            const page = getCurrentPage()!
-            ;(page as Recordable).__route__ = to
+            currentRoute.value = getCurrentPageRoute(router)
           }
         },
         onLoad(option) {
@@ -105,7 +85,11 @@ function createRouter(): Router & ObjectPlugin {
         },
         onShow(options?: Recordable) {
           if (this.$mpType === 'page') {
-            currentRoute.value = getCurrentPageRoute(router)
+            const route = getCurrentPageRoute(router)
+            // 非页面切换则无需更新路由
+            if (route.path !== currentRoute.value.path) {
+              currentRoute.value = route
+            }
           }
           else if (this.$mpType === 'app' && options) {
             let mergedQuery: Recordable = options.query || {}
@@ -129,23 +113,12 @@ function createRouter(): Router & ObjectPlugin {
               .catch(markAsReady)
           }
         },
-        onUnload() {
-          if (this.$mpType === 'page') {
-            const page = getPreviousPage() as Recordable | undefined
-            if (page && page.__route__) {
-              currentRoute.value = page.__route__
-            }
-          }
-        },
       })
     },
     route: currentRoute,
-    routes: [
-      ...pages,
-      ...subPackages.reduce((arr, cur) => {
-        return arr.concat(cur.pages)
-      }, []),
-    ],
+    routes: [...pages, ...subPackages.reduce((arr, cur) => {
+      return arr.concat(cur.pages)
+    }, [])],
   }
 
   return router

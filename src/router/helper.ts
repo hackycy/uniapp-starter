@@ -63,7 +63,12 @@ export function getCurrentPageRoute(router: Router): Route {
   if (page.$page) {
     currRoute.fullPath = page.$page.fullPath
     const { query } = parseURL(page.$page.fullPath)
-    currRoute.query = query || undefined
+
+    if (router.route.value === START_LOCATION_NORMALIZED) {
+      // 判断是否为冷启动，并合并冷启动下的参数
+      Object.assign(query, router.route.value.query || {})
+    }
+    currRoute.query = query
   }
 
   return currRoute
