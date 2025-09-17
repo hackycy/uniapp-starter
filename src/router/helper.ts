@@ -30,6 +30,14 @@ export function getCurrentPage() {
 }
 
 /**
+ * 获取前一个页面
+ */
+export function getPreviousPage() {
+  const pages = getCurrentPages()
+  return pages.length > 1 ? pages[pages.length - 2] : undefined
+}
+
+/**
  * 根据路径获取路由
  */
 export function getRouteByPath(path: string, router: Router): Route | null {

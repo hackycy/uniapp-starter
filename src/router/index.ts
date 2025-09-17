@@ -7,7 +7,9 @@ import { useCallbacks } from '@/composables/web/useCallbacks'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
 import {
+  getCurrentPage,
   getCurrentPageRoute,
+  getPreviousPage,
   invokeGuards,
   navigateTo,
   routeKey,
@@ -87,6 +89,10 @@ function createRouter(): Router & ObjectPlugin {
             else {
               currentRoute.value = to
             }
+
+            // Set the route of current page instance
+            const page = getCurrentPage()!
+            ;(page as Recordable).__route__ = to
           }
         },
         onLoad(option) {
@@ -123,12 +129,23 @@ function createRouter(): Router & ObjectPlugin {
               .catch(markAsReady)
           }
         },
+        onUnload() {
+          if (this.$mpType === 'page') {
+            const page = getPreviousPage() as Recordable | undefined
+            if (page && page.__route__) {
+              currentRoute.value = page.__route__
+            }
+          }
+        },
       })
     },
     route: currentRoute,
-    routes: [...pages, ...subPackages.reduce((arr, cur) => {
-      return arr.concat(cur.pages)
-    }, [])],
+    routes: [
+      ...pages,
+      ...subPackages.reduce((arr, cur) => {
+        return arr.concat(cur.pages)
+      }, []),
+    ],
   }
 
   return router
