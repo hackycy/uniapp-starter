@@ -33,3 +33,4 @@ MP_*.txt
 pages.json
 manifest.json
 uni-pages.d.ts
+project**.json
