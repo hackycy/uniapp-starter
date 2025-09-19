@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { CSSProperties } from 'vue'
 import { computed } from 'vue'
 import { useTheme } from '@/composables/core/useTheme'
 import { mixLighten } from '@/utils/color'
@@ -10,19 +9,41 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  border: {
+    type: Boolean,
+    default: true,
+  },
+  ghost: {
+    type: Boolean,
+    default: false,
+  },
+  customClass: {
+    type: String,
+    default: '',
+  },
+  customStyle: {
+    type: String,
+    default: '',
+  },
 })
 
 const { getPrimaryColor } = useTheme()
 
-const getStyles = computed((): CSSProperties => {
+const getStyles = computed((): string => {
   const fontColor = props.color || getPrimaryColor.value
   const bgColor = mixLighten(fontColor, 0.9)
   const borderColor = mixLighten(fontColor, 0.7)
-  return {
-    color: fontColor,
-    backgroundColor: bgColor,
-    border: `1rpx solid ${borderColor}`,
+
+  let style = `color: ${fontColor};`
+  if (props.border) {
+    style += ` border: 1rpx solid ${borderColor};`
   }
+
+  if (!props.ghost) {
+    style += ` background-color: ${bgColor};`
+  }
+
+  return `${style} ${props.customStyle || ''}`
 })
 </script>
 
@@ -37,7 +58,7 @@ export default {
 </script>
 
 <template>
-  <view class="basic-tag" :style="getStyles">
+  <view class="basic-tag" :class="customClass" :style="getStyles">
     <slot />
   </view>
 </template>
