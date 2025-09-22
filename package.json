@@ -94,7 +94,7 @@
     "@uni-helper/unocss-preset-uni": "^0.2.11",
     "@uni-helper/vite-plugin-uni-layouts": "^0.1.11",
     "@uni-helper/vite-plugin-uni-manifest": "^0.2.8",
-    "@uni-helper/vite-plugin-uni-pages": "^0.3.2",
+    "@uni-helper/vite-plugin-uni-pages": "^0.3.15",
     "@unocss/eslint-config": "^66.4.2",
     "@vue/runtime-core": "^3.4.21",
     "@vue/tsconfig": "^0.1.3",
