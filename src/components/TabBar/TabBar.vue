@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRouter } from '@/router'
-import { useTabBar } from './useTabBar'
+import { useTabBarInner } from './useTabBar'
 
 const router = useRouter()
-const { getTabBar, getShowTabBar, getCurrentPagePath } = useTabBar()
+const { getTabBar, getShowTabBar, getCurrentPagePath } = useTabBarInner()
 
 function handleTabChange(arg: Recordable) {
   if (getCurrentPagePath.value === arg.value) {

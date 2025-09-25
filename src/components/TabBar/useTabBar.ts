@@ -7,7 +7,7 @@ import { TabBarStrategy } from './types'
 
 const tabbarState = reactive<TabBarItem[]>(tabBarItems.map(item => ({ ...item })))
 
-export function useTabBar() {
+export function useTabBarInner() {
   const route = useRoute()
 
   function isPageTabBar(path: string) {
