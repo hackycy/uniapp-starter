@@ -46,7 +46,7 @@ export default {
         />
         <view
           v-else-if="item.iconType === 'unocss' || item.iconType === 'iconfont'"
-          :class="active && item.selectedIcon ? item.selectedIcon : item.icon"
+          :class="[active && item.selectedIcon ? item.selectedIcon : item.icon, active ? 'is-active' : 'is-inactive']"
           class="text-[20px]"
         />
         <wd-img
