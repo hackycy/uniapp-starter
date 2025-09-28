@@ -16,6 +16,11 @@ export interface UseAsyncOptions<T> {
   maxRetries?: number
   /* 重试延迟时间(毫秒) */
   retryDelay?: number
+
+  /* Event */
+  onComplete?: () => void
+  onSuccess?: () => void
+  onError?: () => void
 }
 
 export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsyncOptions<T> = {}) {
@@ -28,6 +33,9 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
     immediate = true,
     maxRetries = 3,
     retryDelay = 1000,
+    onComplete,
+    onError,
+    onSuccess,
   } = options
 
   const dataRef = ref<T>(defaultValue)
@@ -52,6 +60,8 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
 
       // 重置重试计数
       retryCountRef.value = 0
+
+      onSuccess?.()
     }
     catch (error: unknown) {
       if (retryCountRef.value < maxRetries) {
@@ -64,7 +74,12 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
       else {
         stateRef.value = 'error'
         errorRef.value = error
+
+        onError?.()
       }
+    }
+    finally {
+      onComplete?.()
     }
   }
 
