@@ -57,6 +57,10 @@ function createRouter(): Router & ObjectPlugin {
     back(to) {
       return uni.navigateBack(to)
     },
+    canGoBack(delta?: number) {
+      delta = delta ?? 1
+      return getCurrentPages().length > delta
+    },
     isReady: () => {
       if (ready && currentRoute.value !== START_LOCATION_NORMALIZED) {
         return Promise.resolve()
