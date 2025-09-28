@@ -1,6 +1,6 @@
 # uniapp-starter
 
-基于 Vite + Vue3 + TypeScript + uni-app 3 (vue3) 的多端快速启动模板
+基于 Vite + Vue3 + TypeScript + uni-app 的多端快速启动模板
 
 支持 公众号H5 / 微信小程序 / 多家小程序 等平台一套代码多端输出。
 
