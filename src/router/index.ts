@@ -95,7 +95,7 @@ function createRouter(): Router & ObjectPlugin {
               currentRoute.value = route
             }
           }
-          else if (this.$mpType === 'app' && options) {
+          else if (this.$mpType === 'app' && options && !ready) {
             let mergedQuery: Recordable = options.query || {}
             // #ifdef H5
             const { query: urlQuery } = parseURL(location.href)
