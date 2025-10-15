@@ -94,7 +94,7 @@ pnpm lint:fix
 - `router.push / replace / switchTab / reLaunch / back` API 与 Vue Router 类似
 - `router.route` 为当前路由（响应式）
 - 守卫：在 `guard.ts` 中注册，支持登录拦截（`meta.auth = true`）
-- 页面元信息来源：`pages.config.ts` + `pages.json` 自动生成产物（由 `@uni-helper/vite-plugin-uni-pages` 插件提供）
+- 页面元信息来源：`pages.config.ts` + `pages.json` 自动生成产物（由 `@uni-aide/vite-plugin-pages` 插件提供）
 
 示例跳转：
 
