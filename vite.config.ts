@@ -2,12 +2,12 @@ import type { ConfigEnv, ProxyOptions, UserConfig } from 'vite'
 import { readFile } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
+import UniManifest from '@uni-aide/vite-plugin-manifest'
+import UniPages from '@uni-aide/vite-plugin-pages'
 // import Uni from '@dcloudio/vite-plugin-uni'
 // ESM re-export @dcloudio/vite-plugin-uni
 import Uni from '@uni-helper/plugin-uni'
 import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
-import UniManifest from '@uni-helper/vite-plugin-uni-manifest'
-import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import dayjs from 'dayjs'
 import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
@@ -32,13 +32,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       // https://github.com/uni-helper/vite-plugin-uni-manifest
       UniManifest(),
       // https://github.com/uni-helper/vite-plugin-uni-pages
-      UniPages({
-        exclude: ['**/components/**/**.*', '**/*.ignore.*'],
-        dir: 'src/pages',
-        subPackages: ['src/pages-sub'],
-        dts: 'types/uni-pages.d.ts',
-        mergePages: true,
-      }),
+      UniPages(),
       // https://github.com/uni-helper/vite-plugin-uni-layouts
       UniLayouts({
         layout: 'default',

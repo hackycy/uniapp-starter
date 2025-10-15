@@ -1,19 +1,55 @@
-import { defineUniPages } from '@uni-helper/vite-plugin-uni-pages'
+import { defineConfig } from '@uni-aide/vite-plugin-pages'
 
-export default defineUniPages({
-  pages: [],
+export default defineConfig({
+  pages: [
+    {
+      path: 'pages/index/index',
+      type: 'home',
+      name: 'Home',
+      layout: 'navigation',
+      style: {
+        navigationBarTitleText: '首页',
+      },
+    },
+    {
+      path: 'pages/login',
+      type: 'page',
+      name: 'Login',
+      layout: 'default',
+      style: {
+        navigationBarTitleText: 'Login',
+        // #ifdef H5
+        navigationStyle: 'custom',
+        // #endif
+      },
+    },
+    {
+      path: 'pages/index/user',
+      type: 'page',
+      name: 'user',
+      layout: 'navigation',
+      style: {
+        navigationBarTitleText: 'User',
+        navigationStyle: 'custom',
+      },
+    },
+    {
+      path: 'pages/mine/index',
+      type: 'page',
+      name: 'Mine',
+      layout: 'navigation',
+      style: {
+        navigationBarTitleText: '我的',
+      },
+    },
+  ],
   globalStyle: {
-    // 导航栏配置
     navigationBarBackgroundColor: '@navBgColor',
     navigationBarTextStyle: '@navTxtStyle',
-
-    // 页面背景配置
     backgroundColor: '@bgColor',
     backgroundTextStyle: '@bgTxtStyle',
     backgroundColorTop: '@bgColorTop',
     backgroundColorBottom: '@bgColorBottom',
-
-    // 下拉刷新配置
     enablePullDownRefresh: false,
     onReachBottomDistance: 50,
   },
@@ -23,4 +59,24 @@ export default defineUniPages({
       '^wd-(.*)': 'wot-design-uni/components/wd-$1/wd-$1.vue',
     },
   },
+  subPackages: [
+    {
+      root: 'pages-sub',
+      pages: [
+        {
+          path: '404',
+          type: 'page',
+          name: 'PageNotFound',
+          layout: 'default',
+          style: {
+            navigationStyle: 'custom',
+          },
+        },
+        {
+          path: 'webview',
+          type: 'page',
+        },
+      ],
+    },
+  ],
 })

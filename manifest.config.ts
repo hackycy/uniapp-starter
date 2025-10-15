@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { defineManifestConfig } from '@uni-helper/vite-plugin-uni-manifest'
+import { defineConfig } from '@uni-aide/vite-plugin-manifest'
 import { loadEnv } from 'vite'
 import { version } from './package.json'
 
@@ -7,7 +7,7 @@ const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 const { VITE_APP_NAME, VITE_APP_ID, VITE_APP_DESCRIPTION, VITE_WX_APPID, VITE_APP_PUBLIC_BASE } = env
 
-export default defineManifestConfig({
+export default defineConfig({
   'name': VITE_APP_NAME,
   'appid': VITE_APP_ID,
   'description': VITE_APP_DESCRIPTION,
