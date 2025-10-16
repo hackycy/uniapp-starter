@@ -16,14 +16,3 @@ const { getProgress } = useProgressSimulator({
     />
   </view>
 </template>
-
-<route lang="json">
-{
-  "name": "Login",
-  "layout": "default",
-  "style": {
-    "navigationBarTitleText": "Login",
-    "navigationStyle": "custom"
-  }
-}
-</route>

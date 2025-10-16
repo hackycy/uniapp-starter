@@ -35,13 +35,3 @@ const title = ref('Hello')
   color: #8f8f94;
 }
 </style>
-
-<route lang="json">
-{
-  "name": "Mine",
-  "layout": "navigation",
-  "style": {
-    "navigationBarTitleText": "我的"
-  }
-}
-</route>

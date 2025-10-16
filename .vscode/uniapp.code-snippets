@@ -20,18 +20,6 @@
       "",
       "<style lang=\"scss\" scoped></style>",
       "",
-      "<route lang=\"json\">",
-      "{",
-      "  \"name\": \"$1\",",
-      "  \"layout\": \"${2:default}\",",
-      "  \"type\": \"page\",",
-      "  \"meta\": {},",
-      "  \"style\": {",
-      "    \"navigationBarTitleText\": \"$3\",",
-      "    \"navigationStyle\": \"custom\"",
-      "  }",
-      "}",
-      "</route>"
     ],
     "description": "UniApp Page Template"
   },

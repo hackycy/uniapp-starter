@@ -13,14 +13,3 @@ onShow(() => {
 <template>
   <view><!-- TODO --></view>
 </template>
-
-<route lang="json">
-{
-  "name": "user",
-  "layout": "navigation",
-  "style": {
-    "navigationBarTitleText": "User",
-    "navigationStyle": "custom"
-  }
-}
-</route>

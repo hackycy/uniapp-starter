@@ -1,20 +1,26 @@
-<template>
-  <view class="container">
-    <view class="content">
-      <view class="error-msg">页面走丢了</view>
-      <view class="error-desc">抱歉，您访问的页面可能不存在</view>
-      <wd-button class="btn-text" @click="goBack">返回首页</wd-button>
-    </view>
-  </view>
-</template>
-
 <script lang="ts" setup>
 function goBack() {
   uni.redirectTo({
-    url: '/pages/index/index'
+    url: '/pages/index/index',
   })
 }
 </script>
+
+<template>
+  <view class="container">
+    <view class="content">
+      <view class="error-msg">
+        页面走丢了
+      </view>
+      <view class="error-desc">
+        抱歉，您访问的页面可能不存在
+      </view>
+      <wd-button class="btn-text" @click="goBack">
+        返回首页
+      </wd-button>
+    </view>
+  </view>
+</template>
 
 <style lang="scss">
 .container {
@@ -46,13 +52,3 @@ function goBack() {
   }
 }
 </style>
-
-<route lang="json">
-{
-  "name": "PageNotFound",
-  "layout": "default",
-  "style": {
-    "navigationStyle": "custom"
-  }
-}
-</route>

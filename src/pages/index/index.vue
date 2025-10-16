@@ -54,14 +54,3 @@ onShow((options) => {
   color: #8f8f94;
 }
 </style>
-
-<route lang="json">
-{
-  "name": "Home",
-  "type": "home",
-  "layout": "navigation",
-  "style": {
-    "navigationBarTitleText": "首页"
-  }
-}
-</route>
