@@ -92,11 +92,11 @@ export async function invokeGuards(args: any, router: Router) {
       result = await res
     }
     else {
-      result = res || result
+      result = res === false ? res : result
     }
 
-    if (res === false) {
-      return
+    if (result === false) {
+      return Promise.reject(new Error('Navigation aborted'))
     }
   }
 }
