@@ -3,6 +3,7 @@ import { readFile } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import UniManifest from '@uni-aide/vite-plugin-manifest'
+import UniMockComponent from '@uni-aide/vite-plugin-mock-component'
 import UniPages from '@uni-aide/vite-plugin-pages'
 // import Uni from '@dcloudio/vite-plugin-uni'
 // ESM re-export @dcloudio/vite-plugin-uni
@@ -41,6 +42,8 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       Uni(),
       // https://github.com/antfu/unocss
       UnoCSS(),
+      // Fix https://github.com/dcloudio/uni-app/issues/4604
+      UniMockComponent(),
       // https://github.com/vbenjs/vite-plugin-html
       UNI_PLATFORM === 'h5'
       && createHtmlPlugin({
@@ -60,28 +63,6 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
         gzipSize: true,
         brotliSize: true,
       }),
-      // Fix https://github.com/dcloudio/uni-app/issues/4604
-      {
-        name: 'vite-plugin-uni-polyfill',
-        transform(code, id) {
-          if (!id.endsWith('@dcloudio/uni-mp-vue/dist/vue.runtime.esm.js')) {
-            return
-          }
-
-          code += `
-          // Vue 3 components mock
-          function createMockComponent(name) {
-            return {
-              setup() {
-                throw new Error("[vite-plugin-uni-polyfill] " + name + " It is not supported in the current version of Vue that Uni App relies on. It's provided to avoid compiler errors.")
-              }
-            }
-          }
-          export var TransitionGroup = /*#__PURE__*/ createMockComponent('TransitionGroup')
-          `
-          return code
-        },
-      },
       // 微信JS接口安全域名验证文件支持, 用于本地开发内网穿透调试使用
       UNI_PLATFORM === 'h5'
       && mode === 'development' && {
