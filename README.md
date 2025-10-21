@@ -7,7 +7,7 @@
 ## ✨ 特性 (Features)
 
 - 🔧 基于 Vite 构建，按需插件组合，启动 & 构建快速
-- 📦 集成 `@uni-helper` 系列：自动生成 pages / layouts / manifest，约定式页面 & 布局
+- 📦 高度工程化，自动生成 pages / layouts / manifest，约定式页面 & 布局
 - 🎨 UnoCSS 原子化 + 自定义 Icon 集成（`src/assets/icons`）
 - 🧩 主题系统：预设多主题色，可运行时切换（Pinia 持久化）
 - 🧭 自封装 Router（轻量仿 Vue Router API + 守卫体系 + 登录拦截）
