@@ -110,6 +110,7 @@
     "tsx": "^4.20.4",
     "typescript": "^5.9.2",
     "unocss": "^65.5.0",
+    "unplugin-mp-verify-file-serve": "^0.0.1",
     "vite": "5.2.8",
     "vite-plugin-html": "^3.2.2",
     "vue-tsc": "^3.0.6"

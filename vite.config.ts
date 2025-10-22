@@ -1,5 +1,4 @@
 import type { ConfigEnv, ProxyOptions, UserConfig } from 'vite'
-import { readFile } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import UniManifest from '@uni-aide/vite-plugin-manifest'
@@ -12,6 +11,7 @@ import UniLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import dayjs from 'dayjs'
 import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
+import MPVerifyFileServe from 'unplugin-mp-verify-file-serve/vite'
 import { loadEnv } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { version } from './package.json'
@@ -65,30 +65,9 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       }),
       // 微信JS接口安全域名验证文件支持, 用于本地开发内网穿透调试使用
       UNI_PLATFORM === 'h5'
-      && mode === 'development' && {
-        name: 'mp-verify-file-serve-plugin',
-        configureServer(server) {
-          server.middlewares.use((req, res, next) => {
-            if (req.originalUrl?.startsWith('/MP_') && req.originalUrl.endsWith('.txt')) {
-              // 放置到 /node_modules/MP_verify_XXXXXX.txt 或 自行更改
-              const filePath = path.join(process.cwd(), 'node_modules', req.originalUrl)
-              readFile(filePath, 'utf-8', (err, data) => {
-                if (err) {
-                  res.statusCode = 500
-                  res.end('Internal Server Error')
-                }
-                else {
-                  res.setHeader('Content-Type', 'text/plain')
-                  res.end(data)
-                }
-              })
-            }
-            else {
-              next()
-            }
-          })
-        },
-      },
+      && MPVerifyFileServe({
+        serveDir: 'node_modules',
+      }),
     ],
     define: {
       __APP_INFO__: JSON.stringify({
