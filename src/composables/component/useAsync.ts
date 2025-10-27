@@ -1,4 +1,4 @@
-import { isEmpty as _isEmpty } from 'radashi'
+import { debounce as _debounce, isEmpty as _isEmpty } from 'radashi'
 import { ref } from 'vue'
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error' | 'empty'
@@ -16,6 +16,8 @@ export interface UseAsyncOptions<T> {
   maxRetries?: number
   /* 重试延迟时间(毫秒) */
   retryDelay?: number
+  /* 防抖开启时间(毫秒) */
+  debounce?: number
 
   /* Event */
   onComplete?: () => void
@@ -33,6 +35,7 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
     immediate = true,
     maxRetries = 3,
     retryDelay = 1000,
+    debounce,
     onComplete,
     onError,
     onSuccess,
@@ -98,7 +101,7 @@ export function useAsync<T = any>(factoryFn: () => Promise<T>, options: UseAsync
     stateRef,
     errorRef,
     dataRef,
-    run,
+    run: typeof debounce === 'number' ? _debounce({ delay: debounce }, run) : run,
     isIdle: () => stateRef.value === 'idle',
     isLoading: () => stateRef.value === 'loading',
     isError: () => stateRef.value === 'error',
