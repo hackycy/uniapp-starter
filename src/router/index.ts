@@ -6,14 +6,7 @@ import { pages, subPackages } from '~uni-pages'
 import { useCallbacks } from '@/composables/web/useCallbacks'
 import { parseURL } from '@/utils/uri'
 import { setupRouterGuard } from './guard'
-import {
-  getCurrentPageRoute,
-  invokeGuards,
-  navigateTo,
-  routeKey,
-  routerKey,
-  START_LOCATION_NORMALIZED,
-} from './helper'
+import { getCurrentPageRoute, invokeGuards, navigateTo, routeKey, routerKey, START_LOCATION_NORMALIZED } from './helper'
 
 export * from './core'
 
@@ -31,7 +24,7 @@ function createRouter(): Router & ObjectPlugin {
   const readyHandlers = useCallbacks<OnReadyCallback>()
   let ready: boolean = false
 
-  function markAsReady(err?: unknown) {
+  function markAsReady(err?: unknown): unknown {
     if (!ready) {
       // still not ready if an error happened
       ready = !err
@@ -42,19 +35,48 @@ function createRouter(): Router & ObjectPlugin {
     return err
   }
 
+  function triggerError(error: unknown): Promise<void> {
+    markAsReady(error)
+    return Promise.reject(error)
+  }
+
   const router: ObjectPlugin & Router = {
     guards: [],
-    push(to) {
+    async push(to) {
       return navigateTo(to, this, 'push')
+        .then(() => {
+          markAsReady()
+        })
+        .catch((error) => {
+          return triggerError(error)
+        })
     },
-    replace(to) {
+    async replace(to) {
       return navigateTo(to, this, 'replace')
+        .then(() => {
+          markAsReady()
+        })
+        .catch((error) => {
+          return triggerError(error)
+        })
     },
-    switchTab(to) {
+    async switchTab(to) {
       return navigateTo(to, this, 'switchTab')
+        .then(() => {
+          markAsReady()
+        })
+        .catch((error) => {
+          return triggerError(error)
+        })
     },
-    reLaunch(to) {
+    async reLaunch(to) {
       return navigateTo(to, this, 'reLaunch')
+        .then(() => {
+          markAsReady()
+        })
+        .catch((error) => {
+          return triggerError(error)
+        })
     },
     back(to) {
       return uni.navigateBack(to)
@@ -92,7 +114,6 @@ function createRouter(): Router & ObjectPlugin {
         onShow(options?: Recordable) {
           if (this.$mpType === 'page') {
             const route = getCurrentPageRoute(router)
-            // 非页面切换则无需更新路由
             if (route.path !== currentRoute.value.path) {
               currentRoute.value = route
             }
@@ -122,9 +143,12 @@ function createRouter(): Router & ObjectPlugin {
       })
     },
     route: currentRoute,
-    routes: [...pages, ...subPackages.reduce((arr, cur) => {
-      return arr.concat(cur.pages)
-    }, [])],
+    routes: [
+      ...pages,
+      ...subPackages.reduce((arr, cur) => {
+        return arr.concat(cur.pages)
+      }, []),
+    ],
   }
 
   return router
