@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { defineConfig } from '@uni-aide/vite-plugin-manifest'
+import { defineConfig } from '@uni-aide/unplugin-uni-manifest'
 import { loadEnv } from 'vite'
 import { version } from './package.json'
 

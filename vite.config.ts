@@ -1,9 +1,9 @@
 import type { ConfigEnv, ProxyOptions, UserConfig } from 'vite'
 import path from 'node:path'
 import process from 'node:process'
-import UniManifest from '@uni-aide/vite-plugin-manifest'
+import UniManifest from '@uni-aide/unplugin-uni-manifest/vite'
+import UniPages from '@uni-aide/unplugin-uni-pages/vite'
 import UniMockComponent from '@uni-aide/vite-plugin-mock-component'
-import UniPages from '@uni-aide/vite-plugin-pages'
 // import Uni from '@dcloudio/vite-plugin-uni'
 // ESM re-export @dcloudio/vite-plugin-uni
 import Uni from '@uni-helper/plugin-uni'
@@ -30,9 +30,8 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
 
   return {
     plugins: [
-      // https://github.com/uni-helper/vite-plugin-uni-manifest
+      // https://github.com/hackycy/uni-aide
       UniManifest(),
-      // https://github.com/uni-helper/vite-plugin-uni-pages
       UniPages(),
       // https://github.com/uni-helper/vite-plugin-uni-layouts
       UniLayouts({

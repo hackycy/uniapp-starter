@@ -1,7 +1,7 @@
 // @ts-check
 import { copyFileSync, existsSync } from 'node:fs'
-import { checkManifestJsonFileSync } from '@uni-aide/vite-plugin-manifest'
-import { checkPagesJsonFileSync } from '@uni-aide/vite-plugin-pages'
+import { checkManifestJsonFileSync } from '@uni-aide/unplugin-uni-manifest'
+import { checkPagesJsonFileSync } from '@uni-aide/unplugin-uni-pages'
 import { getRootPath } from './utils.mjs'
 
 await (async () => {

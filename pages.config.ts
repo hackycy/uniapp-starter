@@ -1,4 +1,4 @@
-import { defineConfig } from '@uni-aide/vite-plugin-pages'
+import { defineConfig } from '@uni-aide/unplugin-uni-pages'
 
 export default defineConfig({
   pages: [
