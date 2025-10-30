@@ -49,42 +49,9 @@
 1. 环境要求：Node >= 18，推荐使用 `pnpm`
 2. 克隆项目：
 ```bash
-git clone https://github.com/hackycy/uniapp-starter.git
-cd uniapp-starter
+npx degit hackycy/uniapp-starter my-app
+cd my-app
 pnpm i
-```
-3. 启动（H5 默认平台）：
-```bash
-pnpm dev:h5
-```
-4. 其它常用平台（任选其一）：
-```bash
-pnpm dev:mp-weixin      # 微信小程序
-pnpm dev:mp-alipay      # 支付宝小程序
-pnpm dev:mp-baidu       # 百度
-pnpm dev:mp-toutiao     # 头条
-pnpm dev:mp-qq          # QQ
-pnpm dev:mp-kuaishou    # 快手
-pnpm dev:mp-lark        # 飞书
-pnpm dev:mp-xhs         # 小红书
-pnpm dev:quickapp-webview
-pnpm dev:h5:ssr         # H5 SSR 模式
-```
-
-构建：
-
-```bash
-pnpm build:h5
-pnpm build:mp-weixin
-pnpm build:h5:ssr
-```
-
-类型检查 / 语法检查：
-
-```bash
-pnpm type-check
-pnpm lint
-pnpm lint:fix
 ```
 
 ## 🧩 路由说明
@@ -152,51 +119,6 @@ import { storage } from '@/utils/cache'
 storage.set('TOKEN', 'xxx', 3600)
 const token = storage.get('TOKEN')
 ```
-
-## 🛠 常用指令 & 脚本 (Scripts)
-
-| 分类 | 命令                   | 说明                    |
-| ---- | ---------------------- | ----------------------- |
-| 开发 | `pnpm dev:h5`          | H5 调试                 |
-| 开发 | `pnpm dev:mp-weixin`   | 微信小程序              |
-| 开发 | `pnpm dev:h5:ssr`      | H5 SSR                  |
-| 构建 | `pnpm build:h5`        | 构建 H5                 |
-| 构建 | `pnpm build:mp-weixin` | 构建微信小程序          |
-| 质量 | `pnpm type-check`      | TS 校验                 |
-| 质量 | `pnpm lint`            | ESLint 检查             |
-| 质量 | `pnpm lint:fix`        | 自动修复                |
-| 版本 | `pnpm release`         | 使用 bumpp 语义版本提升 |
-
-## 🔐 环境变量 (Env)
-
-在 `.env` / `.env.xxx` 内配置：
-
-| 变量                  | 用途                                                        |
-| --------------------- | ----------------------------------------------------------- |
-| `VITE_APP_NAME`       | 项目名称 (H5 注入 html title)                               |
-| `VITE_APP_SHORT_NAME` | 缓存前缀                                                    |
-| `VITE_APP_PORT`       | 本地开发端口                                                |
-| `VITE_APP_PROXY`      | 开发代理配置 (JSON 数组，如 `[["/api","https://xxx.com"]]`) |
-| `VITE_API_BASE_URL`   | 接口基础域名                                                |
-| `VITE_API_PATH`       | 接口路径前缀                                                |
-| `VITE_DEVTOOL`        | 是否开启 vConsole ('true'/'false')                          |
-| `VITE_OPENWX_APPID`   | H5 微信开放平台 AppId（仅 H5 注入）                         |
-| `VITE_WX_APPID`       | 微信小程序 AppId（仅 MP-WEIXIN 注入）                       |
-
-## 🧪 代码规范
-
-- ESLint + Prettier + Antfu 规则
-- 统一使用 `pnpm`（preinstall 保护）
-- 提交前建议运行：`pnpm lint && pnpm type-check`
-
-## 📦 第三方库
-
-- 构建：Vite / @uni-helper/plugin-uni
-- 状态：Pinia
-- 网络：alova
-- 组件：wot-design-uni
-- 样式：UnoCSS + SCSS
-- 工具：radashi / dayjs / vueuse
 
 ## 🔌 自定义图标
 
