@@ -89,12 +89,11 @@ export function useProgressSimulator(options?: ProgressOptions) {
     else {
       // 模拟自然完成的冲刺效果
       progressRef.value += (1 - progressRef.value) * 0.3
-    }
 
-    // 延迟重置进度条
-    completionTimer = setTimeout(() => {
-      progressRef.value = 0
-    }, cfg.completionSpeed) as unknown as number
+      completionTimer = setTimeout(() => {
+        progressRef.value = 1
+      }, cfg.completionSpeed) as unknown as number
+    }
   }
 
   const updateProgress = (value: number) => {
