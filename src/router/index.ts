@@ -147,7 +147,7 @@ function createRouter(): Router & ObjectPlugin {
       ...pages,
       ...subPackages.reduce((arr, cur) => {
         return arr.concat(cur.pages)
-      }, []),
+      }, [] as Recordable[]),
     ],
   }
 
