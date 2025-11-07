@@ -77,7 +77,8 @@
     "vue": "^3.4.21",
     "vue-i18n": "^9.1.9",
     "wechat-open-js-sdk": "^0.0.6",
-    "wot-design-uni": "^1.12.4"
+    "wot-design-uni": "^1.12.4",
+    "z-paging": "^2.8.8"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
