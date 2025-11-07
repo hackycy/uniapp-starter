@@ -48,3 +48,18 @@ export interface TabBarItem {
    */
   badge?: number | 'dot'
 }
+
+/**
+ * TabBar 配置接口
+ */
+export interface TabBarConfig {
+  /**
+   * TabBar 策略
+   */
+  strategy: TabBarStrategy
+
+  /**
+   * TabBar 项配置
+   */
+  items: TabBarItem[]
+}
