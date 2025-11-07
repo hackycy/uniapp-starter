@@ -1,9 +1,19 @@
 <script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
 import { useRouter } from '@/router'
+import { TabBarStrategy } from './types'
 import { useTabBarInner } from './useTabBar'
 
 const router = useRouter()
-const { getTabBar, getShowTabBar, getCurrentPagePath } = useTabBarInner()
+const { getTabBar, getShowTabBar, getCurrentPagePath, getStrategy } = useTabBarInner()
+
+onLoad(() => {
+  // #ifdef APP-PLUS
+  if ([TabBarStrategy.CUSTOM, TabBarStrategy.NONE].includes(getStrategy.value)) {
+    uni.hideTabBar()
+  }
+  // #endif
+})
 
 function handleTabChange(arg: Recordable) {
   if (getCurrentPagePath.value === arg.value) {

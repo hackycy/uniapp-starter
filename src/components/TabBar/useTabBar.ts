@@ -1,5 +1,4 @@
 import type { TabBarItem } from './types'
-import { onLoad } from '@dcloudio/uni-app'
 import { computed, reactive } from 'vue'
 import { useRoute } from '@/router'
 import { strategy, tabBarItems } from '@/settings/tabbarSettings'
@@ -29,14 +28,6 @@ export function useTabBarInner() {
       return isPageTabBar(getCurrentPagePath.value!)
     }
     return false
-  })
-
-  onLoad(() => {
-    // #ifdef APP-PLUS
-    if ([TabBarStrategy.CUSTOM, TabBarStrategy.NONE].includes(getStrategy.value)) {
-      uni.hideTabBar()
-    }
-    // #endif
   })
 
   return {
