@@ -28,7 +28,9 @@ export function useScript(opt: ScriptOptions) {
       }
 
       script.src = opt.src
-      opt.id && (script.id = opt.id)
+      if (opt.id) {
+        script.id = `${opt.id}`
+      }
 
       isLoading.value = true
       document.head.appendChild(script)
@@ -36,7 +38,9 @@ export function useScript(opt: ScriptOptions) {
   })
 
   onUnmounted(() => {
-    script && script.remove()
+    if (script) {
+      script.remove()
+    }
   })
 
   return {
