@@ -9,15 +9,6 @@ export default defineConfig({
       layout: 'navigation',
       style: {
         navigationBarTitleText: '首页',
-      },
-    },
-    {
-      path: 'pages/login',
-      type: 'page',
-      name: 'Login',
-      layout: 'default',
-      style: {
-        navigationBarTitleText: 'Login',
         // #ifdef H5
         navigationStyle: 'custom',
         // #endif
@@ -30,7 +21,9 @@ export default defineConfig({
       layout: 'navigation',
       style: {
         navigationBarTitleText: 'User',
+        // #ifdef H5
         navigationStyle: 'custom',
+        // #endif
       },
     },
     {
@@ -40,6 +33,21 @@ export default defineConfig({
       layout: 'navigation',
       style: {
         navigationBarTitleText: '我的',
+        // #ifdef H5
+        navigationStyle: 'custom',
+        // #endif
+      },
+    },
+    {
+      path: 'pages/login',
+      type: 'page',
+      name: 'Login',
+      layout: 'default',
+      style: {
+        navigationBarTitleText: 'Login',
+        // #ifdef H5
+        navigationStyle: 'custom',
+        // #endif
       },
     },
   ],
