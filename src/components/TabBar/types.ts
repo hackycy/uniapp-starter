@@ -1,7 +1,10 @@
+/**
+ * TabBar 使用策略
+ */
 export enum TabBarStrategy {
   // 不显示
   NONE = 0,
-  // 原生，需定义在pages.config.ts
+  // 原生，需定义在pages.config.ts，代码配置可忽略
   NATIVE = 1,
   // 自定义
   CUSTOM = 2,
@@ -62,4 +65,12 @@ export interface TabBarConfig {
    * TabBar 项配置
    */
   items: TabBarItem[]
+}
+
+export interface Props {
+  /**
+   * 自定义 TabBar 配置
+   * 如果不传，则使用全局默认配置
+   */
+  config?: TabBarConfig
 }

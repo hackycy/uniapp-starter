@@ -1,17 +1,9 @@
 <script setup lang="ts">
-import type { TabBarConfig } from './types'
+import type { Props } from './types'
 import { onLoad } from '@dcloudio/uni-app'
 import { useRouter } from '@/router'
 import { TabBarStrategy } from './types'
 import { useTabBarInner } from './useTabBar'
-
-interface Props {
-  /**
-   * 自定义 TabBar 配置
-   * 如果不传，则使用全局默认配置
-   */
-  config?: TabBarConfig
-}
 
 const props = defineProps<Props>()
 
