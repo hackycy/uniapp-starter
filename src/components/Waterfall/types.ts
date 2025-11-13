@@ -22,9 +22,10 @@ export const basicProps = {
   /**
    * 列数
    */
-  column: {
-    type: Number,
+  columns: {
+    type: [Number, String] as PropType<number | string>,
     default: 2,
+    validator: (value: number | string) => Number(value) >= 2,
   },
   /**
    * 注意不要覆盖display, position等可能影响布局的样式
