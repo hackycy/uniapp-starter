@@ -8,14 +8,14 @@ export const basicProps = {
     type: Array as PropType<WaterfallItem[]>,
     default: () => [],
   },
-  rowKey: {
+  itemKey: {
     type: [String, Number] as PropType<string | number>,
     default: 'id',
   },
   /**
    * 每个子项的添加延迟时间，单位 ms
    */
-  itemDelay: {
+  delay: {
     type: Number,
     default: 50,
   },
