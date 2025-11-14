@@ -23,7 +23,7 @@ const casePagesRef = ref<CasePage[]>([
     title: '瀑布流',
     icon: 'i-icon-park-outline-waterfalls-h',
     click: () => {
-      router.push('/pages/demo/waterfall')
+      router.push('/pages/demo/waterfall-flow')
     },
   },
   {
