@@ -3,4 +3,7 @@
  *
  * @description 用于 unocss safelist，防止图标被 tree-shake 掉
  */
-export default []
+export default [
+  'i-lineicons-turborepo',
+  'i-mdi-github-face',
+]

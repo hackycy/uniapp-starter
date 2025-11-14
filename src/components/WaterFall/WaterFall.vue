@@ -138,6 +138,10 @@ function isSameItem(a?: WaterfallItem, b?: WaterfallItem) {
     return aId === bId
   }
 
+  if (!a || !b) {
+    return false
+  }
+
   return a === b
 }
 
@@ -224,6 +228,7 @@ watch(getColumns, (newCount, oldCount) => {
 
 onMounted(() => {
   isMountedRef.value = true
+  initializeColumns()
 
   if (pendingSplitRef.value || tmpItemsRef.value.length) {
     pendingSplitRef.value = false
@@ -263,7 +268,7 @@ export default {
       :class="[customColumnClass]"
       :style="customColumnStyle"
     >
-      <slot :name="columnId" :column-idx="index" />
+      <slot :name="columnId" :column-idx="index" :items="waterfallItemColumnsRef[index]" />
     </view>
   </view>
 </template>

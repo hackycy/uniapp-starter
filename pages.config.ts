@@ -1,38 +1,47 @@
 import { defineConfig } from '@uni-aide/unplugin-uni-pages'
 
+function createDemoPages(): any {
+  const list: { name: string, title: string }[] = [
+    {
+      name: 'waterfall',
+      title: '瀑布流',
+    },
+  ]
+
+  return list.map((item) => {
+    return {
+      path: `pages/demo/${item.name}`,
+      name: `Demo-${item.name}`,
+      layout: 'default',
+      style: {
+        navigationBarTitleText: item.title,
+        // #ifdef H5
+        navigationStyle: 'custom',
+        // #endif
+      },
+    }
+  })
+}
+
 export default defineConfig({
   pages: [
     {
-      path: 'pages/index/index',
-      type: 'home',
+      path: 'pages/index',
       name: 'Home',
       layout: 'navigation',
       style: {
-        navigationBarTitleText: '首页',
+        navigationBarTitleText: '案例',
         // #ifdef H5
         navigationStyle: 'custom',
         // #endif
       },
     },
     {
-      path: 'pages/index/user',
-      type: 'page',
-      name: 'user',
+      path: 'pages/about',
+      name: 'About',
       layout: 'navigation',
       style: {
-        navigationBarTitleText: 'User',
-        // #ifdef H5
-        navigationStyle: 'custom',
-        // #endif
-      },
-    },
-    {
-      path: 'pages/mine/index',
-      type: 'page',
-      name: 'Mine',
-      layout: 'navigation',
-      style: {
-        navigationBarTitleText: '我的',
+        navigationBarTitleText: '关于',
         // #ifdef H5
         navigationStyle: 'custom',
         // #endif
@@ -50,6 +59,8 @@ export default defineConfig({
         // #endif
       },
     },
+    // 案例页面
+    ...createDemoPages(),
   ],
   globalStyle: {
     navigationBarBackgroundColor: '@navBgColor',
