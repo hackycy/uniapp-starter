@@ -44,7 +44,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "node ./scripts/postinstall.mjs",
+    "postinstall": "tsx ./scripts/postinstall.ts",
     "uvm": "npx @dcloudio/uvm@latest",
     "release": "bumpp"
   },

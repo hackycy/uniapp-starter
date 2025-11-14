@@ -6,6 +6,6 @@ import process from 'node:process'
  * Get user root directory
  * @param {string[]} dir file path
  */
-export function getRootPath(...dir) {
+export function getRootPath(...dir: string[]) {
   return path.resolve(process.cwd(), ...dir)
 }

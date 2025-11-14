@@ -2,7 +2,7 @@
 import { copyFileSync, existsSync } from 'node:fs'
 import { checkManifestJsonFileSync } from '@uni-aide/unplugin-uni-manifest'
 import { checkPagesJsonFileSync } from '@uni-aide/unplugin-uni-pages'
-import { getRootPath } from './utils.mjs'
+import { getRootPath } from './utils'
 
 await (async () => {
   // 检测 manifest.json 和 pages.json 文件
