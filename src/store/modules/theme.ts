@@ -55,6 +55,7 @@ export const useThemeStore = defineStore('theme', {
     setThemeColor(color: string) {
       this.themeColor = color
       this.themeVars.colorTheme = color
+      storage.set(THEME_PRIMARY_COLOR_KEY, color)
     },
     /**
      * 初始化主题设定
