@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import FABack from '@/components/FABack/FABack.vue'
-import Waterfall from '@/components/Waterfall/Waterfall.vue'
+import WaterfallComp from '@/components/Waterfall/Waterfall.vue'
 
 interface GoodsItem {
   id: string
@@ -61,7 +61,7 @@ const goodsRef = ref<GoodsItem[]>([
 <template>
   <view class="box-border flex flex-col fixed top-0 left-0 right-0 bottom-0">
     <scroll-view scroll-y class="absolute top-0 left-0 right-0 bottom-0 p-[24rpx] box-border">
-      <Waterfall :model-value="goodsRef" :columns="2">
+      <WaterfallComp :model-value="goodsRef" :columns="2">
         <template v-for="colIndex in [0, 1]" :key="colIndex" #[`waterfall-column-${colIndex}`]="{ items }">
           <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
             <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm">
@@ -92,7 +92,7 @@ const goodsRef = ref<GoodsItem[]>([
             </view>
           </view>
         </template>
-      </Waterfall>
+      </WaterfallComp>
     </scroll-view>
 
     <!-- #ifdef H5 -->
