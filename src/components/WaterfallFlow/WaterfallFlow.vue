@@ -252,6 +252,42 @@ function reflow() {
   reflowWith(internalItemsRef.value)
 }
 
+function reflowFromIndex(startIndex: number) {
+  if (!internalItemsRef.value.length) {
+    return
+  }
+
+  const normalizedIndex = Math.max(0, startIndex)
+  if (normalizedIndex <= 0) {
+    reflow()
+    return
+  }
+
+  const itemsToReflow = internalItemsRef.value.slice(normalizedIndex)
+  if (!itemsToReflow.length) {
+    return
+  }
+
+  const hasAllIds = itemsToReflow.every(item => resolveId(item) !== undefined)
+  if (!hasAllIds) {
+    reflow()
+    return
+  }
+
+  const idsToReflow = new Set(itemsToReflow.map(item => resolveId(item)!))
+
+  // Remove affected items from columns so they can be reassigned
+  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map(column =>
+    column.filter((item) => {
+      const id = resolveId(item)
+      return !id || !idsToReflow.has(id)
+    }),
+  )
+
+  tmpItemsRef.value = [...cloneData(itemsToReflow), ...tmpItemsRef.value]
+  runSplit()
+}
+
 function clear() {
   tmpItemsRef.value = []
   initializeColumns()
@@ -280,7 +316,7 @@ function remove(itemId: string | number) {
   )
   tmpItemsRef.value = tmpItemsRef.value.filter(item => !predicate(item))
   internalItemsRef.value = internalItemsRef.value.filter(item => !predicate(item))
-  reflow()
+  reflowFromIndex(originalIndex)
 
   emit('item-removed', { item: removedItem, index: originalIndex })
 }

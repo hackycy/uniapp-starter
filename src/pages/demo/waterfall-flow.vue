@@ -5,71 +5,99 @@ import WaterfallFlow from '@/components/WaterfallFlow/WaterfallFlow.vue'
 
 interface GoodsItem {
   id: string
-  image: string
+  height: number
   title: string
   marketPrice: number
   sellPrice: number
   tag: string
 }
 
+const waterfallFlowRef = ref<InstanceType<typeof WaterfallFlow> | null>(null)
+
+const TITLE_POOL = [
+  '新奇周边灵感合集',
+  '便携轻户外装备',
+  '复古收纳桌面件',
+  '夏日早餐灵感包',
+  '手作香薰礼盒',
+  '旅行速干衣精选',
+  '数码随身配件',
+  '趣味互动盲盒',
+]
+
+const TAG_POOL = ['热销', '精选', '新品', '特惠', '限量']
+const PAGE_SIZE = 10
+
+let seed = 1
+
+function removeItem(itemId: string) {
+  waterfallFlowRef.value?.remove(itemId)
+}
+
+function randomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function createItem(): GoodsItem {
+  const title = TITLE_POOL[randomInt(0, TITLE_POOL.length - 1)]
+  const sellPrice = randomInt(19, 299)
+  return {
+    id: `goods-${seed++}`,
+    title,
+    sellPrice,
+    marketPrice: sellPrice + randomInt(10, 88),
+    tag: TAG_POOL[randomInt(0, TAG_POOL.length - 1)],
+    height: randomInt(160, 320),
+  }
+}
+
+function createItems(count = PAGE_SIZE) {
+  return Array.from({ length: count }, () => createItem())
+}
+
 // 精品推荐
-const goodsRef = ref<GoodsItem[]>([
-  {
-    id: 'goods-1',
-    image: 'https://img.alicdn.com/imgextra/i4/2210681560277/O1CN01du28AW1DuunTuNYw5_!!2210681560277.jpg_q50.jpg_.webp',
-    title: '烟台伴手礼海鲜零食组合手提袋尽享海鲜零食美味大礼包',
-    marketPrice: 68,
-    sellPrice: 58,
-    tag: '特产',
-  },
-  {
-    id: 'goods-2',
-    image: 'https://img.alicdn.com/imgextra/i3/1079518540/O1CN01xHA7KR2CxNUu1Z8Ni~hdr~_!!1079518540.heic_q50.jpg_.webp',
-    title: '烟台文创｜养马岛相机冰箱贴 獐岛 秦风崖 海岛日记 果冻海',
-    marketPrice: 128,
-    sellPrice: 99,
-    tag: '纪念品',
-  },
-  {
-    id: 'goods-3',
-    image: 'https://gw.alicdn.com/imgextra/O1CN01ZH5Pjv20nVZBhLfC0_!!6000000006894-0-mia.jpg_q50.jpg_.webp',
-    title: '山东烟台红富士苹果脆甜多汁冰糖心丑苹果当季新鲜水果整箱装包邮',
-    marketPrice: 128,
-    sellPrice: 99,
-    tag: '特产',
-  },
-  {
-    id: 'goods-4',
-    image: 'https://img.alicdn.com/imgextra/i2/2276447069/TB25goVX_nI8KJjSszgXXc8ApXa_!!2276447069.jpg',
-    title: '烟台蓬莱长岛旅游特产淡干金钩海米即食小虾米虾仁新货海鲜海产',
-    marketPrice: 58,
-    sellPrice: 39,
-    tag: '海鲜',
-  },
-  {
-    id: 'goods-5',
-    image:
-      'https://img.alicdn.com/imgextra/i3/2217552268461/O1CN01oRWmow2CNC9RgGBaW_!!4611686018427382957-0-item_pic.jpg_q50.jpg_.webp',
-    title: '可折叠露营车摆摊地摊小推车拉货专用取快递手推车营地户外野餐车',
-    marketPrice: 198,
-    sellPrice: 159,
-    tag: '户外',
-  },
-])
+const goodsRef = ref<GoodsItem[]>(createItems())
+const isLoadingMore = ref(false)
+
+function loadMore() {
+  if (isLoadingMore.value) {
+    return
+  }
+
+  isLoadingMore.value = true
+  setTimeout(() => {
+    goodsRef.value = [...goodsRef.value, ...createItems()]
+    isLoadingMore.value = false
+  }, 600)
+}
 </script>
 
 <template>
   <view class="box-border flex flex-col fixed top-0 left-0 right-0 bottom-0">
-    <scroll-view scroll-y class="absolute top-0 left-0 right-0 bottom-0 p-[24rpx] box-border">
-      <WaterfallFlow :model-value="goodsRef" :columns="2">
+    <scroll-view
+      scroll-y
+      lower-threshold="160"
+      class="absolute top-0 left-0 right-0 bottom-0 p-[24rpx] box-border"
+      @scrolltolower="loadMore"
+    >
+      <WaterfallFlow ref="waterfallFlowRef" :data-source="goodsRef" :columns="2" :delay="0">
         <template v-for="colIndex in [0, 1]" :key="colIndex" #[`waterfall-column-${colIndex}`]="{ items }">
           <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
-            <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm">
-              <image class="w-full" style="min-height: 80rpx" :src="item.image" mode="widthFix" />
+            <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
+              <view
+                class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
+                :style="{ height: `${item.height}rpx` }"
+              >
+                {{ item.height }}
+              </view>
 
               <view class="p-[16rpx] box-border">
                 <view class="text-[26rpx] text-label-primary mb-[12rpx] line-clamp-2 font-semibold">
                   {{ item.title }}
+                </view>
+
+                <view class="inline-flex items-center px-[12rpx] py-[4rpx] bg-primary-50 text-primary border-rd-[999rpx] text-[20rpx] mb-[12rpx]">
+                  {{ item.tag }}
                 </view>
 
                 <view class="flex items-baseline justify-between">
@@ -93,6 +121,10 @@ const goodsRef = ref<GoodsItem[]>([
           </view>
         </template>
       </WaterfallFlow>
+
+      <view v-if="isLoadingMore" class="text-center text-[24rpx] text-label-tertiary py-[24rpx]">
+        正在加载更多...
+      </view>
     </scroll-view>
 
     <!-- #ifdef H5 -->
