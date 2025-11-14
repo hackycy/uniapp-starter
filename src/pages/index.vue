@@ -26,6 +26,13 @@ const casePagesRef = ref<CasePage[]>([
     },
   },
   {
+    icon: 'i-ic-twotone-color-lens',
+    title: '主题切换',
+    click: () => {
+      router.push('/pages/demo/theme-switch')
+    },
+  },
+  {
     icon: 'i-simple-icons-unocss',
     title: 'UnoCSS 图标使用',
     click: () => {

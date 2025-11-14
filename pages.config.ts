@@ -18,6 +18,10 @@ function createDemoPages(): any {
       name: 'waterfall-flow',
       title: '瀑布流',
     },
+    {
+      name: 'theme-switch',
+      title: '主题切换',
+    },
   ]
 
   return list.map((item) => {
