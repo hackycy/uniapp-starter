@@ -4,6 +4,8 @@
 
 支持 公众号H5 / 微信小程序 / 多家小程序 等平台一套代码多端输出。
 
+预览地址: [http://gh.sooosin.com/uniapp-starter](http://gh.sooosin.com/uniapp-starter/)
+
 ## ✨ 特性 (Features)
 
 - 🔧 基于 Vite 构建，按需插件组合，启动 & 构建快速
