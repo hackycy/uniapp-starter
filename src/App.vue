@@ -24,5 +24,3 @@ onPageNotFound(() => {
   })
 })
 </script>
-
-<style lang="scss"></style>

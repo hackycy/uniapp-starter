@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from '@/router'
-import { setupDevtool } from '@/utils/env'
 
 const router = useRouter()
 
@@ -14,21 +13,35 @@ interface CasePage {
 const casePagesRef = ref<CasePage[]>([
   {
     icon: 'i-codicon-debug-console',
-    title: 'VConsole调试',
+    title: 'VConsole 调试面板',
     click: () => {
-      setupDevtool()
+      router.push('/pages/demo/vconsole')
+    },
+  },
+  {
+    icon: 'i-ic-twotone-data-object',
+    title: 'Wot-UI 组件库',
+    click: () => {
+      router.push('/pages/demo/wot-ui')
+    },
+  },
+  {
+    icon: 'i-simple-icons-unocss',
+    title: 'UnoCSS 图标使用',
+    click: () => {
+      router.push('/pages/demo/unocss-icons')
     },
   },
   {
     title: '瀑布流',
-    icon: 'i-icon-park-outline-waterfalls-h',
+    icon: 'i-icon-park-twotone-waterfalls-h',
     click: () => {
       router.push('/pages/demo/waterfall-flow')
     },
   },
   {
-    title: 'WebView',
-    icon: 'i-icon-park-outline-browser-chrome',
+    title: 'z-paging',
+    icon: 'i-ph-scribble-loop-bold',
   },
 ])
 
@@ -38,7 +51,7 @@ function handle(c: CasePage) {
 </script>
 
 <template>
-  <view class="relative min-h-screen box-border px-[24rpx] py-[28rpx]">
+  <view class="relative min-h-screen box-border px-[24rpx] py-[28rpx] bg-[radial-gradient(circle_at_25%_15%,#fff9f2_0%,#f3f6ff_58%,#ecf2ff_100%)]">
     <view class="mb-[28rpx] flex items-center justify-between">
       <view>
         <view class="text-[40rpx] font-semibold text-gray-900">
@@ -57,7 +70,7 @@ function handle(c: CasePage) {
       <view
         v-for="(item, idx) in casePagesRef"
         :key="`${item.title}-${idx}`"
-        class="relative overflow-hidden rounded-[22rpx] bg-white active:scale-[0.98] active:brightness-90 transition-transform duration-200"
+        class="relative overflow-hidden rounded-[22rpx] bg-white/95 border border-white/70 shadow-[0_18rpx_42rpx_rgba(15,23,42,0.08)] backdrop-blur-[3px] active:scale-[0.98] active:brightness-95 transition-transform duration-200"
         @tap="handle(item)"
       >
         <view class="block pb-[100%]" />
@@ -65,7 +78,7 @@ function handle(c: CasePage) {
           class="absolute inset-[14rpx] flex h-auto flex-col items-center justify-center rounded-[18rpx] px-[16rpx] text-center"
         >
           <view
-            class="mb-[16rpx] flex h-[132rpx] w-[132rpx] items-center justify-center rounded-full bg-white/80 shadow-md"
+            class="mb-[16rpx] flex h-[132rpx] w-[132rpx] items-center justify-center rounded-full bg-[#f5f7ff] shadow-md"
           >
             <view class="text-[64rpx] text-primary" :class="[item.icon]" />
           </view>

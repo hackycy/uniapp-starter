@@ -3,6 +3,18 @@ import { defineConfig } from '@uni-aide/unplugin-uni-pages'
 function createDemoPages(): any {
   const list: { name: string, title: string }[] = [
     {
+      name: 'wot-ui',
+      title: 'Wot-UI 组件库',
+    },
+    {
+      name: 'unocss-icons',
+      title: 'UnoCSS 图标使用',
+    },
+    {
+      name: 'vconsole',
+      title: 'VConsole 调试面板',
+    },
+    {
       name: 'waterfall-flow',
       title: '瀑布流',
     },
@@ -59,7 +71,7 @@ export default defineConfig({
         // #endif
       },
     },
-    // 案例页面
+    // 案例页面，使用可删除及demo下的测试页面
     ...createDemoPages(),
   ],
   globalStyle: {
