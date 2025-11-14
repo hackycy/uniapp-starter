@@ -62,7 +62,7 @@ function handle(c: CasePage) {
         </view>
       </view>
       <view class="flex h-[96rpx] w-[96rpx] items-center justify-center rounded-full bg-white/80 shadow-lg">
-        <view class="i-tabler-windmill text-[56rpx] text-primary animate-spin" />
+        <view class="i-icon-park-twotone-windmill-two text-[56rpx] text-primary animate-spin animate-duration-3000" />
       </view>
     </view>
 
