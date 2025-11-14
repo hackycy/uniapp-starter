@@ -3,7 +3,7 @@ import { defineConfig } from '@uni-aide/unplugin-uni-pages'
 function createDemoPages(): any {
   const list: { name: string, title: string }[] = [
     {
-      name: 'waterfall',
+      name: 'waterfall-flow',
       title: '瀑布流',
     },
   ]
