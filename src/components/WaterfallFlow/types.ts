@@ -1,11 +1,9 @@
-export type WaterfallItem = Recordable
-
 /**
  * 参考 https://github.com/umicro/uView/blob/master/uview-ui/components/u-waterfall/u-waterfall.vue
  */
 export const basicProps = {
-  modelValue: {
-    type: Array as PropType<WaterfallItem[]>,
+  dataSource: {
+    type: Array as PropType<any[]>,
     default: () => [],
   },
   itemKey: {

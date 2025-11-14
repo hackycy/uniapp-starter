@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import type { WaterfallItem } from './types'
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
 import { basicProps } from './types'
 import { cloneData, delay } from './utils'
 
 const props = defineProps(basicProps)
+
+const emit = defineEmits<{
+  (event: 'reflow-start'): void
+  (event: 'reflow-end'): void
+  (event: 'item-removed', payload: { item: any, index: number }): void
+}>()
 
 const getColumns = computed((): number => {
   return Number(props.columns)
@@ -23,19 +28,18 @@ const getDelay = computed((): number => {
   return Number.isFinite(val) && val > 0 ? val : 0
 })
 
-// 动态列数组
-const waterfallItemColumnsRef = ref<WaterfallItem[][]>([])
+// 动态列数组，用于存放分配后的数据及插槽渲染
+const waterfallItemColumnsRef = ref<any[][]>([])
 
-const internalItemsRef = ref<WaterfallItem[]>([])
-const tmpItemsRef = ref<WaterfallItem[]>([])
+// 内部数据源
+const internalItemsRef = ref<any[]>([])
+const tmpItemsRef = ref<any[]>([])
 
 const isSplittingRef = ref(false)
 const pendingSplitRef = ref(false)
 
 // 组件是否挂载完成
 const isMountedRef = ref(false)
-
-const getClonedValue = computed<WaterfallItem[]>(() => cloneData(props.modelValue ?? []))
 
 const instance = getCurrentInstance()
 
@@ -51,12 +55,17 @@ async function runSplit() {
   }
 
   isSplittingRef.value = true
+  emit('reflow-start')
+
   await splitLoop()
   isSplittingRef.value = false
 
   if (tmpItemsRef.value.length) {
     // 继续分配剩余数据
     await runSplit()
+  }
+  else {
+    emit('reflow-end')
   }
 }
 
@@ -85,8 +94,8 @@ async function splitLoop() {
   }
 }
 
-function syncLists(source: WaterfallItem[]) {
-  const map = new Map<string, WaterfallItem>()
+function syncLists(source: any[]) {
+  const map = new Map<string, any>()
   source.forEach((item) => {
     const id = resolveId(item)
     if (id) {
@@ -99,7 +108,7 @@ function syncLists(source: WaterfallItem[]) {
   }
 
   // 更新所有列中的数据
-  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map((column) => {
+  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map((column: any[]) => {
     return column.map((item) => {
       const id = resolveId(item)
       return id && map.has(id) ? cloneData(map.get(id)!) : item
@@ -111,13 +120,13 @@ function initializeColumns() {
   waterfallItemColumnsRef.value = Array.from({ length: getColumns.value }, () => [])
 }
 
-function reflowWith(items: WaterfallItem[]) {
+function reflowWith(items: any[]) {
   initializeColumns()
   tmpItemsRef.value = cloneData(items)
   runSplit()
 }
 
-function resolveId(item?: WaterfallItem) {
+function resolveId(item?: any) {
   if (!item) {
     return
   }
@@ -126,11 +135,11 @@ function resolveId(item?: WaterfallItem) {
   return val !== undefined && val !== null ? String(val) : undefined
 }
 
-function hasStableIds(items: WaterfallItem[]) {
+function hasStableIds(items: any[]) {
   return items.every(item => resolveId(item) !== undefined)
 }
 
-function isSameItem(a?: WaterfallItem, b?: WaterfallItem) {
+function isSameItem(a?: any, b?: any) {
   const aId = resolveId(a)
   const bId = resolveId(b)
 
@@ -145,6 +154,7 @@ function isSameItem(a?: WaterfallItem, b?: WaterfallItem) {
   return a === b
 }
 
+// 获取元素尺寸信息
 function getRect(selector: string): Promise<{ height: number } | null> {
   return new Promise((resolve) => {
     const query = instance?.proxy ? uni.createSelectorQuery().in(instance.proxy) : uni.createSelectorQuery()
@@ -164,7 +174,7 @@ function getRect(selector: string): Promise<{ height: number } | null> {
 }
 
 watch(
-  getClonedValue,
+  () => props.dataSource,
   (newVal, oldVal) => {
     const prev = Array.isArray(oldVal) ? oldVal : []
     internalItemsRef.value = cloneData(newVal)
@@ -215,6 +225,7 @@ watch(
   },
   {
     immediate: true,
+    deep: false,
   },
 )
 
@@ -236,15 +247,48 @@ onMounted(() => {
   }
 })
 
+// Exposed methods
+function reflow() {
+  reflowWith(internalItemsRef.value)
+}
+
+function clear() {
+  tmpItemsRef.value = []
+  initializeColumns()
+  internalItemsRef.value = []
+}
+
+function remove(itemId: string | number) {
+  const predicate = (item: any) => resolveId(item) === String(itemId)
+
+  let removedItem: any = null
+  let originalIndex = -1
+
+  // 查找数据中的位置
+  originalIndex = internalItemsRef.value.findIndex(item => predicate(item))
+  if (originalIndex !== -1) {
+    removedItem = internalItemsRef.value[originalIndex]
+  }
+
+  if (!removedItem) {
+    return
+  }
+
+  // 从内部数据源中移除
+  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map(column =>
+    column.filter(item => !predicate(item)),
+  )
+  tmpItemsRef.value = tmpItemsRef.value.filter(item => !predicate(item))
+  internalItemsRef.value = internalItemsRef.value.filter(item => !predicate(item))
+  reflow()
+
+  emit('item-removed', { item: removedItem, index: originalIndex })
+}
+
 defineExpose({
-  reflow: () => {
-    reflowWith(internalItemsRef.value)
-  },
-  clear: () => {
-    tmpItemsRef.value = []
-    initializeColumns()
-    internalItemsRef.value = []
-  },
+  reflow,
+  clear,
+  remove,
 })
 </script>
 
@@ -273,18 +317,18 @@ export default {
   </view>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .waterfall {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 24rpx;
+}
 
-  &__column {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 24rpx;
-  }
+.waterfall__column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24rpx;
 }
 </style>
