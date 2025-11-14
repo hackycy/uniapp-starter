@@ -19,7 +19,7 @@ import { version } from './package.json'
 // https://vitejs.dev/config/
 export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   const env = loadEnv(mode, process.cwd())
-  const { VITE_APP_PORT, VITE_APP_NAME, VITE_APP_PROXY } = env
+  const { VITE_APP_PORT, VITE_APP_NAME, VITE_APP_PROXY, VITE_VISUALIZER } = env
   const { UNI_PLATFORM } = process.env
 
   // /**
@@ -55,6 +55,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
       }),
       // https://github.com/btd/rollup-plugin-visualizer
       UNI_PLATFORM === 'h5'
+      && VITE_VISUALIZER === 'true'
       && mode === 'production'
       && visualizer({
         filename: './node_modules/.cache/visualizer/stats.html',
