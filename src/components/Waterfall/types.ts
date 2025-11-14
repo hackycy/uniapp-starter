@@ -41,10 +41,16 @@ export const basicProps = {
     type: String,
     default: '',
   },
+  /**
+   * 注意不要覆盖display, position等可能影响布局的样式
+   */
   customColumnClass: {
     type: String,
     default: '',
   },
+  /**
+   * 注意不要覆盖display, position等可能影响布局的样式
+   */
   customColumnStyle: {
     type: String,
     default: '',
