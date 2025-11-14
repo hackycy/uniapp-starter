@@ -3,6 +3,7 @@ import process from 'node:process'
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
 import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
+import Icons from './src/components/Icon/icon.data.ts'
 
 export default defineConfig({
   presets: [
@@ -40,7 +41,7 @@ export default defineConfig({
     // 支持css class组合，eg: `<div class="hover:(bg-gray-400 font-medium) font-(light mono)">测试 unocss</div>`
     transformerVariantGroup(),
   ],
-  safelist: [],
+  safelist: [...Icons],
   rules: [
     [
       'p-safe',
