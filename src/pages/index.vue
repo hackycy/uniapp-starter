@@ -59,7 +59,7 @@ const caseCategoriesRef = ref<CaseCategory[]>([
         title: '瀑布流',
         icon: 'i-icon-park-twotone-waterfalls-h',
         click: () => {
-          router.push('/pages/demo/waterfall-flow')
+          router.push('/pages/demo/waterfall')
         },
       },
       {

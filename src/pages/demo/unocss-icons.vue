@@ -24,7 +24,6 @@ onShow(() => {
       <text class="i-ph-alarm-bold text-[64rpx] m-[10rpx]" />
       <text class="i-ph-apple-logo-fill text-[64rpx] m-[10rpx] text-primary" />
       <text class="i-ph-battery-charging-fill text-[64rpx] m-[10rpx] text-yellow" />
-      <text class="i-ph-beer-bold text-[64rpx] m-[10rpx]" />
       <text class="i-ph-bell-fill text-[64rpx] m-[10rpx] text-orange" />
       <text class="i-ph-bicycle-bold text-[64rpx] m-[10rpx] text-purple" />
     </view>

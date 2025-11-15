@@ -3,7 +3,9 @@ import process from 'node:process'
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
 import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
-import Icons from './src/components/Icon/icon.data'
+// eslint-disable-next-line ts/ban-ts-comment
+// @ts-expect-error
+import Icons from './src/components/Icon/icon.data.ts'
 
 export default defineConfig({
   presets: [

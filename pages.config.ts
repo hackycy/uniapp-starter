@@ -15,7 +15,7 @@ function createDemoPages(): any {
       title: 'VConsole 调试面板',
     },
     {
-      name: 'waterfall-flow',
+      name: 'waterfall',
       title: '瀑布流',
     },
     {

@@ -30,6 +30,23 @@ const getDelay = computed((): number => {
 
 // 动态列数组，用于存放分配后的数据及插槽渲染
 const waterfallItemColumnsRef = ref<any[][]>([])
+const leftItemsRef = ref<any[]>([])
+const rightItemsRef = ref<any[]>([])
+
+watch(
+  () => waterfallItemColumnsRef.value,
+  (newVal) => {
+    console.log('waterfallItemColumnsRef changed:', newVal)
+    leftItemsRef.value = newVal[0] || []
+    rightItemsRef.value = newVal[1] || []
+    console.log('leftItemsRef:', leftItemsRef.value)
+    console.log('rightItemsRef:', rightItemsRef.value)
+  },
+  {
+    immediate: true,
+    deep: true,
+  },
+)
 
 // 内部数据源
 const internalItemsRef = ref<any[]>([])
@@ -44,6 +61,7 @@ const isMountedRef = ref(false)
 const instance = getCurrentInstance()
 
 async function runSplit() {
+  console.log('runSplit called', tmpItemsRef.value)
   if (isSplittingRef.value) {
     return
   }
@@ -341,14 +359,21 @@ export default {
 <template>
   <view class="waterfall" :class="customClass" :style="customStyle">
     <view
-      v-for="(columnId, index) in getColumnIds"
-      :id="columnId"
-      :key="columnId"
+      :id="getColumnIds[0]"
       class="waterfall__column"
       :class="[customColumnClass]"
       :style="customColumnStyle"
     >
-      <slot :name="columnId" :column-idx="index" :items="waterfallItemColumnsRef[index]" />
+      <slot name="waterfall-column-0" :items="leftItemsRef" />
+    </view>
+
+    <view
+      :id="getColumnIds[1]"
+      class="waterfall__column"
+      :class="[customColumnClass]"
+      :style="customColumnStyle"
+    >
+      <slot name="waterfall-column-1" :items="rightItemsRef" />
     </view>
   </view>
 </template>
