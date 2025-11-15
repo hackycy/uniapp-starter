@@ -1,13 +1,31 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import FABack from '@/components/FABack/FABack.vue'
 import { useTheme } from '@/composables/core/useTheme'
 import { Theme_Color_Presets } from '@/settings/designSetings'
 
-const { getPrimaryColor, setThemeColor } = useTheme()
+const { getPrimaryColor, setThemeColor, getCurrentTheme, toggleDarkMode } = useTheme()
+
+const darkModeRef = ref(getCurrentTheme.value === 'dark')
+
+watch(
+  () => darkModeRef.value,
+  (newVal) => {
+    toggleDarkMode(newVal)
+  },
+)
 </script>
 
 <template>
   <view class="min-h-screen flex-center flex-col p-[20rpx] gap-[20rpx]">
+    <view class="text-[32rpx] mb-[20rpx] text-label-primary font-semibold">
+      夜间模式
+    </view>
+
+    <view class="relative">
+      <wd-switch v-model="darkModeRef" />
+    </view>
+
     <view class="text-[32rpx] mb-[20rpx] text-label-primary font-semibold">
       主题切换示例
     </view>

@@ -47,7 +47,7 @@ function handleOpenRepo() {
 </script>
 
 <template>
-  <view class="min-h-screen box-border flex flex-col bg-[#f5f6fa] px-[28rpx] pb-safe pt-[40rpx]">
+  <view class="min-h-screen box-border flex flex-col bg-[#f5f6fa] px-[28rpx] pb-safe pt-[40rpx] dark:bg-[#060c1f]">
     <view
       class="rounded-[28rpx] bg-gradient-to-br from-[#6366f1] via-[#8b5cf6] to-[#ec4899] p-[32rpx] text-white shadow-lg"
     >
@@ -70,13 +70,13 @@ function handleOpenRepo() {
       <view
         v-for="item in highlights"
         :key="item.title"
-        class="rounded-[24rpx] bg-white p-[28rpx]"
+        class="rounded-[24rpx] bg-white p-[28rpx] dark:bg-[#10192c]"
       >
         <view class="flex flex-col items-start">
-          <view class="text-[30rpx] font-medium text-gray-900">
+          <view class="text-[30rpx] font-medium text-gray-900 dark:text-gray-100">
             {{ item.title }}
           </view>
-          <view class="mt-[8rpx] text-[24rpx] leading-[34rpx] text-gray-500">
+          <view class="mt-[8rpx] text-[24rpx] leading-[34rpx] text-gray-500 dark:text-gray-400">
             {{ item.description }}
           </view>
         </view>
@@ -109,13 +109,13 @@ function handleOpenRepo() {
     </view>
 
     <view class="rounded-[24rpx] px-[28rpx] py-[24rpx] text-center" style="margin-top: 200rpx">
-      <view class="text-[28rpx] font-medium text-gray-900">
+      <view class="text-[28rpx] font-medium text-gray-900 dark:text-gray-100">
         {{ appInfo.name }}
       </view>
-      <view class="mt-[6rpx] text-[24rpx] text-gray-500">
+      <view class="mt-[6rpx] text-[24rpx] text-gray-500 dark:text-gray-400">
         版本 {{ appInfo.version }}
       </view>
-      <view v-if="appInfo.release" class="mt-[4rpx] text-[22rpx] text-gray-400">
+      <view v-if="appInfo.release" class="mt-[4rpx] text-[22rpx] text-gray-400 dark:text-gray-500">
         构建于 {{ appInfo.release }}
       </view>
     </view>

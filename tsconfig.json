@@ -37,6 +37,8 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "types/**/*.d.ts"
+    "types/**/*.d.ts",
+    "uno.config.ts",
+    "vite.config.ts"
   ]
 }

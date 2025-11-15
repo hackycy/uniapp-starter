@@ -43,7 +43,7 @@ export default {
   <wd-tabbar
     v-if="getShowTabBar"
     :model-value="getCurrentPagePath"
-    bordered
+    :bordered="false"
     safe-area-inset-bottom
     placeholder
     fixed

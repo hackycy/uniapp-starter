@@ -3,12 +3,19 @@ import process from 'node:process'
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
 import { defineConfig, presetIcons, transformerDirectives, transformerVariantGroup } from 'unocss'
-import Icons from './src/components/Icon/icon.data.ts'
+import Icons from './src/components/Icon/icon.data'
 
 export default defineConfig({
   presets: [
     presetUni({
       attributify: false,
+      uno: {
+        presetOptions: {
+          dark: {
+            dark: '.wot-theme-dark',
+          },
+        },
+      },
     }),
     /**
      * https://icones.js.org/
