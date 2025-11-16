@@ -1,170 +1,264 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
-import { basicProps } from './types'
-import { cloneData, delay } from './utils'
 
-const props = defineProps(basicProps)
+type WaterfallItem = Record<string, any>
 
-const emit = defineEmits<{
-  (event: 'reflow-start'): void
-  (event: 'reflow-end'): void
-  (event: 'item-removed', payload: { item: any, index: number }): void
-}>()
-
-const getDelay = computed((): number => {
-  const val = Number(props.delay)
-  return Number.isFinite(val) && val > 0 ? val : 0
+const props = defineProps({
+  modelValue: {
+    type: Array as PropType<WaterfallItem[]>,
+    default: () => [],
+  },
+  addTime: {
+    type: [Number, String] as PropType<number | string>,
+    default: 50,
+  },
+  idKey: {
+    type: String,
+    default: 'id',
+  },
 })
 
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: WaterfallItem[]): void
+}>()
+
+const leftList = ref<WaterfallItem[]>([])
+const rightList = ref<WaterfallItem[]>([])
+const tempList = ref<WaterfallItem[]>([])
+const internalValue = ref<WaterfallItem[]>(cloneData(props.modelValue ?? []))
+const isMounted = ref(false)
+const isSplitting = ref(false)
+const pendingSplit = ref(false)
+
+const instance = getCurrentInstance()
 const uid = `waterfall-${Math.random().toString(36).slice(2, 10)}`
 const leftColumnId = `${uid}-left`
 const rightColumnId = `${uid}-right`
 const leftSelector = `#${leftColumnId}`
 const rightSelector = `#${rightColumnId}`
 
-const leftItemsRef = ref<any[]>([])
-const rightItemsRef = ref<any[]>([])
+const addDelay = computed(() => {
+  const value = Number(props.addTime)
+  return Number.isFinite(value) && value > 0 ? value : 0
+})
 
-// 内部数据源
-const internalItemsRef = ref<any[]>([])
-const tmpItemsRef = ref<any[]>([])
+const clonedValue = computed<WaterfallItem[]>(() => cloneData(props.modelValue ?? []))
 
-const isSplittingRef = ref(false)
-const pendingSplitRef = ref(false)
+watch(
+  clonedValue,
+  (newVal, oldVal) => {
+    const prev = Array.isArray(oldVal) ? oldVal : []
+    internalValue.value = cloneData(newVal)
 
-// 组件是否挂载完成
-const isMountedRef = ref(false)
+    if (!newVal.length) {
+      tempList.value = []
+      leftList.value = []
+      rightList.value = []
+      return
+    }
 
-const instance = getCurrentInstance()
+    const diff = newVal.length - prev.length
+
+    if (!prev.length) {
+      tempList.value = cloneData(newVal)
+      runSplit()
+      return
+    }
+
+    if (!hasStableIds([...prev, ...newVal])) {
+      reflowWith(newVal)
+      return
+    }
+
+    if (diff < 0) {
+      reflowWith(newVal)
+      return
+    }
+
+    const prefixMatches = prev.every((item, idx) => isSameItem(item, newVal[idx]))
+    if (!prefixMatches) {
+      reflowWith(newVal)
+      return
+    }
+
+    if (diff > 0) {
+      const appended = newVal.slice(prev.length)
+      if (appended.length) {
+        tempList.value = tempList.value.concat(cloneData(appended))
+        runSplit()
+      }
+    }
+
+    syncLists(newVal)
+  },
+  { immediate: true },
+)
+
+onMounted(() => {
+  isMounted.value = true
+  if (pendingSplit.value || tempList.value.length) {
+    pendingSplit.value = false
+    runSplit()
+  }
+})
 
 async function runSplit() {
-  if (isSplittingRef.value) {
+  if (isSplitting.value)
+    return
+  if (!isMounted.value) {
+    pendingSplit.value = true
     return
   }
 
-  // 组件未挂载完成，等待挂载完成后再执行分配
-  if (!isMountedRef.value) {
-    pendingSplitRef.value = true
-    return
-  }
-
-  isSplittingRef.value = true
-  emit('reflow-start')
-
+  isSplitting.value = true
   await splitLoop()
-  isSplittingRef.value = false
+  isSplitting.value = false
 
-  if (tmpItemsRef.value.length) {
-    // 继续分配剩余数据
-    await runSplit()
-  }
-  else {
-    emit('reflow-end')
+  if (tempList.value.length) {
+    runSplit()
   }
 }
 
 async function splitLoop() {
-  while (tmpItemsRef.value.length) {
+  while (tempList.value.length) {
     await nextTick()
 
-    // 获取各列高度
     const [leftRect, rightRect] = await Promise.all([
       getRect(leftSelector),
       getRect(rightSelector),
     ])
 
-    const item = tmpItemsRef.value.shift()
-    if (!item) {
+    const item = tempList.value.shift()
+    if (!item)
       break
-    }
 
     const leftHeight = (leftRect?.height as number | undefined) ?? 0
     const rightHeight = (rightRect?.height as number | undefined) ?? 0
 
     if (leftHeight <= rightHeight) {
-      leftItemsRef.value.push(item)
+      leftList.value.push(item)
     }
     else {
-      rightItemsRef.value.push(item)
+      rightList.value.push(item)
     }
 
-    // 判断是否需要延迟
-    if (tmpItemsRef.value.length && getDelay.value > 0) {
-      await delay(getDelay.value)
+    if (tempList.value.length && addDelay.value > 0) {
+      await delay(addDelay.value)
     }
   }
 }
 
-function syncLists(source: any[]) {
-  const map = new Map<string, any>()
+function syncLists(source: WaterfallItem[]) {
+  const map = new Map<string | number, WaterfallItem>()
   source.forEach((item) => {
     const id = resolveId(item)
-    if (id) {
-      map.set(id, item)
+    if (id !== undefined) {
+      map.set(id, cloneData(item))
     }
   })
 
-  if (!map.size) {
+  if (!map.size)
     return
-  }
 
-  leftItemsRef.value = leftItemsRef.value.map((item) => {
+  leftList.value = leftList.value.map((item) => {
     const id = resolveId(item)
-    if (id && map.has(id)) {
-      return map.get(id)
-    }
-    return item
+    return id !== undefined && map.has(id) ? cloneData(map.get(id)!) : item
   })
 
-  rightItemsRef.value = rightItemsRef.value.map((item) => {
+  rightList.value = rightList.value.map((item) => {
     const id = resolveId(item)
-    if (id && map.has(id)) {
-      return map.get(id)
-    }
-    return item
+    return id !== undefined && map.has(id) ? cloneData(map.get(id)!) : item
   })
 }
 
-function initializeColumns() {
-  leftItemsRef.value = []
-  rightItemsRef.value = []
-}
-
-function reflowWith(items: any[]) {
-  initializeColumns()
-  tmpItemsRef.value = cloneData(items)
+function reflowWith(data: WaterfallItem[]) {
+  leftList.value = []
+  rightList.value = []
+  tempList.value = cloneData(data)
   runSplit()
 }
 
-function resolveId(item?: any) {
-  if (!item) {
-    return
-  }
-
-  const val = item[props.itemKey]
-  return val !== undefined && val !== null ? String(val) : undefined
+function clear() {
+  tempList.value = []
+  leftList.value = []
+  rightList.value = []
+  internalValue.value = []
+  emit('update:modelValue', [])
 }
 
-function hasStableIds(items: any[]) {
-  return items.every(item => resolveId(item) !== undefined)
+function remove(id: string | number) {
+  const predicate = (item: WaterfallItem) => resolveId(item) === id
+  leftList.value = leftList.value.filter(item => !predicate(item))
+  rightList.value = rightList.value.filter(item => !predicate(item))
+  tempList.value = tempList.value.filter(item => !predicate(item))
+
+  const nextValue = internalValue.value.filter(item => !predicate(item))
+  internalValue.value = cloneData(nextValue)
+  emit('update:modelValue', cloneData(nextValue))
 }
 
-function isSameItem(a?: any, b?: any) {
-  const aId = resolveId(a)
-  const bId = resolveId(b)
-
-  if (aId !== undefined && bId !== undefined) {
-    return aId === bId
+function modify(id: string | number, key: string, value: unknown) {
+  const updater = (list: WaterfallItem[]) => {
+    const index = list.findIndex(item => resolveId(item) === id)
+    if (index !== -1) {
+      const next = { ...list[index], [key]: value }
+      list.splice(index, 1, next)
+    }
   }
 
-  if (!a || !b) {
-    return false
-  }
+  updater(leftList.value)
+  updater(rightList.value)
 
-  return a === b
+  const nextValue = internalValue.value.map((item) => {
+    if (resolveId(item) === id) {
+      return { ...item, [key]: value }
+    }
+    return item
+  })
+
+  internalValue.value = cloneData(nextValue)
+  emit('update:modelValue', cloneData(nextValue))
 }
 
-// 获取元素尺寸信息
+function reflow() {
+  reflowWith(internalValue.value)
+}
+
+function resolveId(item?: WaterfallItem) {
+  if (!item)
+    return undefined
+  const value = item[props.idKey]
+  return value !== undefined && value !== null ? (value as string | number) : undefined
+}
+
+function hasStableIds(list: WaterfallItem[]) {
+  return list.every(item => resolveId(item) !== undefined)
+}
+
+function isSameItem(a?: WaterfallItem, b?: WaterfallItem) {
+  const idA = resolveId(a)
+  const idB = resolveId(b)
+  if (idA !== undefined || idB !== undefined) {
+    return idA === idB
+  }
+
+  try {
+    return JSON.stringify(a) === JSON.stringify(b)
+  }
+  catch (error) {
+    return a === b
+  }
+}
+
+function cloneData<T>(data: T): T {
+  return JSON.parse(JSON.stringify(data))
+}
+
+function delay(ms: number) {
+  return new Promise<void>(resolve => setTimeout(resolve, ms))
+}
+
 function getRect(selector: string): Promise<{ height: number } | null> {
   return new Promise((resolve) => {
     const query = instance?.proxy ? uni.createSelectorQuery().in(instance.proxy) : uni.createSelectorQuery()
@@ -183,145 +277,13 @@ function getRect(selector: string): Promise<{ height: number } | null> {
   })
 }
 
-watch(
-  () => props.dataSource,
-  (newVal, oldVal) => {
-    const prev = Array.isArray(oldVal) ? oldVal : []
-    internalItemsRef.value = cloneData(newVal)
-
-    if (!newVal.length) {
-      tmpItemsRef.value = []
-      initializeColumns()
-      return
-    }
-
-    const diff = newVal.length - prev.length
-
-    if (!prev.length) {
-      tmpItemsRef.value = cloneData(newVal)
-      runSplit()
-      return
-    }
-
-    // 数据无法稳定识别，则全部重新分配
-    if (!hasStableIds([...prev, ...newVal])) {
-      reflowWith(newVal)
-      return
-    }
-
-    if (diff < 0) {
-      reflowWith(newVal)
-      return
-    }
-
-    // 检查已有数据是否一致
-    const prevMatches = prev.every((item, idx) => isSameItem(item, newVal[idx]))
-    // 有数据变更，则全部重新分配
-    if (!prevMatches) {
-      reflowWith(newVal)
-      return
-    }
-
-    // 增量更新
-    if (diff > 0) {
-      const addedItems = newVal.slice(prev.length)
-      if (addedItems.length) {
-        tmpItemsRef.value.push(...addedItems)
-        runSplit()
-      }
-    }
-
-    syncLists(newVal)
-  },
-  {
-    immediate: true,
-  },
-)
-
-onMounted(() => {
-  isMountedRef.value = true
-  initializeColumns()
-
-  if (pendingSplitRef.value || tmpItemsRef.value.length) {
-    pendingSplitRef.value = false
-    runSplit()
-  }
-})
-
-// Exposed methods
-function reflow() {
-  reflowWith(internalItemsRef.value)
-}
-
-function reflowFromIndex(startIndex: number) {
-  if (!internalItemsRef.value.length) {
-    return
-  }
-
-  const normalizedIndex = Math.max(0, startIndex)
-  if (normalizedIndex <= 0) {
-    reflow()
-    return
-  }
-
-  const itemsToReflow = internalItemsRef.value.slice(normalizedIndex)
-  if (!itemsToReflow.length) {
-    return
-  }
-
-  const hasAllIds = itemsToReflow.every(item => resolveId(item) !== undefined)
-  if (!hasAllIds) {
-    reflow()
-    return
-  }
-
-  const idsToReflow = new Set(itemsToReflow.map(item => resolveId(item)!))
-
-  // Remove affected items from columns so they can be reassigned
-  leftItemsRef.value = leftItemsRef.value.filter(item => !idsToReflow.has(resolveId(item)!))
-  rightItemsRef.value = rightItemsRef.value.filter(item => !idsToReflow.has(resolveId(item)!))
-
-  tmpItemsRef.value = [...cloneData(itemsToReflow), ...tmpItemsRef.value]
-  runSplit()
-}
-
-function clear() {
-  tmpItemsRef.value = []
-  initializeColumns()
-  internalItemsRef.value = []
-}
-
-function remove(itemId: string | number) {
-  const predicate = (item: any) => resolveId(item) === String(itemId)
-
-  let removedItem: any = null
-  let originalIndex = -1
-
-  // 查找数据中的位置
-  originalIndex = internalItemsRef.value.findIndex(item => predicate(item))
-  if (originalIndex !== -1) {
-    removedItem = internalItemsRef.value[originalIndex]
-  }
-
-  if (!removedItem) {
-    return
-  }
-
-  // 从内部数据源中移除
-  leftItemsRef.value = leftItemsRef.value.filter(item => !predicate(item))
-  rightItemsRef.value = rightItemsRef.value.filter(item => !predicate(item))
-
-  tmpItemsRef.value = tmpItemsRef.value.filter(item => !predicate(item))
-  internalItemsRef.value = internalItemsRef.value.filter(item => !predicate(item))
-  reflowFromIndex(originalIndex)
-
-  emit('item-removed', { item: removedItem, index: originalIndex })
-}
-
 defineExpose({
-  reflow,
+  leftList,
+  rightList,
   clear,
   remove,
+  modify,
+  reflow,
 })
 </script>
 
@@ -336,39 +298,32 @@ export default {
 </script>
 
 <template>
-  <view class="waterfall" :class="customClass" :style="customStyle">
-    <view
-      :id="leftColumnId"
-      class="waterfall__column"
-      :class="customColumnClass"
-      :style="customColumnStyle"
-    >
-      <slot name="left" :left-items="leftItemsRef" :items="leftItemsRef" />
+  <view class="waterfall">
+    <view :id="leftColumnId" class="waterfall__column">
+      <slot name="left" :left-list="leftList" :items="leftList" />
     </view>
-
-    <view
-      :id="rightColumnId"
-      class="waterfall__column"
-      :class="customColumnClass"
-      :style="customColumnStyle"
-    >
-      <slot name="right" :right-items="rightItemsRef" :items="rightItemsRef" />
+    <view :id="rightColumnId" class="waterfall__column">
+      <slot name="right" :right-list="rightList" :items="rightList" />
     </view>
   </view>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .waterfall {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 24rpx;
 }
 
 .waterfall__column {
   display: flex;
   flex: 1;
   flex-direction: column;
+  min-width: 0;
   gap: 24rpx;
+
+  &:first-of-type {
+    margin-right: 24rpx;
+  }
 }
 </style>

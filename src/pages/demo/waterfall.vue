@@ -80,40 +80,42 @@ function loadMore() {
       class="absolute top-0 left-0 right-0 bottom-0 p-[24rpx] box-border"
       @scrolltolower="loadMore"
     >
-      <WaterfallFlow ref="waterfallFlowRef" :data-source="goodsRef" :delay="50">
+      <WaterfallFlow ref="waterfallFlowRef" :model-value="goodsRef" :add-time="50">
         <template #left="{ items }">
-          <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
-            <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
-              <view
-                class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
-                :style="{ height: `${item.height}rpx` }"
-              >
-                {{ item.height }}
-              </view>
-
-              <view class="p-[16rpx] box-border">
-                <view class="text-[26rpx] text-label-primary mb-[12rpx] line-clamp-2 font-semibold">
-                  {{ item.title }}
+          <view class="flex flex-col gap-[24rpx]">
+            <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
+              <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
+                <view
+                  class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
+                  :style="{ height: `${item.height}rpx` }"
+                >
+                  {{ item.height }}
                 </view>
 
-                <view class="inline-flex items-center px-[12rpx] py-[4rpx] bg-primary-50 text-primary border-rd-[999rpx] text-[20rpx] mb-[12rpx]">
-                  {{ item.tag }}
-                </view>
-
-                <view class="flex items-baseline justify-between">
-                  <view class="flex items-center gap-[8rpx]">
-                    <text class="text-[28rpx] text-label-error font-bold">
-                      ￥{{ item.sellPrice }}
-                    </text>
-                    <text class="text-[22rpx] text-label-secondary line-through">
-                      ￥{{ item.marketPrice }}
-                    </text>
+                <view class="p-[16rpx] box-border">
+                  <view class="text-[26rpx] text-label-primary mb-[12rpx] line-clamp-2 font-semibold">
+                    {{ item.title }}
                   </view>
 
-                  <view class="flex items-end">
-                    <text class="text-[18rpx] text-label-secondary">
-                      已售 1024
-                    </text>
+                  <view class="inline-flex items-center px-[12rpx] py-[4rpx] bg-primary-50 text-primary border-rd-[999rpx] text-[20rpx] mb-[12rpx]">
+                    {{ item.tag }}
+                  </view>
+
+                  <view class="flex items-baseline justify-between">
+                    <view class="flex items-center gap-[8rpx]">
+                      <text class="text-[28rpx] text-label-error font-bold">
+                        ￥{{ item.sellPrice }}
+                      </text>
+                      <text class="text-[22rpx] text-label-secondary line-through">
+                        ￥{{ item.marketPrice }}
+                      </text>
+                    </view>
+
+                    <view class="flex items-end">
+                      <text class="text-[18rpx] text-label-secondary">
+                        已售 1024
+                      </text>
+                    </view>
                   </view>
                 </view>
               </view>
@@ -122,38 +124,40 @@ function loadMore() {
         </template>
 
         <template #right="{ items }">
-          <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
-            <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
-              <view
-                class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
-                :style="{ height: `${item.height}rpx` }"
-              >
-                {{ item.height }}
-              </view>
-
-              <view class="p-[16rpx] box-border">
-                <view class="text-[26rpx] text-label-primary mb-[12rpx] line-clamp-2 font-semibold">
-                  {{ item.title }}
+          <view class="flex flex-col gap-[24rpx]">
+            <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
+              <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
+                <view
+                  class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
+                  :style="{ height: `${item.height}rpx` }"
+                >
+                  {{ item.height }}
                 </view>
 
-                <view class="inline-flex items-center px-[12rpx] py-[4rpx] bg-primary-50 text-primary border-rd-[999rpx] text-[20rpx] mb-[12rpx]">
-                  {{ item.tag }}
-                </view>
-
-                <view class="flex items-baseline justify-between">
-                  <view class="flex items-center gap-[8rpx]">
-                    <text class="text-[28rpx] text-label-error font-bold">
-                      ￥{{ item.sellPrice }}
-                    </text>
-                    <text class="text-[22rpx] text-label-secondary line-through">
-                      ￥{{ item.marketPrice }}
-                    </text>
+                <view class="p-[16rpx] box-border">
+                  <view class="text-[26rpx] text-label-primary mb-[12rpx] line-clamp-2 font-semibold">
+                    {{ item.title }}
                   </view>
 
-                  <view class="flex items-end">
-                    <text class="text-[18rpx] text-label-secondary">
-                      已售 1024
-                    </text>
+                  <view class="inline-flex items-center px-[12rpx] py-[4rpx] bg-primary-50 text-primary border-rd-[999rpx] text-[20rpx] mb-[12rpx]">
+                    {{ item.tag }}
+                  </view>
+
+                  <view class="flex items-baseline justify-between">
+                    <view class="flex items-center gap-[8rpx]">
+                      <text class="text-[28rpx] text-label-error font-bold">
+                        ￥{{ item.sellPrice }}
+                      </text>
+                      <text class="text-[22rpx] text-label-secondary line-through">
+                        ￥{{ item.marketPrice }}
+                      </text>
+                    </view>
+
+                    <view class="flex items-end">
+                      <text class="text-[18rpx] text-label-secondary">
+                        已售 1024
+                      </text>
+                    </view>
                   </view>
                 </view>
               </view>
