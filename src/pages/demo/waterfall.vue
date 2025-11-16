@@ -80,8 +80,8 @@ function loadMore() {
       class="absolute top-0 left-0 right-0 bottom-0 p-[24rpx] box-border"
       @scrolltolower="loadMore"
     >
-      <WaterfallFlow ref="waterfallFlowRef" :data-source="goodsRef" :columns="2" :delay="50">
-        <template #waterfall-column-0="{ items }">
+      <WaterfallFlow ref="waterfallFlowRef" :data-source="goodsRef" :delay="50">
+        <template #left="{ items }">
           <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
             <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
               <view
@@ -121,7 +121,7 @@ function loadMore() {
           </view>
         </template>
 
-        <template #waterfall-column-1="{ items }">
+        <template #right="{ items }">
           <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
             <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
               <view

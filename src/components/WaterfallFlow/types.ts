@@ -1,5 +1,6 @@
 /**
  * 参考 https://github.com/umicro/uView/blob/master/uview-ui/components/u-waterfall/u-waterfall.vue
+ * 参考 https://github.com/climblee/uv-ui/blob/master/uni_modules/uv-waterfall/components/uv-waterfall/uv-waterfall.vue
  */
 export const basicProps = {
   dataSource: {
@@ -16,14 +17,6 @@ export const basicProps = {
   delay: {
     type: Number,
     default: 50,
-  },
-  /**
-   * 列数
-   */
-  columns: {
-    type: [Number, String] as PropType<number | string>,
-    default: 2,
-    validator: (value: number | string) => Number(value) >= 2,
   },
   /**
    * 注意不要覆盖display, position等可能影响布局的样式

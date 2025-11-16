@@ -11,42 +11,19 @@ const emit = defineEmits<{
   (event: 'item-removed', payload: { item: any, index: number }): void
 }>()
 
-const getColumns = computed((): number => {
-  return Number(props.columns)
-})
-
-const getColumnIds = computed((): string[] => {
-  return Array.from({ length: getColumns.value }, (_, i) => `waterfall-column-${i}`)
-})
-
-const getColumnSelectors = computed((): string[] => {
-  return getColumnIds.value.map(id => `#${id}`)
-})
-
 const getDelay = computed((): number => {
   const val = Number(props.delay)
   return Number.isFinite(val) && val > 0 ? val : 0
 })
 
-// 动态列数组，用于存放分配后的数据及插槽渲染
-const waterfallItemColumnsRef = ref<any[][]>([])
+const uid = `waterfall-${Math.random().toString(36).slice(2, 10)}`
+const leftColumnId = `${uid}-left`
+const rightColumnId = `${uid}-right`
+const leftSelector = `#${leftColumnId}`
+const rightSelector = `#${rightColumnId}`
+
 const leftItemsRef = ref<any[]>([])
 const rightItemsRef = ref<any[]>([])
-
-watch(
-  () => waterfallItemColumnsRef.value,
-  (newVal) => {
-    console.log('waterfallItemColumnsRef changed:', newVal)
-    leftItemsRef.value = newVal[0] || []
-    rightItemsRef.value = newVal[1] || []
-    console.log('leftItemsRef:', leftItemsRef.value)
-    console.log('rightItemsRef:', rightItemsRef.value)
-  },
-  {
-    immediate: true,
-    deep: true,
-  },
-)
 
 // 内部数据源
 const internalItemsRef = ref<any[]>([])
@@ -61,7 +38,6 @@ const isMountedRef = ref(false)
 const instance = getCurrentInstance()
 
 async function runSplit() {
-  console.log('runSplit called', tmpItemsRef.value)
   if (isSplittingRef.value) {
     return
   }
@@ -92,18 +68,25 @@ async function splitLoop() {
     await nextTick()
 
     // 获取各列高度
-    const promises = getColumnSelectors.value.map(selector => getRect(selector))
-    const resolvedRects = await Promise.all(promises)
-    const columnHeights = resolvedRects.map(rect => (rect ? rect.height : 0))
+    const [leftRect, rightRect] = await Promise.all([
+      getRect(leftSelector),
+      getRect(rightSelector),
+    ])
 
     const item = tmpItemsRef.value.shift()
     if (!item) {
       break
     }
 
-    // 找到高度最小的列
-    const minHeightIdx = columnHeights.indexOf(Math.min(...columnHeights))
-    waterfallItemColumnsRef.value[minHeightIdx].push(item)
+    const leftHeight = (leftRect?.height as number | undefined) ?? 0
+    const rightHeight = (rightRect?.height as number | undefined) ?? 0
+
+    if (leftHeight <= rightHeight) {
+      leftItemsRef.value.push(item)
+    }
+    else {
+      rightItemsRef.value.push(item)
+    }
 
     // 判断是否需要延迟
     if (tmpItemsRef.value.length && getDelay.value > 0) {
@@ -125,17 +108,26 @@ function syncLists(source: any[]) {
     return
   }
 
-  // 更新所有列中的数据
-  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map((column: any[]) => {
-    return column.map((item) => {
-      const id = resolveId(item)
-      return id && map.has(id) ? cloneData(map.get(id)!) : item
-    })
+  leftItemsRef.value = leftItemsRef.value.map((item) => {
+    const id = resolveId(item)
+    if (id && map.has(id)) {
+      return map.get(id)
+    }
+    return item
+  })
+
+  rightItemsRef.value = rightItemsRef.value.map((item) => {
+    const id = resolveId(item)
+    if (id && map.has(id)) {
+      return map.get(id)
+    }
+    return item
   })
 }
 
 function initializeColumns() {
-  waterfallItemColumnsRef.value = Array.from({ length: getColumns.value }, () => [])
+  leftItemsRef.value = []
+  rightItemsRef.value = []
 }
 
 function reflowWith(items: any[]) {
@@ -243,17 +235,8 @@ watch(
   },
   {
     immediate: true,
-    deep: false,
   },
 )
-
-watch(getColumns, (newCount, oldCount) => {
-  if (newCount !== oldCount) {
-    initializeColumns()
-    // 重新分配数据
-    reflowWith(internalItemsRef.value)
-  }
-})
 
 onMounted(() => {
   isMountedRef.value = true
@@ -295,12 +278,8 @@ function reflowFromIndex(startIndex: number) {
   const idsToReflow = new Set(itemsToReflow.map(item => resolveId(item)!))
 
   // Remove affected items from columns so they can be reassigned
-  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map(column =>
-    column.filter((item) => {
-      const id = resolveId(item)
-      return !id || !idsToReflow.has(id)
-    }),
-  )
+  leftItemsRef.value = leftItemsRef.value.filter(item => !idsToReflow.has(resolveId(item)!))
+  rightItemsRef.value = rightItemsRef.value.filter(item => !idsToReflow.has(resolveId(item)!))
 
   tmpItemsRef.value = [...cloneData(itemsToReflow), ...tmpItemsRef.value]
   runSplit()
@@ -329,9 +308,9 @@ function remove(itemId: string | number) {
   }
 
   // 从内部数据源中移除
-  waterfallItemColumnsRef.value = waterfallItemColumnsRef.value.map(column =>
-    column.filter(item => !predicate(item)),
-  )
+  leftItemsRef.value = leftItemsRef.value.filter(item => !predicate(item))
+  rightItemsRef.value = rightItemsRef.value.filter(item => !predicate(item))
+
   tmpItemsRef.value = tmpItemsRef.value.filter(item => !predicate(item))
   internalItemsRef.value = internalItemsRef.value.filter(item => !predicate(item))
   reflowFromIndex(originalIndex)
@@ -359,21 +338,21 @@ export default {
 <template>
   <view class="waterfall" :class="customClass" :style="customStyle">
     <view
-      :id="getColumnIds[0]"
+      :id="leftColumnId"
       class="waterfall__column"
-      :class="[customColumnClass]"
+      :class="customColumnClass"
       :style="customColumnStyle"
     >
-      <slot name="waterfall-column-0" :items="leftItemsRef" />
+      <slot name="left" :left-items="leftItemsRef" :items="leftItemsRef" />
     </view>
 
     <view
-      :id="getColumnIds[1]"
+      :id="rightColumnId"
       class="waterfall__column"
-      :class="[customColumnClass]"
+      :class="customColumnClass"
       :style="customColumnStyle"
     >
-      <slot name="waterfall-column-1" :items="rightItemsRef" />
+      <slot name="right" :right-items="rightItemsRef" :items="rightItemsRef" />
     </view>
   </view>
 </template>
