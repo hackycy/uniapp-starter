@@ -84,9 +84,9 @@ function loadMore() {
         <template #left="{ items }">
           <view class="flex flex-col gap-[24rpx]">
             <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
-              <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
+              <view class="border-rd-[12rpx] overflow-hidden bg-white dark:bg-[#0f172a] box-border shadow-sm" @click="removeItem(item.id)">
                 <view
-                  class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
+                  class="w-full bg-[#f4f6fb] dark:bg-[#1e293b] flex items-center justify-center text-[24rpx] text-label-tertiary"
                   :style="{ height: `${item.height}rpx` }"
                 >
                   {{ item.height }}
@@ -126,9 +126,9 @@ function loadMore() {
         <template #right="{ items }">
           <view class="flex flex-col gap-[24rpx]">
             <view v-for="item in items" :key="item.id" class="flex flex-col gap-[24rpx] relative box-border">
-              <view class="border-rd-[12rpx] overflow-hidden bg-white box-border shadow-sm" @click="removeItem(item.id)">
+              <view class="border-rd-[12rpx] overflow-hidden bg-white dark:bg-[#0f172a] box-border shadow-sm" @click="removeItem(item.id)">
                 <view
-                  class="w-full bg-[#f4f6fb] flex items-center justify-center text-[24rpx] text-label-tertiary"
+                  class="w-full bg-[#f4f6fb] dark:bg-[#1e293b] flex items-center justify-center text-[24rpx] text-label-tertiary"
                   :style="{ height: `${item.height}rpx` }"
                 >
                   {{ item.height }}

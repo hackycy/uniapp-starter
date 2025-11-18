@@ -11,7 +11,7 @@ export const defaultTabBarConfig: TabBarConfig = {
     {
       pagePath: 'pages/index',
       text: '案例',
-      icon: 'i-lineicons-turborepo',
+      icon: 'i-basil-apps-solid',
       iconType: 'unocss',
     },
     {

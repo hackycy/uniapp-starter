@@ -36,7 +36,7 @@ const caseCategoriesRef = ref<CaseCategory[]>([
         },
       },
       {
-        icon: 'i-ic-twotone-color-lens',
+        icon: 'i-ic-outline-color-lens',
         title: '主题切换',
         click: () => {
           router.push('/pages/demo/theme-switch')
@@ -57,7 +57,7 @@ const caseCategoriesRef = ref<CaseCategory[]>([
     items: [
       {
         title: '瀑布流',
-        icon: 'i-icon-park-twotone-waterfalls-h',
+        icon: 'i-icon-park-outline-waterfalls-v',
         click: () => {
           router.push('/pages/demo/waterfall')
         },

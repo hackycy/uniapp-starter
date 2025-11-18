@@ -1,6 +1,6 @@
 import type { AppTheme, Theme, ThemeState } from '#/store'
 import { defineStore } from 'pinia'
-import { THEME_PRIMARY_COLOR_KEY } from '@/enums/cacheEnum'
+import { THEME_MODE_KEY, THEME_PRIMARY_COLOR_KEY } from '@/enums/cacheEnum'
 import { Theme_Color_Presets } from '@/settings/designSetings'
 import { storage } from '@/utils/cache'
 import { store } from '..'
@@ -8,9 +8,10 @@ import { store } from '..'
 export const useThemeStore = defineStore('theme', {
   state: (): ThemeState => {
     const themeColor = storage.get(THEME_PRIMARY_COLOR_KEY) || Theme_Color_Presets[0]
+    const theme = storage.get(THEME_MODE_KEY) || 'system'
 
     return {
-      theme: 'light',
+      theme,
       systemTheme: 'light',
       themeColor,
       themeVars: {
@@ -31,6 +32,7 @@ export const useThemeStore = defineStore('theme', {
   actions: {
     setTheme(mode: AppTheme) {
       this.theme = mode
+      storage.set(THEME_MODE_KEY, mode)
     },
     setSystemTheme(theme: Theme) {
       this.systemTheme = theme

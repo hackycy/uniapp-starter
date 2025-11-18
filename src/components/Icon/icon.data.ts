@@ -6,4 +6,5 @@
 export default [
   'i-lineicons-turborepo',
   'i-mdi-github-face',
+  'i-basil-apps-solid',
 ]
