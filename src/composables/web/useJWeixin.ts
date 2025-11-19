@@ -75,12 +75,13 @@ export function useJWeixin({ debug, sign = defaultSign }: UseJWeixinOptions = {}
       return Promise.resolve()
     }
 
-    if (readyHandlers.list().length <= 0) {
-      init()
-    }
-
     return new Promise<void>((resolve, reject) => {
       readyHandlers.add([resolve, reject])
+
+      // 只有第一个请求会初始化
+      if (readyHandlers.list().length <= 1) {
+        init()
+      }
     })
   }
 
