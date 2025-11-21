@@ -146,7 +146,7 @@ function createRouter(): Router & ObjectPlugin {
     routes: [
       ...pages,
       ...subPackages.reduce((arr, cur) => {
-        return arr.concat(cur.pages)
+        return arr.concat(cur.pages.map(e => ({ ...e, path: `${cur.root}/${e.path}` })))
       }, [] as Recordable[]),
     ],
   }
