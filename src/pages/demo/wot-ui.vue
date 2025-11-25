@@ -55,4 +55,14 @@ onShow(() => {
   </view>
 </template>
 
-<style lang="scss" scoped></style>
+<route lang="jsonc" part="subPackage">
+{
+  "layout": "default",
+  "style": {
+    "navigationBarTitleText": "Wot-UI 组件库",
+    // #ifdef H5
+    "navigationStyle": "custom"
+    // #endif
+  }
+}
+</route>

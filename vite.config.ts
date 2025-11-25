@@ -32,7 +32,9 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
     plugins: [
       // https://github.com/hackycy/uni-aide
       UniManifest(),
-      UniPages(),
+      UniPages({
+        scanDir: ['src/pages'],
+      }),
       // https://github.com/uni-helper/vite-plugin-uni-layouts
       UniLayouts({
         layout: 'default',

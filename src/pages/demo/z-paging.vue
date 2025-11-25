@@ -14,4 +14,14 @@ onShow(() => {
   <view><!-- TODO --></view>
 </template>
 
-<style lang="scss" scoped></style>
+<route lang="jsonc" part="subPackage">
+{
+  "layout": "default",
+  "style": {
+    "navigationBarTitleText": "z-paging",
+    // #ifdef H5
+    "navigationStyle": "custom"
+    // #endif
+  }
+}
+</route>

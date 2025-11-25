@@ -1,44 +1,5 @@
 import { defineConfig } from '@uni-aide/unplugin-uni-pages'
 
-function createDemoPages(): any {
-  const list: { name: string, title: string }[] = [
-    {
-      name: 'wot-ui',
-      title: 'Wot-UI 组件库',
-    },
-    {
-      name: 'unocss-icons',
-      title: 'UnoCSS 图标使用',
-    },
-    {
-      name: 'vconsole',
-      title: 'VConsole 调试面板',
-    },
-    {
-      name: 'waterfall',
-      title: '瀑布流',
-    },
-    {
-      name: 'theme-switch',
-      title: '主题切换',
-    },
-  ]
-
-  return list.map((item) => {
-    return {
-      path: `pages/demo/${item.name}`,
-      name: `Demo-${item.name}`,
-      layout: 'default',
-      style: {
-        navigationBarTitleText: item.title,
-        // #ifdef H5
-        navigationStyle: 'custom',
-        // #endif
-      },
-    }
-  })
-}
-
 export default defineConfig({
   pages: [
     {
@@ -75,8 +36,6 @@ export default defineConfig({
         // #endif
       },
     },
-    // 案例页面，使用可删除及demo下的测试页面
-    ...createDemoPages(),
   ],
   globalStyle: {
     navigationBarBackgroundColor: '@navBgColor',

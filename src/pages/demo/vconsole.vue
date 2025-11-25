@@ -36,4 +36,14 @@ onShow(() => {
   </view>
 </template>
 
-<style lang="scss" scoped></style>
+<route lang="jsonc" part="subPackage">
+{
+  "layout": "default",
+  "style": {
+    "navigationBarTitleText": "VConsole 调试面板",
+    // #ifdef H5
+    "navigationStyle": "custom"
+    // #endif
+  }
+}
+</route>

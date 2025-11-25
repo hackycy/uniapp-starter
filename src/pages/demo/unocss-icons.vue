@@ -49,4 +49,14 @@ onShow(() => {
   </view>
 </template>
 
-<style lang="scss" scoped></style>
+<route lang="jsonc" part="subPackage">
+{
+  "layout": "default",
+  "style": {
+    "navigationBarTitleText": "UnoCSS 图标使用",
+    // #ifdef H5
+    "navigationStyle": "custom"
+    // #endif
+  }
+}
+</route>

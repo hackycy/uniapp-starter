@@ -176,3 +176,15 @@ function loadMore() {
     <!-- #endif -->
   </view>
 </template>
+
+<route lang="jsonc" part="subPackage">
+{
+  "layout": "default",
+  "style": {
+    "navigationBarTitleText": "瀑布流",
+    // #ifdef H5
+    "navigationStyle": "custom"
+    // #endif
+  }
+}
+</route>

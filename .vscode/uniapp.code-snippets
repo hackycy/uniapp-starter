@@ -19,7 +19,7 @@
       "</template>",
       "",
       "<style lang=\"scss\" scoped></style>",
-      "",
+      ""
     ],
     "description": "UniApp Page Template"
   },
@@ -48,5 +48,20 @@
       ""
     ],
     "description": "UniApp Component Template"
+  },
+  "Uniapp Pages route block": {
+    "prefix": "<route",
+    "body": [
+      "<route lang=\"jsonc\">",
+      "{",
+      "  \"layout\": \"default\",",
+      "  \"style\": {",
+      "    \"navigationBarTitleText\": \"$1\",",
+      "    \"navigationStyle\": \"custom\"",
+      "  }",
+      "}",
+      "</route>"
+    ],
+    "description": "Uniapp Pages route block"
   }
 }
