@@ -54,24 +54,4 @@ export default defineConfig({
       '^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)': 'z-paging/components/z-paging$1/z-paging$1.vue',
     },
   },
-  subPackages: [
-    {
-      root: 'pages-sub',
-      pages: [
-        {
-          path: '404',
-          type: 'page',
-          name: 'PageNotFound',
-          layout: 'default',
-          style: {
-            navigationStyle: 'custom',
-          },
-        },
-        {
-          path: 'webview',
-          type: 'page',
-        },
-      ],
-    },
-  ],
 })

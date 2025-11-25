@@ -14,3 +14,12 @@ onLoad((options) => {
     <web-view :src="urlRef" />
   </view>
 </template>
+
+<route lang="jsonc" part="subPackage">
+{
+  "layout": "default",
+  "style": {
+    "navigationBarTitleText": ""
+  }
+}
+</route>
