@@ -68,6 +68,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-4080520251106001",
     "@dcloudio/uni-mp-xhs": "3.0.0-4080520251106001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4080520251106001",
+    "@vant/area-data": "^2.1.0",
     "@vueuse/core": "^13.7.0",
     "@vueuse/shared": "^13.9.0",
     "alova": "^3.3.4",
