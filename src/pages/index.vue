@@ -63,6 +63,13 @@ const caseCategoriesRef = ref<CaseCategory[]>([
         },
       },
       {
+        title: '省市区选择器',
+        icon: 'i-mdi-map-marker-radius',
+        click: () => {
+          router.push('/pages/demo/area-select')
+        },
+      },
+      {
         title: 'z-paging',
         icon: 'i-ph-scribble-loop-bold',
       },
