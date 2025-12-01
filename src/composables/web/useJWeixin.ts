@@ -20,6 +20,9 @@ export interface UseJWeixinOptions {
   sign?: (url: string) => Promise<Sign>
 }
 
+/**
+ * SDK 签名请求的默认实现参考
+ */
 async function defaultSign(url: string) {
   return http.Request<Sign>({
     method: 'POST',
@@ -99,9 +102,14 @@ export function useJWeixin({ debug, sign = defaultSign }: UseJWeixinOptions = {}
     return isReady().then(() => jweixin)
   }
 
+  async function getRawJWeixin(): Promise<typeof jweixin> {
+    return jweixin
+  }
+
   return {
     isReady,
     getJWeixin,
+    getRawJWeixin,
   }
   // #endif
 }
