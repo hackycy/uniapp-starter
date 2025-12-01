@@ -4,8 +4,10 @@ import VueHook from 'alova/vue'
 import { buildFullPath } from '..'
 import { isDev } from '../env'
 
+export const REQUEST_BASE_URL = buildFullPath(import.meta.env.VITE_API_BASE_URL, import.meta.env.VITE_API_PATH)
+
 const alovaInstance = createAlova({
-  baseURL: buildFullPath(import.meta.env.VITE_API_BASE_URL, import.meta.env.VITE_API_PATH),
+  baseURL: REQUEST_BASE_URL,
   ...AdapterUniapp(),
   timeout: 10 * 1000,
   statesHook: VueHook,
