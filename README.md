@@ -26,14 +26,13 @@
 
 ```
 ├─ src
-│  ├─ pages/            业务主包页面（自动扫描）
-│  ├─ pages-sub/        分包页面（自动扫描）
+│  ├─ pages/            业务主包页面（默认开启自动扫描，可配置关闭）
 │  ├─ layouts/          约定式布局（默认 default / navigation）
-│  ├─ components/       公共组件（TabBar / PrivacyPopup / Skeleton ...）
-│  ├─ composables/      组合式工具（web、core、component）
+│  ├─ components/       大量公共组件（TabBar / PrivacyPopup ...）
+│  ├─ composables/      大量组合式工具（web、core、component）
 │  ├─ store/            Pinia 模块化状态管理
 │  ├─ router/           自定义轻量路由实现 + 守卫
-│  ├─ utils/            通用工具（env/cache/http/uuid/uri/...）
+│  ├─ utils/            通用工具
 │  ├─ settings/         主题/TabBar 等项目设定
 │  ├─ styles/           全局样式 & 入口 SCSS
 │  ├─ assets/           图标 & 图片资源（自定义 svg 会被 UnoCSS Icons 集合加载）
