@@ -102,7 +102,7 @@ export function useJWeixin({ debug, sign = defaultSign }: UseJWeixinOptions = {}
     return isReady().then(() => jweixin)
   }
 
-  async function getRawJWeixin(): Promise<typeof jweixin> {
+  function getRawJWeixin(): typeof jweixin {
     return jweixin
   }
 
