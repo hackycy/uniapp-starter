@@ -7,4 +7,6 @@ export default [
   'i-lineicons-turborepo',
   'i-mdi-github-face',
   'i-basil-apps-solid',
+  'i-material-symbols-light-star-shine',
+  'i-material-symbols-recommend-sharp',
 ]

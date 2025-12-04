@@ -11,13 +11,13 @@ export const defaultTabBarConfig: TabBarConfig = {
     {
       pagePath: 'pages/index',
       text: '案例',
-      icon: 'i-basil-apps-solid',
+      icon: 'i-material-symbols-light-star-shine',
       iconType: 'unocss',
     },
     {
       pagePath: 'pages/about',
       text: '关于',
-      icon: 'i-mdi-github-face',
+      icon: 'i-material-symbols-recommend-sharp',
       iconType: 'unocss',
     },
   ],

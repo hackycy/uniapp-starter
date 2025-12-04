@@ -49,6 +49,13 @@ const caseCategoriesRef = ref<CaseCategory[]>([
           router.push('/pages/demo/unocss-icons')
         },
       },
+      {
+        icon: 'i-mdi-wechat',
+        title: '微信JS-SDK集成',
+        click: () => {
+          router.push('/pages/demo/jweixin-sdk')
+        },
+      },
     ],
   },
   {
@@ -130,7 +137,7 @@ function setActiveCategory(key: string) {
       </view>
     </view>
 
-    <view class="grid grid-cols-2 gap-[24rpx]">
+    <view class="grid grid-cols-3 gap-[24rpx]">
       <view
         v-for="(item, idx) in casePagesRef"
         :key="`${item.title}-${idx}`"
@@ -142,12 +149,13 @@ function setActiveCategory(key: string) {
           class="absolute inset-[14rpx] flex h-auto flex-col items-center justify-center rounded-[18rpx] px-[16rpx] text-center"
         >
           <view
-            class="mb-[16rpx] flex h-[132rpx] w-[132rpx] items-center justify-center rounded-full bg-[#f5f7ff] shadow-md dark:bg-[#1e293b]"
+            class="mb-[16rpx] flex items-center justify-center rounded-full bg-[#f5f7ff] shadow-md dark:bg-[#1e293b]"
+            style="width: 50%; aspect-ratio: 1 / 1;"
           >
-            <view class="text-[64rpx] text-primary" :class="[item.icon]" />
+            <view class="text-[38rpx] text-primary" :class="[item.icon]" />
           </view>
 
-          <view class="text-[30rpx] font-medium text-gray-900 mt-[20rpx] dark:text-gray-100">
+          <view class="text-[20rpx] font-medium text-gray-900 mt-[20rpx] dark:text-gray-100">
             {{ item.title }}
           </view>
         </view>
