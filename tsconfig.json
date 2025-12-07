@@ -23,7 +23,8 @@
     "types": [
       "@dcloudio/types",
       "miniprogram-api-typings",
-      "wot-design-uni/global"
+      "wot-design-uni/global",
+      "z-paging/types"
     ],
     "allowJs": false,
     "importsNotUsedAsValues": "remove",

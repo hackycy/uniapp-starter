@@ -79,6 +79,9 @@ const caseCategoriesRef = ref<CaseCategory[]>([
       {
         title: 'z-paging',
         icon: 'i-ph-scribble-loop-bold',
+        click: () => {
+          router.push('/pages/demo/z-paging')
+        },
       },
     ],
   },
