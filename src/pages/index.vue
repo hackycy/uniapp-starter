@@ -50,6 +50,13 @@ const caseCategoriesRef = ref<CaseCategory[]>([
         },
       },
       {
+        icon: 'i-fluent-document-page-bottom-right-24-filled',
+        title: '获取所有页面信息',
+        click: () => {
+          router.push('/pages/demo/all-pages')
+        },
+      },
+      {
         icon: 'i-mdi-wechat',
         title: '微信JS-SDK集成',
         click: () => {
