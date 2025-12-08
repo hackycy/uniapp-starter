@@ -21,14 +21,14 @@ onShow(() => {
 
 <template>
   <view class="relaive box-border p-[20rpx]">
-    <view class="text-label-primary box-border bg-orange-100 p-[20rpx] border-rd-[16rpx] mb-[20rpx] flex flex-col gap-[10rpx] font-bold text-[24rpx]">
+    <view class="text-label-primary box-border bg-orange-100 dark:bg-orange-900 p-[20rpx] border-rd-[16rpx] mb-[20rpx] flex flex-col gap-[10rpx] font-bold text-[24rpx]">
       <view>通过 useRouter().routes 获取到的所有页面信息</view>
       <view>或者</view>
       <view>通过@uni-aide/unplugin-uni-pages提供的虚拟模块获取到的所有页面信息：</view>
       <view>import { pages, subPackages } from '~uni-pages'</view>
     </view>
 
-    <view class="text-label-primary whitespace-pre box-border bg-orange-100 p-[20rpx] border-rd-[16rpx] overflow-x-auto overflow-y-hidden text-[24rpx]">
+    <view class="text-label-primary whitespace-pre box-border bg-orange-100 dark:bg-orange-900 p-[20rpx] border-rd-[16rpx] overflow-x-auto overflow-y-hidden text-[24rpx]">
       {{ getRoutes }}
     </view>
 

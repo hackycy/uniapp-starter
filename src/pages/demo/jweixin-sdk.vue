@@ -12,14 +12,14 @@ onShow(() => {
 </script>
 
 <template>
-  <view>
+  <view class="relative h-screen box-border p-[20rpx] flex-center flex-col">
+    <wd-button>初始化</wd-button>
+
     <!-- #ifdef H5 -->
     <FABack />
     <!-- #endif -->
   </view>
 </template>
-
-<style lang="scss" scoped></style>
 
 <route lang="jsonc" part="subPackage">
 {
