@@ -13,7 +13,5 @@ export default {
 </script>
 
 <template>
-  <view><!-- TODO --></view>
+  <wd-picker-view />
 </template>
-
-<style lang="scss" scoped></style>
