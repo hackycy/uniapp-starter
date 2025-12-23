@@ -19,7 +19,7 @@ import { version } from './package.json'
 // https://vitejs.dev/config/
 export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   const env = loadEnv(mode, process.cwd())
-  const { VITE_APP_PORT, VITE_APP_NAME, VITE_APP_PROXY, VITE_VISUALIZER } = env
+  const { VITE_APP_PORT, VITE_APP_NAME, VITE_APP_PROXY, VITE_VISUALIZER, VITE_APP_PUBLIC_BASE } = env
   const { UNI_PLATFORM } = process.env
 
   // /**
@@ -29,6 +29,7 @@ export default async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   // const UnoCSS = (await import('unocss/vite')).default
 
   return {
+    base: VITE_APP_PUBLIC_BASE,
     plugins: [
       // https://github.com/hackycy/uni-aide
       UniManifest(),
