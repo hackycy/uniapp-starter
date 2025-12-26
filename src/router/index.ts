@@ -24,6 +24,9 @@ function createRouter(): Router & ObjectPlugin {
   const readyHandlers = useCallbacks<OnReadyCallback>()
   let ready: boolean = false
 
+  /**
+   * https://github.com/vuejs/router/blob/f420992ec453a09b22449617be9e30307d52acdf/packages/router/src/router.ts#L943
+   */
   function markAsReady(err?: unknown): unknown {
     if (!ready) {
       // still not ready if an error happened
@@ -40,8 +43,10 @@ function createRouter(): Router & ObjectPlugin {
     return Promise.reject(error)
   }
 
-  const router: ObjectPlugin & Router = {
+  const router: ObjectPlugin & Router & { _pageShown?: boolean } = {
     guards: [],
+    // Indicates whether the page has been shown at least once
+    _pageShown: false,
     async push(to) {
       return navigateTo(to, this, 'push')
         .then(() => {
@@ -107,12 +112,16 @@ function createRouter(): Router & ObjectPlugin {
           if (!isEmpty(option)) {
             currentRoute.value = {
               ...currentRoute.value,
-              query: option,
+              query: router._pageShown ? option : { ...currentRoute.value.query, ...option },
             }
           }
         },
         onShow(options?: Recordable) {
           if (this.$mpType === 'page') {
+            if (!router._pageShown) {
+              router._pageShown = true
+            }
+
             const route = getCurrentPageRoute(router)
             if (route.path !== currentRoute.value.path) {
               currentRoute.value = route
