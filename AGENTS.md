@@ -19,9 +19,12 @@
 - `src/pages/` - 页面文件
 - `src/components/` - 组件文件
 - `src/layouts/` - 布局文件
+- `src/composables/` Vue Composables (Hooks)
 - `src/api/` - API 接口
+- `src/enums/` - 项目枚举定义
 - `src/utils/http/` - HTTP 请求封装
 - `src/store/` - 状态管理
+- `src/utils/` - 项目工具类库
 
 ## 开发命令
 - `pnpm dev` - 开发 H5 版本
@@ -54,6 +57,11 @@
 - 配置在 [uno.config.ts]
 - 支持预设和自定义规则
 - 优先使用原子化类名，减少自定义 CSS
+
+## 样式规范
+- 保证优先使用`rpx`作为尺寸单位, 如布局宽高、内外边距、字体大小、边框、圆角、间距等需要适配的样式，例外情况: 极细边框 (1px 物理像素边框)
+- 以`750rpx`等于屏幕宽度为基准进行设计
+- 避免混用`rpx`与`px`，以免导致计算复杂度增加
 
 ## Vue SFC 组件规范
 - `<script setup lang="ts">` 标签必须是第一个子元素
