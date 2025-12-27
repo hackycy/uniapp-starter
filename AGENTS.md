@@ -59,7 +59,7 @@
 - 优先使用原子化类名，减少自定义 CSS
 
 ## 样式规范
-- 保证优先使用`rpx`作为尺寸单位, 如布局宽高、内外边距、字体大小、边框、圆角、间距等需要适配的样式，例外情况: 极细边框 (1px 物理像素边框)
+- 使用`rpx`作为尺寸单位, 如布局宽高、内外边距、字体大小、边框、圆角、间距等需要适配的样式，例外情况: 极细边框 (1px 物理像素边框)
 - 以`750rpx`等于屏幕宽度为基准进行设计
 - 避免混用`rpx`与`px`，以免导致计算复杂度增加
 
@@ -110,6 +110,11 @@ function handleClick() {
 
 <template>
   <view class="page">
+    <!-- 样式规范示例 -->
+    <view class="w-full relative">
+      <view class="w-[100rpx] p-[16rpx] gap-[10rpx] m-[20rpx]" />
+    </view>
+
     <!-- uni-app 组件 -->
     <button @click="handleClick">
       点击
