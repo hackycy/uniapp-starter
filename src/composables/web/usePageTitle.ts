@@ -9,20 +9,21 @@ import { getCurrentPage } from '@/router/helper'
  */
 export function usePageTitle() {
   // #ifdef H5
-  const pageTitle = useTitle(null, {
-    restoreOnUnmount: () => {
+  useTitle(null, {
+    restoreOnUnmount: (originalTitle: string, _currentTitle: string) => {
       const returnPage = getCurrentPage() as Recordable | undefined
       if (returnPage) {
-        return returnPage.$page?.meta?.navigationBar?.titleText || null
+        return returnPage.$page?.meta?.navigationBar?.titleText || originalTitle
       }
-      return null
+      return originalTitle
     },
   })
   // #endif
 
   function setTitle(title: string) {
     // #ifdef H5
-    pageTitle.value = title
+    // pageTitle.value = title
+    document.title = title
     // #endif
 
     // #ifndef H5
