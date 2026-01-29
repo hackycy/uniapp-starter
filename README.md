@@ -1,10 +1,8 @@
 # uniapp-starter
 
-基于 Vite + Vue3 + TypeScript + uni-app 的多端快速启动模板
+基于 Vite + Vue3 + TypeScript + uni-app 的多端快速启动模板 [预览地址](https://hackycy.github.io/uniapp-starter/#/)
 
 支持 公众号H5 / 微信小程序 / 多家小程序 等平台一套代码多端输出。
-
-预览地址: [http://gh.sooosin.com/uniapp-starter](http://gh.sooosin.com/uniapp-starter/)
 
 ## ✨ 特性 (Features)
 
